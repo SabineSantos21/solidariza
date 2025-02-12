@@ -1,2 +1,2 @@
-# solidariza
+# Solidariza
 Repositório Aplicação Web Solidariza
