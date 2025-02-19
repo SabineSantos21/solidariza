@@ -1,1 +1,55 @@
-<p>donor works!</p>
+<div class="bg-transparent d-flex justify-content-between justify-content-center mb-2">
+    <img src="../../../../../assets/img/logos/logo-horizontal.png" alt="" height="80">
+    <h3 class="text-center mt-3 mb-3 text-uppercase mr-4">Cadastro de Voluntário</h3>
+</div>
+
+
+<form>
+    <div class="row">
+        <div class="col-sm-12 col-md-12 col-lg-6 col-xl-6">
+            <div class="form-group">
+                <input type="text" id="input-username" class="form-control form-control-alternative" placeholder="Nome">
+            </div>
+        </div>
+        
+        <div class="col-sm-12 col-md-12 col-lg-6 col-xl-6">
+            <div class="form-group">
+                <input type="text" id="input-username" class="form-control form-control-alternative" placeholder="E-mail">
+            </div>
+        </div>
+        
+        <div class="col-sm-12 col-md-12 col-lg-6 col-xl-6">
+            <div class="form-group">
+                <input type="password" id="input-username" class="form-control form-control-alternative" placeholder="Senha">
+            </div>
+        </div>
+        
+        <div class="col-sm-12 col-md-12 col-lg-6 col-xl-6">
+            <div class="form-group">
+                <input type="password" id="input-username" class="form-control form-control-alternative" placeholder="Confirmar Senha">
+            </div>
+        </div>
+        
+        <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 d-flex align-items-center">
+            <input id="customCheckRegister" type="checkbox" class="mb-2 mr-2 cursor-pointer">
+            <label for="customCheckRegister">
+                <span class="text-muted">Declaro que concordo com as políticas de privacidade de termos de uso</span>
+            </label>
+        </div>
+       
+        <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 d-flex align-items-center">
+            <input id="customCheckRegister" type="checkbox" class="mb-2 mr-2 cursor-pointer">
+            <label for="customCheckRegister">
+                <span class="text-muted">Declaro que concordo com o uso de cookies no software</span>
+            </label>
+        </div>
+    </div>
+
+    <div class="text-center">
+        <button type="button" class="btn btn-create-donor my-4" [routerLink]="['/dashboard']">Criar Conta</button>
+    </div>
+</form>
+
+<div class="d-flex justify-content-center w-100 mt-3">
+    <small [routerLink]="['/login']" class="cursor-pointer"><strong>Retornar ao login</strong></small>
+</div>
