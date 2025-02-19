@@ -2339,7 +2339,7 @@ pre code
 
     transition: all .2s cubic-bezier(.68, -.55, .265, 1.55);
 
-    color: #8898aa;
+    color: #292929;
     border: 1px solid #cad1d7;
     border-radius: .375rem;
     background-color: #fff;
@@ -2360,7 +2360,7 @@ pre code
 }
 .form-control:focus
 {
-    color: #8898aa;
+    color: #292929;
     border-color: rgba(50, 151, 211, .25);
     outline: 0;
     background-color: #fff;
@@ -2369,17 +2369,17 @@ pre code
 .form-control:-ms-input-placeholder
 {
     opacity: 1;
-    color: #adb5bd;
+    color: #292929;
 }
 .form-control::-ms-input-placeholder
 {
     opacity: 1;
-    color: #adb5bd;
+    color: #292929;
 }
 .form-control::placeholder
 {
     opacity: 1;
-    color: #adb5bd;
+    color: #292929;
 }
 .form-control:disabled,
 .form-control[readonly]
@@ -2390,7 +2390,7 @@ pre code
 
 select.form-control:focus::-ms-value
 {
-    color: #8898aa;
+    color: #4b4b4b;
     background-color: #fff;
 }
 
@@ -18022,15 +18022,15 @@ a.btn-icon-only
 }
 .form-control:focus:-ms-input-placeholder
 {
-    color: #adb5bd;
+    color: #292929;
 }
 .form-control:focus::-ms-input-placeholder
 {
-    color: #adb5bd;
+    color: #292929;
 }
 .form-control:focus::placeholder
 {
-    color: #adb5bd;
+    color: #292929;
 }
 
 textarea[resize='none']
