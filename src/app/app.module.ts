@@ -13,6 +13,9 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { AppRoutingModule } from './app.routing';
 import { ComponentsModule } from './components/components.module';
 import { CreateAccountComponent } from './pages/authentication/create-account/create-account.component';
+import { OrganizationComponent } from './pages/authentication/create-account/organization/organization.component';
+import { DonorComponent } from './pages/authentication/create-account/donor/donor.component';
+import { VolunteerComponent } from './pages/authentication/create-account/volunteer/volunteer.component';
 
 
 @NgModule({
@@ -29,7 +32,10 @@ import { CreateAccountComponent } from './pages/authentication/create-account/cr
     AppComponent,
     AdminLayoutComponent,
     AuthLayoutComponent,
-    CreateAccountComponent
+    CreateAccountComponent,
+    OrganizationComponent,
+    DonorComponent,
+    VolunteerComponent
   ],
   providers: [],
   bootstrap: [AppComponent]
