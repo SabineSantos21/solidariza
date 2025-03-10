@@ -3,30 +3,61 @@
     <h3 class="text-center mt-3 mb-3 text-uppercase mr-4">Cadastro de Voluntário</h3>
 </div>
 
+<div *ngIf="alertSuccess != ''" class="alert alert-success" role="alert">
+    {{ alertSuccess }}
+</div>
 
-<form>
+<div *ngIf="alertError != ''" class="alert alert-danger" role="alert">
+    {{ alertError }}
+</div>
+
+<form [formGroup]="form">
     <div class="row">
         <div class="col-sm-12 col-md-12 col-lg-6 col-xl-6">
             <div class="form-group">
-                <input type="text" id="input-username" class="form-control form-control-alternative" placeholder="Nome">
+                <input 
+                type="text" 
+                id="input-username" 
+                class="form-control form-control-alternative" 
+                placeholder="Nome"
+                formControlName="name"
+                >
             </div>
         </div>
         
         <div class="col-sm-12 col-md-12 col-lg-6 col-xl-6">
             <div class="form-group">
-                <input type="text" id="input-username" class="form-control form-control-alternative" placeholder="E-mail">
+                <input 
+                type="text" 
+                id="input-username" 
+                class="form-control form-control-alternative" 
+                placeholder="E-mail"
+                formControlName="email"
+                >
             </div>
         </div>
         
         <div class="col-sm-12 col-md-12 col-lg-6 col-xl-6">
             <div class="form-group">
-                <input type="password" id="input-username" class="form-control form-control-alternative" placeholder="Senha">
+                <input 
+                type="password" 
+                id="input-username" 
+                class="form-control form-control-alternative" 
+                placeholder="Senha"
+                formControlName="password"
+                >
             </div>
         </div>
         
         <div class="col-sm-12 col-md-12 col-lg-6 col-xl-6">
             <div class="form-group">
-                <input type="password" id="input-username" class="form-control form-control-alternative" placeholder="Confirmar Senha">
+                <input 
+                type="password" 
+                id="input-username" 
+                class="form-control form-control-alternative" 
+                placeholder="Confirmar Senha"
+                formControlName="confirmPassword"
+                >
             </div>
         </div>
         
@@ -46,7 +77,7 @@
     </div>
 
     <div class="text-center">
-        <button type="button" class="btn btn-create-donor my-4" [routerLink]="['/dashboard']">Criar Conta</button>
+        <button type="button" class="btn btn-create-donor my-4" (click)="createUser()">Criar Conta</button>
     </div>
 </form>
 
