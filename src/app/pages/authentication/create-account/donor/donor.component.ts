@@ -15,6 +15,9 @@ export class DonorComponent implements OnInit {
   alertError: any = "";
   alertSuccess: any = "";
 
+  checkPolicy = null;
+  checkCookie = null;
+
   constructor(
     private formBuilder: FormBuilder,
     private userService: UserService,
@@ -36,7 +39,13 @@ export class DonorComponent implements OnInit {
   }
 
   public createUser() {
-    if (this.validatePassword()) {
+    console.log("checkPolicy",this.checkPolicy)
+    console.log("checkCookie", this.checkCookie)
+
+    this.checkPolicy = this.checkPolicy == null ? false : this.checkPolicy;
+    this.checkCookie = this.checkCookie == null ? false : this.checkCookie;
+
+    if (this.checkPolicy && this.checkCookie && this.validatePassword()) {
       var user = this.form.value;
       user.type = UserType.Donor;
 

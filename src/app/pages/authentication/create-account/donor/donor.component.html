@@ -61,19 +61,27 @@
             </div>
         </div>
         
-        <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 d-flex align-items-center">
-            <input id="customCheckRegister" type="checkbox" class="mb-2 mr-2 cursor-pointer">
-            <label for="customCheckRegister">
-                <span class="text-muted">Declaro que concordo com as políticas de privacidade de termos de uso</span>
-            </label>
+        <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 d-flex flex-column justify-content-center mb-3">
+            <div>
+                <input id="customCheckRegister" type="checkbox" class="mb-2 mr-2 cursor-pointer" [checked]="checkPolicy" (change)="checkPolicy = !checkPolicy">
+                <label for="customCheckRegister">
+                    <span class="text-muted">Declaro que concordo com as políticas de privacidade de termos de uso</span>
+                </label>
+            </div>
+            <small class="text-danger" *ngIf="checkPolicy == false">É obrigatório concordar com a política de privacidade</small>
         </div>
+        
        
-        <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 d-flex align-items-center">
-            <input id="customCheckRegister" type="checkbox" class="mb-2 mr-2 cursor-pointer">
-            <label for="customCheckRegister">
-                <span class="text-muted">Declaro que concordo com o uso de cookies no software</span>
-            </label>
+        <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 d-flex flex-column justify-content-center mb-3">
+            <div>
+                <input id="customCheckRegister" type="checkbox" class="mb-2 mr-2 cursor-pointer" [checked]="checkCookie" (change)="checkCookie = !checkCookie">
+                <label for="customCheckRegister">
+                    <span class="text-muted">Declaro que concordo com o uso de cookies no software</span>
+                </label>
+            </div>
+            <small class="text-danger" *ngIf="checkCookie == false">É obrigatório concordar com o uso de cookies</small>
         </div>
+
     </div>
 
     <div class="text-center">
