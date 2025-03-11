@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { UserType } from 'src/app/shared/enums/userType';
 import { NewUser } from 'src/app/shared/models/user';
@@ -31,23 +31,36 @@ export class DonorComponent implements OnInit {
   public createForm(user: NewUser) {
     this.form = this.formBuilder.group({
       name: new FormControl(user.name, Validators.required),
-      type: new FormControl(user.type, Validators.required),
+      type: new FormControl(UserType.Donor, Validators.required),
       email: new FormControl(user.email, Validators.required),
       password: new FormControl(user.password, Validators.required),
       confirmPassword: new FormControl(null, Validators.required)
     })
   }
 
-  public createUser() {
-    console.log("checkPolicy",this.checkPolicy)
-    console.log("checkCookie", this.checkCookie)
+  getControl(name: string): AbstractControl {
+    return this.form.get(name);
+  }
 
+  private validateFields() {
+    Object.keys(this.form.controls).forEach((key) => {
+      if (
+        this.getControl(key).value == "" ||
+        this.getControl(key).value == null
+      )
+        this.getControl(key).markAsTouched();
+    });
+  }
+
+  public createUser() {
     this.checkPolicy = this.checkPolicy == null ? false : this.checkPolicy;
     this.checkCookie = this.checkCookie == null ? false : this.checkCookie;
 
-    if (this.checkPolicy && this.checkCookie && this.validatePassword()) {
+    if (this.form.invalid) {
+      this.validateFields();
+    }
+    else if (this.validatePassword() && this.checkPolicy && this.checkCookie) {
       var user = this.form.value;
-      user.type = UserType.Donor;
 
       this.userService.createUser(user).subscribe(
         (data) => {

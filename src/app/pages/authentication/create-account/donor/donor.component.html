@@ -14,50 +14,65 @@
 <form [formGroup]="form">
     <div class="row">
         <div class="col-sm-12 col-md-12 col-lg-6 col-xl-6">
-            <div class="form-group">
+            <div
+            *ngIf="getControl('name'); let control" 
+            class="form-group"
+            >
                 <input 
                 type="text" 
-                id="input-username" 
                 class="form-control form-control-alternative" 
                 placeholder="Nome"
                 formControlName="name"
                 >
+                <small class="text-danger" *ngIf="!control.untouched && control.invalid">Campo <strong>Nome</strong> é obrigatório</small>
             </div>
         </div>
         
         <div class="col-sm-12 col-md-12 col-lg-6 col-xl-6">
-            <div class="form-group">
+            <div
+            *ngIf="getControl('email'); let control" 
+            class="form-group"
+            >
                 <input 
                 type="text" 
-                id="input-username" 
                 class="form-control form-control-alternative" 
                 placeholder="E-mail"
                 formControlName="email"
                 >
+                <small class="text-danger" *ngIf="!control.untouched && control.invalid">Campo <strong>E-mail</strong> é obrigatório</small>
+
             </div>
         </div>
         
         <div class="col-sm-12 col-md-12 col-lg-6 col-xl-6">
-            <div class="form-group">
+            <div 
+            *ngIf="getControl('password'); let control" 
+            class="form-group"
+            >
                 <input 
                 type="password" 
-                id="input-username" 
                 class="form-control form-control-alternative" 
                 placeholder="Senha"
                 formControlName="password"
                 >
+                <small class="text-danger" *ngIf="!control.untouched && control.invalid">Campo <strong>Senha</strong> é obrigatório</small>
+
             </div>
         </div>
         
         <div class="col-sm-12 col-md-12 col-lg-6 col-xl-6">
-            <div class="form-group">
+            <div 
+            *ngIf="getControl('confirmPassword'); let control" 
+            class="form-group"
+            >
                 <input 
                 type="password" 
-                id="input-username" 
                 class="form-control form-control-alternative" 
                 placeholder="Confirmar Senha"
                 formControlName="confirmPassword"
                 >
+                <small class="text-danger" *ngIf="!control.untouched && control.invalid">Campo <strong>Confirmar Senha</strong> é obrigatório</small>
+
             </div>
         </div>
         

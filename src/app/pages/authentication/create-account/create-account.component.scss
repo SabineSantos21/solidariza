@@ -20,3 +20,9 @@
     display: flex;
     align-items: center;
 }
+
+.card-content {
+    max-height: 90vh; /* Define uma altura máxima */
+    overflow-y: auto;  /* Adiciona o scroll vertical quando necessário */
+}
+  
