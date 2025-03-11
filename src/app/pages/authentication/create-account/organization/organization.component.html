@@ -32,6 +32,7 @@
                 class="form-control form-control-alternative" 
                 placeholder="CNPJ"
                 formControlName="documentNumber"
+                mask="00.000.000/0000-00"
                 >
                 <small class="text-danger" *ngIf="!control.untouched && control.invalid">Campo <strong>CNPJ</strong> é obrigatório</small>
             
@@ -64,6 +65,7 @@
                 class="form-control form-control-alternative" 
                 placeholder="Telefone"
                 formControlName="phone"
+                mask="(00) 0000-00009"
                 >
                 <small class="text-danger" *ngIf="!control.untouched && control.invalid">Campo <strong>Telefone</strong> é obrigatório</small>
 
@@ -96,6 +98,7 @@
                 class="form-control form-control-alternative" 
                 placeholder="Telefone para Contato"
                 formControlName="contactPhone"
+                mask="(00) 0000-00009"
                 >
                 <small class="text-danger" *ngIf="!control.untouched && control.invalid">Campo <strong>Telefone para Contato</strong> é obrigatório</small>
 

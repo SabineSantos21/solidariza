@@ -16,7 +16,11 @@ import { CreateAccountComponent } from './pages/authentication/create-account/cr
 import { OrganizationComponent } from './pages/authentication/create-account/organization/organization.component';
 import { DonorComponent } from './pages/authentication/create-account/donor/donor.component';
 import { VolunteerComponent } from './pages/authentication/create-account/volunteer/volunteer.component';
+import { NgxMaskModule, IConfig } from 'ngx-mask';
 
+const maskConfig: Partial<IConfig> = {
+  validation: false, // Define se a máscara deve validar o input
+};
 
 @NgModule({
   imports: [
@@ -28,6 +32,7 @@ import { VolunteerComponent } from './pages/authentication/create-account/volunt
     RouterModule,
     AppRoutingModule,
     ReactiveFormsModule,
+    NgxMaskModule.forRoot(maskConfig)
   ],
   declarations: [
     AppComponent,
@@ -38,7 +43,6 @@ import { VolunteerComponent } from './pages/authentication/create-account/volunt
     DonorComponent,
     VolunteerComponent
   ],
-  providers: [],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

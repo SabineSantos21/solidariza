@@ -4,61 +4,130 @@
 </div>
 
 
-<form>
+<form [formGroup]="form">
     <div class="row">
         <div class="col-sm-12 col-md-12 col-lg-6 col-xl-6">
+            <div
+            *ngIf="getControl('name'); let control" 
+            class="form-group"
+            >
+                <input 
+                type="text" 
+                class="form-control form-control-alternative" 
+                placeholder="Nome"
+                formControlName="name"
+                >
+                <small class="text-danger" *ngIf="!control.untouched && control.invalid">Campo <strong>Nome</strong> é obrigatório</small>
+
+            </div>
+        </div>
+        
+        <div 
+        *ngIf="getControl('documentNumber'); let control" 
+        class="col-sm-12 col-md-12 col-lg-6 col-xl-6"
+        >
             <div class="form-group">
-                <input type="text" id="input-username" class="form-control form-control-alternative" placeholder="Nome">
+                <input 
+                type="text" 
+                class="form-control form-control-alternative" 
+                placeholder="CPF"
+                formControlName="documentNumber"
+                mask="000.000.000-00"
+                >
+                <small class="text-danger" *ngIf="!control.untouched && control.invalid">Campo <strong>CPF</strong> é obrigatório</small>
+            
+            </div>
+        </div>
+        
+        <div 
+        *ngIf="getControl('email'); let control" 
+        class="col-sm-12 col-md-12 col-lg-6 col-xl-6"
+        >
+            <div class="form-group">
+                <input 
+                type="text" 
+                class="form-control form-control-alternative" 
+                placeholder="E-mail"
+                formControlName="email"
+                >
+                <small class="text-danger" *ngIf="!control.untouched && control.invalid">Campo <strong>E-mail</strong> é obrigatório</small>
+
+            </div>
+        </div>
+        
+        <div 
+        *ngIf="getControl('phone'); let control" 
+        class="col-sm-12 col-md-12 col-lg-6 col-xl-6"
+        >
+            <div class="form-group">
+                <input 
+                type="text" 
+                class="form-control form-control-alternative" 
+                placeholder="Telefone"
+                formControlName="phone"
+                mask="(00) 0000-00009"
+                >
+                <small class="text-danger" *ngIf="!control.untouched && control.invalid">Campo <strong>Telefone</strong> é obrigatório</small>
+
             </div>
         </div>
         
         <div class="col-sm-12 col-md-12 col-lg-6 col-xl-6">
-            <div class="form-group">
-                <input type="text" id="input-username" class="form-control form-control-alternative" placeholder="CPF">
+            <div
+            *ngIf="getControl('password'); let control" 
+            class="form-group"
+            >
+                <input 
+                type="password" 
+                class="form-control form-control-alternative" 
+                placeholder="Senha"
+                formControlName="password"
+                >
+                <small class="text-danger" *ngIf="!control.untouched && control.invalid">Campo <strong>Senha</strong> é obrigatório</small>
+
             </div>
         </div>
         
         <div class="col-sm-12 col-md-12 col-lg-6 col-xl-6">
-            <div class="form-group">
-                <input type="text" id="input-username" class="form-control form-control-alternative" placeholder="E-mail">
+            <div
+            *ngIf="getControl('confirmPassword'); let control" 
+            class="form-group"
+            >
+                <input 
+                type="password" 
+                class="form-control form-control-alternative" 
+                placeholder="Confirmar Senha"
+                formControlName="confirmPassword"
+                >
+                <small class="text-danger" *ngIf="!control.untouched && control.invalid">Campo <strong>Confirmar Senha</strong> é obrigatório</small>
+
             </div>
         </div>
         
-        <div class="col-sm-12 col-md-12 col-lg-6 col-xl-6">
-            <div class="form-group">
-                <input type="text" id="input-username" class="form-control form-control-alternative" placeholder="Telefone">
+        <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 d-flex flex-column justify-content-center mb-3">
+            <div>
+                <input id="customCheckRegister" type="checkbox" class="mb-2 mr-2 cursor-pointer" [checked]="checkPolicy" (change)="checkPolicy = !checkPolicy">
+                <label for="customCheckRegister">
+                    <span class="text-muted">Declaro que concordo com as políticas de privacidade de termos de uso</span>
+                </label>
             </div>
+            <small class="text-danger" *ngIf="checkPolicy == false">É obrigatório concordar com a política de privacidade</small>
         </div>
         
-        <div class="col-sm-12 col-md-12 col-lg-6 col-xl-6">
-            <div class="form-group">
-                <input type="password" id="input-username" class="form-control form-control-alternative" placeholder="Senha">
-            </div>
-        </div>
-        
-        <div class="col-sm-12 col-md-12 col-lg-6 col-xl-6">
-            <div class="form-group">
-                <input type="password" id="input-username" class="form-control form-control-alternative" placeholder="Confirmar Senha">
-            </div>
-        </div>
-        
-        <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 d-flex align-items-center">
-            <input id="customCheckRegister" type="checkbox" class="mb-2 mr-2 cursor-pointer">
-            <label for="customCheckRegister">
-                <span class="text-muted">Declaro que concordo com as políticas de privacidade de termos de uso</span>
-            </label>
-        </div>
        
-        <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 d-flex align-items-center">
-            <input id="customCheckRegister" type="checkbox" class="mb-2 mr-2 cursor-pointer">
-            <label for="customCheckRegister">
-                <span class="text-muted">Declaro que concordo com o uso de cookies no software</span>
-            </label>
+        <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 d-flex flex-column justify-content-center mb-3">
+            <div>
+                <input id="customCheckRegister" type="checkbox" class="mb-2 mr-2 cursor-pointer" [checked]="checkCookie" (change)="checkCookie = !checkCookie">
+                <label for="customCheckRegister">
+                    <span class="text-muted">Declaro que concordo com o uso de cookies no software</span>
+                </label>
+            </div>
+            <small class="text-danger" *ngIf="checkCookie == false">É obrigatório concordar com o uso de cookies</small>
         </div>
     </div>
 
     <div class="text-center">
-        <button type="button" class="btn btn-create-volunteer my-4" [routerLink]="['/dashboard']">Criar Conta</button>
+        <button type="button" class="btn btn-create-volunteer my-4" (click)="createUser()">Criar Conta</button>
     </div>
 </form>
 

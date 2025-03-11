@@ -21,8 +21,8 @@ export class OrganizationComponent implements OnInit {
 
   constructor(
     private formBuilder: FormBuilder,
-      private userService: UserService,
-      private router: Router,
+    private userService: UserService,
+    private router: Router,
   ) { }
 
   ngOnInit(): void {

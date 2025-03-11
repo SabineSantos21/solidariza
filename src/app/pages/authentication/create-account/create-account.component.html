@@ -1,6 +1,6 @@
 <div class="content-login">
   <div class="row align-items-center justify-content-center w-100 h-100">
-    <div class="card col-sm-10 col-md-6 col-lg-6 col-xl-5 pt-3 pb-3" *ngIf="formShow == 'options'">
+    <div class="card col-sm-10 col-md-8 col-lg-8 col-xl-6 pt-3 pb-3" *ngIf="formShow == 'options'">
       <div class="bg-transparent d-flex justify-content-center">
         <img src="../../../../assets/img/logos/logo-vertical.png" alt="" height="200">
       </div>
@@ -43,15 +43,15 @@
       </div>
     </div>
 
-    <div class="card col-sm-10 col-md-6 col-lg-6 col-xl-5 pt-3 pb-3" *ngIf="formShow == 'donor'">
+    <div class="card card-content col-sm-10 col-md-8 col-lg-8 col-xl-6 pt-3 pb-3" *ngIf="formShow == 'donor'">
       <app-donor></app-donor>
     </div>
     
-    <div class="card card-content col-sm-10 col-md-6 col-lg-6 col-xl-8 pt-3 pb-3" *ngIf="formShow == 'organization'">
+    <div class="card card-content col-sm-10 col-md-8 col-lg-8 col-xl-8 pt-3 pb-3" *ngIf="formShow == 'organization'">
       <app-organization></app-organization>
     </div>
     
-    <div class="card col-sm-10 col-md-6 col-lg-6 col-xl-5 pt-3 pb-3" *ngIf="formShow == 'volunteer'">
+    <div class="card card-content col-sm-10 col-md-8 col-lg-8 col-xl-6 pt-3 pb-3" *ngIf="formShow == 'volunteer'">
       <app-volunteer></app-volunteer>
     </div>
 
