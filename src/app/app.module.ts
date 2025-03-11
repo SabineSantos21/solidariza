@@ -45,9 +45,6 @@ const maskConfig: Partial<IConfig> = {
     OrganizationComponent,
     DonorComponent,
     VolunteerComponent,
-    OrganizationProfileComponent,
-    VolunteerProfileComponent,
-    DonorProfileComponent
   ],
   bootstrap: [AppComponent]
 })
