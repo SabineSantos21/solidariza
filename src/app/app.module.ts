@@ -17,6 +17,9 @@ import { OrganizationComponent } from './pages/authentication/create-account/org
 import { DonorComponent } from './pages/authentication/create-account/donor/donor.component';
 import { VolunteerComponent } from './pages/authentication/create-account/volunteer/volunteer.component';
 import { NgxMaskModule, IConfig } from 'ngx-mask';
+import { OrganizationProfileComponent } from './pages/user-profile/organization-profile/organization-profile.component';
+import { VolunteerProfileComponent } from './pages/user-profile/volunteer-profile/volunteer-profile.component';
+import { DonorProfileComponent } from './pages/user-profile/donor-profile/donor-profile.component';
 
 const maskConfig: Partial<IConfig> = {
   validation: false, // Define se a máscara deve validar o input
@@ -41,7 +44,10 @@ const maskConfig: Partial<IConfig> = {
     CreateAccountComponent,
     OrganizationComponent,
     DonorComponent,
-    VolunteerComponent
+    VolunteerComponent,
+    OrganizationProfileComponent,
+    VolunteerProfileComponent,
+    DonorProfileComponent
   ],
   bootstrap: [AppComponent]
 })
