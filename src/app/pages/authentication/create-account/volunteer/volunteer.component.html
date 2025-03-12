@@ -3,6 +3,13 @@
     <h3 class="text-center mt-3 mb-3 text-uppercase mr-4">Cadastro de Voluntário</h3>
 </div>
 
+<div *ngIf="alertSuccess != ''" class="alert alert-success" role="alert">
+    {{ alertSuccess }}
+</div>
+
+<div *ngIf="alertError != ''" class="alert alert-danger" role="alert">
+    {{ alertError }}
+</div>
 
 <form [formGroup]="form">
     <div class="row">
