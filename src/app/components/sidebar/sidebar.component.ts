@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { UserType } from 'src/app/shared/enums/userType';
+import { LocalStorageService } from 'src/app/shared/services/local-storage.service';
 
 declare interface RouteInfo {
     path: string;
@@ -7,14 +9,20 @@ declare interface RouteInfo {
     icon: string;
     class: string;
 }
-export const ROUTES: RouteInfo[] = [
+
+export const ROUTES_ORGANIZATION: RouteInfo[] = [
+    { path: '/dashboard', title: 'Minhas Campanhas',  icon: 'ni-app text-orange', class: '' },
+    { path: '/icons', title: 'Instituições',  icon:'ni-favourite-28 text-blue', class: '' }
+];
+
+export const ROUTES_VOLUNTEER: RouteInfo[] = [
     { path: '/dashboard', title: 'Campanhas',  icon: 'ni-app text-orange', class: '' },
     { path: '/icons', title: 'Instituições',  icon:'ni-favourite-28 text-blue', class: '' },
-    // { path: '/maps', title: 'Maps',  icon:'ni-pin-3 text-orange', class: '' },
-    // { path: '/user-profile', title: 'User profile',  icon:'ni-single-02 text-yellow', class: '' },
-    // { path: '/tables', title: 'Tables',  icon:'ni-bullet-list-67 text-red', class: '' },
-    // { path: '/login', title: 'Login',  icon:'ni-key-25 text-info', class: '' },
-    // { path: '/register', title: 'Register',  icon:'ni-circle-08 text-pink', class: '' }
+];
+
+export const ROUTES_DONOR: RouteInfo[] = [
+    { path: '/dashboard', title: 'Campanhas',  icon: 'ni-app text-orange', class: '' },
+    { path: '/icons', title: 'Instituições',  icon:'ni-favourite-28 text-blue', class: '' },
 ];
 
 @Component({
@@ -27,12 +35,29 @@ export class SidebarComponent implements OnInit {
   public menuItems: any[];
   public isCollapsed = true;
 
-  constructor(private router: Router) { }
+  user: any;
+
+  constructor(private router: Router, private localStorageService: LocalStorageService) { }
 
   ngOnInit() {
-    this.menuItems = ROUTES.filter(menuItem => menuItem);
+    this.user = this.localStorageService.get("user")
+
+    if(this.user.type == UserType.Organization) {
+      this.menuItems = ROUTES_ORGANIZATION.filter(menuItem => menuItem);
+    }
+    else if(this.user.type == UserType.Donor) {
+      this.menuItems = ROUTES_VOLUNTEER.filter(menuItem => menuItem);
+    }
+    else if(this.user.type == UserType.Volunteer) {
+      this.menuItems = ROUTES_VOLUNTEER.filter(menuItem => menuItem);
+    }
+    else {
+      this.router.navigate(['/login'])
+    }
+
     this.router.events.subscribe((event) => {
       this.isCollapsed = true;
    });
+
   }
 }
