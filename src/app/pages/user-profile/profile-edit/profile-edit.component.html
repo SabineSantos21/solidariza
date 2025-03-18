@@ -4,8 +4,14 @@
 </div>
 <div class="container-fluid mt--7">
   <app-organization-edit
-  *ngIf="loading"
-  [user]="user"
-  [profile]="profile"
+    *ngIf="loading && user.type == 1"
+    [user]="user"
+    [profile]="profile"
   ></app-organization-edit>
+
+  <app-volunteer-edit
+    *ngIf="loading && user.type == 3"
+    [user]="user"
+    [profile]="profile"
+  ></app-volunteer-edit>
 </div>

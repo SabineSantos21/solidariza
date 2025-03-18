@@ -17,7 +17,12 @@ import { OrganizationProfileComponent } from 'src/app/pages/user-profile/organiz
 import { ProfileEditComponent } from 'src/app/pages/user-profile/profile-edit/profile-edit.component';
 import { OrganizationEditComponent } from 'src/app/pages/user-profile/profile-edit/organization-edit/organization-edit.component';
 import { VolunteerEditComponent } from 'src/app/pages/user-profile/profile-edit/volunteer-edit/volunteer-edit.component';
+import { IConfig, NgxMaskModule } from 'ngx-mask';
 // import { ToastrModule } from 'ngx-toastr';
+
+const maskConfig: Partial<IConfig> = {
+  validation: false, // Define se a máscara deve validar o input
+};
 
 @NgModule({
   imports: [
@@ -28,6 +33,8 @@ import { VolunteerEditComponent } from 'src/app/pages/user-profile/profile-edit/
     NgbModule,
     ClipboardModule,
     ReactiveFormsModule,
+    NgxMaskModule.forRoot(maskConfig)
+    
   ],
   declarations: [
     DashboardComponent,

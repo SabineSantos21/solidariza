@@ -29,9 +29,10 @@ export class ProfileEditComponent implements OnInit {
     this.profileService.getProfileByUserId(userId).subscribe(
       data => {
         this.profile = data;
-        this.loading = true;
       }
-    )
+    ).add(() => {
+      this.loading = true;
+    })
   }
 
   getUser() {
