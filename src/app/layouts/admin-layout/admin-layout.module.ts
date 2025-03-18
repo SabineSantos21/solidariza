@@ -15,6 +15,8 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { VolunteerProfileComponent } from 'src/app/pages/user-profile/volunteer-profile/volunteer-profile.component';
 import { OrganizationProfileComponent } from 'src/app/pages/user-profile/organization-profile/organization-profile.component';
 import { ProfileEditComponent } from 'src/app/pages/user-profile/profile-edit/profile-edit.component';
+import { OrganizationEditComponent } from 'src/app/pages/user-profile/profile-edit/organization-edit/organization-edit.component';
+import { VolunteerEditComponent } from 'src/app/pages/user-profile/profile-edit/volunteer-edit/volunteer-edit.component';
 // import { ToastrModule } from 'ngx-toastr';
 
 @NgModule({
@@ -35,7 +37,9 @@ import { ProfileEditComponent } from 'src/app/pages/user-profile/profile-edit/pr
     TablesComponent,
     IconsComponent,
     MapsComponent,
-    ProfileEditComponent
+    ProfileEditComponent,
+    OrganizationEditComponent,
+    VolunteerEditComponent,
   ]
 })
 
