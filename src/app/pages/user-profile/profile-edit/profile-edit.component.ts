@@ -1,6 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { LinkType } from 'src/app/shared/enums/linkType';
+import { UserType } from 'src/app/shared/enums/userType';
+import { NewLink } from 'src/app/shared/models/link';
 import { NewProfile, UpdateProfile } from 'src/app/shared/models/profile';
+import { LinkService } from 'src/app/shared/services/link.service';
 import { LocalStorageService } from 'src/app/shared/services/local-storage.service';
 import { ProfileService } from 'src/app/shared/services/profile.service';
 
@@ -20,12 +24,16 @@ export class ProfileEditComponent implements OnInit {
 
   options: any = [];
   selectedOption?: any = null;
+  link: any = null;
   isDropdownOpen = false;
   
+  links: any = [];
+
   constructor(
     public profileService: ProfileService,
     public formBuilder: FormBuilder,
-    public localStorageService: LocalStorageService
+    public localStorageService: LocalStorageService,
+    public linkService: LinkService
   ) { }
 
   ngOnInit(): void {
@@ -40,7 +48,8 @@ export class ProfileEditComponent implements OnInit {
         this.profile = data;
 
         if(this.profile) {
-          this.fillfields()
+          this.fillfields();
+          this.getLinks();
         }
         
       }
@@ -61,17 +70,14 @@ export class ProfileEditComponent implements OnInit {
 
   getLinkIcons() {
     this.options = [
-      { id: 1, name: 'Instagram', image: '../../../../assets/img/icons/social/instagram.svg' },
-      { id: 2, name: 'Facebook', image: '../../../../assets/img/icons/social/facebook.svg' },
-      { id: 3, name: 'LinkedIn', image: '../../../../assets/img/icons/social/linkedin.svg' },
-      { id: 4, name: 'TikTok', image: '../../../../assets/img/icons/social/tiktok.svg' },
-      { id: 5, name: 'Whatsapp', image: '../../../../assets/img/icons/social/whatsapp.svg' },
-      { id: 6, name: 'YouTube', image: '../../../../assets/img/icons/social/youtube.svg' },
+      { id: LinkType.INSTAGRAM, name: 'Instagram', image: '../../../../assets/img/icons/social/instagram.svg' },
+      { id: LinkType.FACEBOOK, name: 'Facebook', image: '../../../../assets/img/icons/social/facebook.svg' },
+      { id: LinkType.LINKEDIN, name: 'LinkedIn', image: '../../../../assets/img/icons/social/linkedin.svg' },
+      { id: LinkType.TIKTOK, name: 'TikTok', image: '../../../../assets/img/icons/social/tiktok.svg' },
+      { id: LinkType.WHATSAPP, name: 'Whatsapp', image: '../../../../assets/img/icons/social/whatsapp.svg' },
+      { id: LinkType.YOUTUBE, name: 'YouTube', image: '../../../../assets/img/icons/social/youtube.svg' },
+      { id: LinkType.OTHER, name: 'Outro', image: '../../../../assets/img/icons/social/link.svg' },
     ];
-  }
-
-  addLink() {
-
   }
 
   public createForm(profile) {
@@ -148,4 +154,78 @@ export class ProfileEditComponent implements OnInit {
     )
   }
 
+  addLink() {
+    var link: NewLink = new NewLink({
+      profileId: this.profile.profileId,
+      type: this.selectedOption.id,
+      url: this.link
+    })
+
+    if(link.profileId && link.type && link.url) {
+      this.linkService.createLink(link).subscribe(
+        data => {
+          this.links.push(data);
+
+          this.link = null;
+          this.selectedOption = null;
+        },
+        error => {
+          this.alertError = "Erro ao adicionar link. Tente novamente."
+        }
+      )
+
+    }
+  }
+
+  getLinks() {
+    this.linkService.getLinksByProfileId(this.profile.profileId).subscribe(
+      data => {
+        this.links = data;
+      },
+      error => {
+        this.alertError = "Erro ao buscar links. Tente novamente mais tarde."
+      }
+    )
+  }
+
+  removeLink(link) {
+    this.linkService.deleteLink(link.linkId).subscribe(
+      data => {
+        this.getLinks()
+      },
+      error => {
+        this.alertError = "Erro ao buscar Links. Tente novamente."
+      }
+    )
+  }
+
+  getSocialIcon(linkType) {
+    
+    switch(linkType) {
+      case LinkType.INSTAGRAM: 
+        return '../../../../assets/img/icons/social/instagram.svg';
+      
+      case LinkType.FACEBOOK:
+        return '../../../../assets/img/icons/social/facebook.svg'
+      
+      case LinkType.LINKEDIN:
+        return '../../../../assets/img/icons/social/linkedin.svg';
+      
+      case LinkType.TIKTOK:
+        return '../../../../assets/img/icons/social/tiktok.svg';
+      
+      case LinkType.WHATSAPP:
+        return '../../../../assets/img/icons/social/whatsapp.svg';
+
+      case LinkType.YOUTUBE:
+        return '../../../../assets/img/icons/social/youtube.svg';
+
+      case LinkType.OTHER:
+        return '../../../../assets/img/icons/social/link.svg';
+      
+      default:
+        break
+    }
+
+  }
 }
