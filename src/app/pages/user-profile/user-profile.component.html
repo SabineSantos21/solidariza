@@ -17,11 +17,33 @@
         
         <div class="card-header text-center border-0 pt-8 pt-md-4 pb-0 pb-md-4"></div>
 
-        <app-organization-profile *ngIf="profileType == 1"></app-organization-profile>
+        <div class="text-center pt-md-4">
+          <div class="card-body mt-5 pt-0 pt-md-4">
+          <h3>
+            {{ user.name }}<span class="font-weight-light"></span>
+          </h3>
+          <div class="text-center pt-md-4">
+            <button _ngcontent-c15="" class="btn btn-primary align-middle" type="button" [routerLink]="['/profile-edit']">
+              <span class="align-middle">
+                <i class="ni ni-ui-04 mr-1"></i> Editar Perfil
+              </span>
 
-        <app-donor-profile *ngIf="profileType == 2"></app-donor-profile>
+            </button>
+          </div>
+        </div>
 
-        <app-volunteer-profile *ngIf="profileType == 3"></app-volunteer-profile>
+        <app-organization-profile 
+        *ngIf="user.type == 1 && profile != null"
+        [user]="user"
+        [profile]="profile"
+        ></app-organization-profile>
+
+        <app-volunteer-profile 
+        *ngIf="user.type == 3 && profile != null"
+        [user]="user"
+        [profile]="profile"
+        >
+        </app-volunteer-profile>
 
       </div>
     </div>

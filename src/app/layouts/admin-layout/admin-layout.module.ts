@@ -13,8 +13,8 @@ import { UserProfileComponent } from '../../pages/user-profile/user-profile.comp
 import { TablesComponent } from '../../pages/tables/tables.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { VolunteerProfileComponent } from 'src/app/pages/user-profile/volunteer-profile/volunteer-profile.component';
-import { DonorProfileComponent } from 'src/app/pages/user-profile/donor-profile/donor-profile.component';
 import { OrganizationProfileComponent } from 'src/app/pages/user-profile/organization-profile/organization-profile.component';
+import { ProfileEditComponent } from 'src/app/pages/user-profile/profile-edit/profile-edit.component';
 // import { ToastrModule } from 'ngx-toastr';
 
 @NgModule({
@@ -24,17 +24,18 @@ import { OrganizationProfileComponent } from 'src/app/pages/user-profile/organiz
     FormsModule,
     HttpClientModule,
     NgbModule,
-    ClipboardModule
+    ClipboardModule,
+    ReactiveFormsModule,
   ],
   declarations: [
     DashboardComponent,
     UserProfileComponent,
     VolunteerProfileComponent,
-    DonorProfileComponent,
     OrganizationProfileComponent,
     TablesComponent,
     IconsComponent,
-    MapsComponent
+    MapsComponent,
+    ProfileEditComponent
   ]
 })
 

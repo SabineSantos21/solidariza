@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+import { ProfileService } from 'src/app/shared/services/profile.service';
 
 @Component({
   selector: 'app-organization-profile',
@@ -6,8 +7,11 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./organization-profile.component.scss']
 })
 export class OrganizationProfileComponent implements OnInit {
+  @Input() user;
+  @Input() profile;
 
-  constructor() { }
+  constructor(
+  ) { }
 
   ngOnInit(): void {
   }
