@@ -36,6 +36,7 @@ export class OrganizationEditComponent implements OnInit {
   ngOnInit(): void {
     this.createForm(new UpdateProfile())
     this.fillFieldsByUser();
+    this.getLinkIcons();
 
     if (this.profile) {
       this.fillfields();
