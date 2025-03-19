@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { CampaignService } from 'src/app/shared/services/campaign.service';
 import { LocalStorageService } from 'src/app/shared/services/local-storage.service';
 import { ProfileService } from 'src/app/shared/services/profile.service';
 
@@ -10,10 +11,12 @@ import { ProfileService } from 'src/app/shared/services/profile.service';
 export class UserProfileComponent implements OnInit {
   user: any = null;
   profile: any = null;
+  campaigns: any = [];
 
   constructor(
     private localStorageService: LocalStorageService,
-    private profileService: ProfileService
+    private profileService: ProfileService,
+    private campaignService: CampaignService
   ) { }
 
   ngOnInit() {
@@ -35,4 +38,14 @@ export class UserProfileComponent implements OnInit {
     )
   }
 
+  getCampaignByUserId(userId) {
+    this.campaignService.getCampaignByUserId(userId).subscribe(
+      data => {
+        this.campaigns = data;
+      },
+      error => {
+
+      }
+    )
+  }
 }

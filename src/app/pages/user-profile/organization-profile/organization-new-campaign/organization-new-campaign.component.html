@@ -1,0 +1,102 @@
+<div class="header pb-3 pt-5 pt-lg-8 d-flex align-items-center" style="min-height: 250px; background-size: cover; background-position: center top;">
+    <span class="mask bg-gradient-info opacity-8"></span>
+</div>
+<div class="container-fluid mt--8">
+    <div class="row">
+        <div class="col-xl-12 order-xl-1">
+            <div class="card bg-secondary shadow">
+                <div class="card-header bg-white border-0">
+                    <div class="row align-items-center">
+                        <div class="col-8">
+                            <h3 class="mb-0">Nova Campanha</h3>
+                        </div>
+                        <div class="col-4 text-right">
+                            <button class="btn btn-sm btn-success">Criar Campanha</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div *ngIf="alertSuccess != ''" class="alert alert-success" role="alert">
+                        {{ alertSuccess }}
+                    </div>
+    
+                    <div *ngIf="alertError != ''" class="alert alert-danger" role="alert">
+                        {{ alertError }}
+                    </div>
+    
+                    <form [formGroup]="form">
+                        <h6 class="heading-small text-muted mb-4">Informações</h6>
+    
+                        <div class="pl-lg-4">
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div *ngIf="getControl('title'); let control" class="form-group">
+                                        <label class="form-control-label">Título</label>
+                                        <input type="text" class="form-control form-control-alternative"
+                                            formControlName="title">
+                                        <small class="text-danger" *ngIf="!control.untouched && control.invalid">Campo
+                                            <strong>Título</strong>
+                                            é obrigatório</small>
+    
+                                    </div>
+                                </div>
+    
+                                <div class="col-lg-12">
+                                    <div *ngIf="getControl('description'); let control" class="form-group">
+                                        <label class="form-control-label">Descrição</label>
+                                        <textarea rows="4" class="form-control form-control-alternative"
+                                            formControlName="description">
+                                        </textarea> 
+                                        <small class="text-danger" *ngIf="!control.untouched && control.invalid">Campo
+                                            <strong>E-mail</strong> é obrigatório</small>
+    
+                                    </div>
+                                </div>
+    
+                                <div class="col-lg-4">
+                                    <div *ngIf="getControl('startDate'); let control" class="form-group">
+                                        <label class="form-control-label">Data Início</label>
+                                        <input type="datetime-local" class="form-control form-control-alternative"
+                                            formControlName="startDate">
+                                        <small class="text-danger" *ngIf="!control.untouched && control.invalid">Campo
+                                            <strong>Data Início</strong> é obrigatório</small>
+    
+                                    </div>
+                                </div>
+                                
+                                <div class="col-lg-4">
+                                    <div *ngIf="getControl('endDate'); let control" class="form-group">
+                                        <label class="form-control-label">Data Fim</label>
+                                        <input type="datetime-local" class="form-control form-control-alternative"
+                                            formControlName="endDate">
+                                        <small class="text-danger" *ngIf="!control.untouched && control.invalid">Campo
+                                            <strong>Data de Início</strong> é obrigatório</small>
+    
+                                    </div>
+                                </div>
+                                
+                                <div class="col-lg-4">
+                                    <div *ngIf="getControl('status'); let control" class="form-group">
+                                        <label class="form-control-label">Status</label>
+                                        
+                                        <select class="form-control form-control-alternative" [(ngModel)]="selectedOption">
+                                            <option selected disabled>Insira um Status</option>
+                                            <option *ngFor="let option of campaignStatus" [ngValue]="option.id">
+                                              {{ option.label }}
+                                            </option>
+                                        </select>
+    
+                                        <small class="text-danger" *ngIf="!control.untouched && control.invalid">Campo
+                                            <strong>Status</strong> é obrigatório</small>
+    
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+    
+            </div>
+        </div>
+    </div>
+</div>
