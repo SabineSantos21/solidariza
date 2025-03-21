@@ -25,7 +25,8 @@ export class UserProfileComponent implements OnInit {
     this.user = this.localStorageService.get("user");
 
     if(this.user) {
-      this.getProfileByUserId(this.user.userId)
+      this.getProfileByUserId(this.user.userId);
+      this.getCampaignByUserId(this.user.userId);
     }
   }
 
@@ -50,6 +51,7 @@ export class UserProfileComponent implements OnInit {
     this.campaignService.getCampaignByUserId(userId).subscribe(
       data => {
         this.campaigns = data;
+        console.log(data)
       },
       error => {
 

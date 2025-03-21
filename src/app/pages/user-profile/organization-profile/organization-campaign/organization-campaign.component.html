@@ -1,3 +1,30 @@
-<div class="card">
-  <span>Campanha</span>
+<div class="row">
+  <div class="col-xl-12 col-lg-12 mb-2">
+    <div class="card card-stats mb-4 mb-xl-0">
+      <div class="card-body">
+
+        <div class="d-flex align-items-center justify-content-between mt-2 mb-3">
+          <div>
+            <img src="../../../assets/img/icons/campanha.svg" alt="" width="20">
+            <span class="ml-2"><strong>{{ campaign.title }}</strong></span>
+          </div>
+        </div>
+
+        <p>
+          {{ campaign.description }}
+        </p>
+
+        <div style="height: 1px; width: 100%; background-color: #d6d6d6;"></div>
+
+        <div class="d-flex align-items-center justify-content-between mt-2">
+          <div>
+            <img src="../../../assets/img/icons/organizacao.svg" alt="" width="25">
+            <small class="ml-2">{{ profile.name }}</small>
+          </div>
+
+          <button class="btn btn-secondary btn-sm" type="button">Saiba mais</button>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>

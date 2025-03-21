@@ -1,7 +1,8 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { NgxSpinnerService } from 'ngx-spinner';
 import { LinkType } from 'src/app/shared/enums/linkType';
+import { CampaignService } from 'src/app/shared/services/campaign.service';
 import { LinkService } from 'src/app/shared/services/link.service';
-import { ProfileService } from 'src/app/shared/services/profile.service';
 
 @Component({
   selector: 'app-organization-profile',
@@ -14,6 +15,7 @@ export class OrganizationProfileComponent implements OnInit {
 
   links: any = [];
   socialAccounts: any = [];
+  campaigns: any = [];
   
   otherLinks: any = [];
   showLinks: boolean = false;
@@ -22,7 +24,9 @@ export class OrganizationProfileComponent implements OnInit {
   alertSuccess: any = "";
 
   constructor(
-    public linkService: LinkService
+    public spinner: NgxSpinnerService,
+    public linkService: LinkService,
+    public campaignService: CampaignService
   ) { }
 
   ngOnInit(): void {
@@ -111,6 +115,18 @@ export class OrganizationProfileComponent implements OnInit {
 
   toggleShowLinks() {
     this.showLinks = !this.showLinks;
+  }
+
+  getCampaignsByUserId() {
+    this.spinner.show();
+
+    this.campaignService.getCampaignByUserId(this.user.userId).subscribe(
+      (data) => {
+        this.campaigns = data;
+      }
+    ).add(() => {
+      this.spinner.hide();
+    })
   }
 
 }
