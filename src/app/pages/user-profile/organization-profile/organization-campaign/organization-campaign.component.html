@@ -22,7 +22,11 @@
             <small class="ml-2">{{ profile.name }}</small>
           </div>
 
-          <button class="btn btn-secondary btn-sm" type="button">Saiba mais</button>
+          <div>
+            <!-- <button class="btn btn-secondary btn-sm mr-3" type="button">Saiba mais</button> -->
+            
+            <button class="btn btn-default btn-sm" type="button" [routerLink]="['/edit-campaign', {id: campaign.campaignId}]">Editar</button>
+          </div>
         </div>
       </div>
     </div>

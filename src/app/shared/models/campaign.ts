@@ -27,3 +27,15 @@ export class NewCampaign {
     endDate: Date;
     status: CampaignStatus;
 }
+
+export class EditCampaign {
+    public constructor(init?: Partial<EditCampaign>){
+        Object.assign(this, init)
+    }
+
+    title: string;
+    description: number;
+    startDate: Date;
+    endDate: Date;
+    status: CampaignStatus;
+}

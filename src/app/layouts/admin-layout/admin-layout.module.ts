@@ -20,6 +20,7 @@ import { VolunteerEditComponent } from 'src/app/pages/user-profile/profile-edit/
 import { IConfig, NgxMaskModule } from 'ngx-mask';
 import { OrganizationCampaignComponent } from 'src/app/pages/user-profile/organization-profile/organization-campaign/organization-campaign.component';
 import { OrganizationNewCampaignComponent } from 'src/app/pages/user-profile/organization-profile/organization-new-campaign/organization-new-campaign.component';
+import { OrganizationEditCampaignComponent } from 'src/app/pages/user-profile/organization-profile/organization-edit-campaign/organization-edit-campaign.component';
 // import { ToastrModule } from 'ngx-toastr';
 
 const maskConfig: Partial<IConfig> = {
@@ -51,6 +52,7 @@ const maskConfig: Partial<IConfig> = {
     VolunteerEditComponent,
     OrganizationCampaignComponent,
     OrganizationNewCampaignComponent,
+    OrganizationEditCampaignComponent,
   ]
 })
 
