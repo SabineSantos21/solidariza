@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { NgxSpinnerService } from 'ngx-spinner';
 import { DocumentType } from 'src/app/shared/enums/documentType';
 import { UserType } from 'src/app/shared/enums/userType';
 import { NewUser } from 'src/app/shared/models/user';
@@ -20,6 +21,7 @@ export class OrganizationComponent implements OnInit {
   checkCookie = null;
 
   constructor(
+    private spinner: NgxSpinnerService,
     private formBuilder: FormBuilder,
     private userService: UserService,
     private router: Router,
@@ -66,6 +68,8 @@ export class OrganizationComponent implements OnInit {
       this.validateFields();
     }
     else if (this.checkPolicy && this.checkCookie && this.validatePassword()) {
+      this.spinner.show();
+
       var user = this.form.value;
 
       this.userService.createUser(user).subscribe(
@@ -75,7 +79,9 @@ export class OrganizationComponent implements OnInit {
         (error) => {
           this.alertError = "Erro ao criar usuário";
         }
-      )
+      ).add(() => {
+        this.spinner.hide();
+      })
     }
   }
 

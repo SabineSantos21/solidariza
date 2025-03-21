@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { NgxSpinnerService } from 'ngx-spinner';
 import { Login } from 'src/app/shared/models/login';
 import { LocalStorageService } from 'src/app/shared/services/local-storage.service';
 import { LoginService } from 'src/app/shared/services/login.service';
@@ -15,6 +16,7 @@ export class LoginComponent implements OnInit {
   alertError: any = "";
 
   constructor(
+    private spinner: NgxSpinnerService,
     private formBuilder: FormBuilder,
     private router: Router,
     private loginService: LoginService,
@@ -50,6 +52,8 @@ export class LoginComponent implements OnInit {
     if(this.form.invalid){
       this.validateFields();
     } else{
+      this.spinner.show();
+
       this.loginService.login(this.form.value).subscribe(
         (data) => {    
           this.localStorageService.set("token", data.token);
@@ -59,7 +63,9 @@ export class LoginComponent implements OnInit {
         (error) => {
           this.alertError = "Erro ao realizar login. Confira se as suas credenciais estão corretas."
         }
-      ).add(() => {});
+      ).add(() => {
+        this.spinner.hide()
+      });
     }
   }
 

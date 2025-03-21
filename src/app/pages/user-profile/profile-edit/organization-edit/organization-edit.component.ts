@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { NgxSpinnerService } from 'ngx-spinner';
 import { LinkType } from 'src/app/shared/enums/linkType';
 import { NewLink } from 'src/app/shared/models/link';
 import { NewProfile, UpdateProfile } from 'src/app/shared/models/profile';
@@ -28,6 +29,7 @@ export class OrganizationEditComponent implements OnInit {
   alertSuccess: any = "";
 
   constructor(
+    private spinner: NgxSpinnerService,
     public profileService: ProfileService,
     public formBuilder: FormBuilder,
     public linkService: LinkService
@@ -102,6 +104,8 @@ export class OrganizationEditComponent implements OnInit {
   }
 
   createProfile(profile) {
+    this.spinner.show();
+
     var newProfile = new NewProfile(profile);
     newProfile.userId = this.user.userId;
 
@@ -112,10 +116,14 @@ export class OrganizationEditComponent implements OnInit {
       error => {
         this.alertError = "Erro ao Salvar Perfil"
       }
-    )
+    ).add(() => {
+      this.spinner.hide()
+    })
   }
 
   updateProfile(profile) {
+    this.spinner.show();
+
     this.profileService.updateProfile(this.profile.profileId, profile).subscribe(
       data => {
         this.alertSuccess = "Alterações Salvas com sucesso"
@@ -123,7 +131,9 @@ export class OrganizationEditComponent implements OnInit {
       error => {
         this.alertError = "Erro ao Salvar Perfil"
       }
-    )
+    ).add(() => {
+      this.spinner.hide()
+    })
   }
 
   addLink() {

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { NgxSpinnerService } from 'ngx-spinner';
 import { CampaignService } from 'src/app/shared/services/campaign.service';
 import { LocalStorageService } from 'src/app/shared/services/local-storage.service';
 import { ProfileService } from 'src/app/shared/services/profile.service';
@@ -14,6 +15,7 @@ export class UserProfileComponent implements OnInit {
   campaigns: any = [];
 
   constructor(
+    private spinner: NgxSpinnerService,
     private localStorageService: LocalStorageService,
     private profileService: ProfileService,
     private campaignService: CampaignService
@@ -28,6 +30,8 @@ export class UserProfileComponent implements OnInit {
   }
 
   getProfileByUserId(userId){
+    this.spinner.show();
+
     this.profileService.getProfileByUserId(userId).subscribe(
       data => {
         this.profile = data;
@@ -35,10 +39,14 @@ export class UserProfileComponent implements OnInit {
       error => {
         
       }
-    )
+    ).add(() => {
+      this.spinner.hide();
+    })
   }
 
   getCampaignByUserId(userId) {
+    this.spinner.show();
+
     this.campaignService.getCampaignByUserId(userId).subscribe(
       data => {
         this.campaigns = data;
@@ -46,6 +54,8 @@ export class UserProfileComponent implements OnInit {
       error => {
 
       }
-    )
+    ).add(() => {
+      this.spinner.hide();
+    })
   }
 }

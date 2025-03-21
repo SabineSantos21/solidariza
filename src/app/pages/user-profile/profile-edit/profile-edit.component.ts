@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { NgxSpinnerService } from 'ngx-spinner';
 import { LocalStorageService } from 'src/app/shared/services/local-storage.service';
 import { ProfileService } from 'src/app/shared/services/profile.service';
 
@@ -17,6 +18,7 @@ export class ProfileEditComponent implements OnInit {
   loading = false
 
   constructor(
+    private spinner: NgxSpinnerService,
     public profileService: ProfileService,
     public localStorageService: LocalStorageService,
   ) { }
@@ -26,12 +28,15 @@ export class ProfileEditComponent implements OnInit {
   }
 
   getProfileByUserId(userId) {
+    this.spinner.show();
+
     this.profileService.getProfileByUserId(userId).subscribe(
       data => {
         this.profile = data;
       }
     ).add(() => {
       this.loading = true;
+      this.spinner.hide();
     })
   }
 

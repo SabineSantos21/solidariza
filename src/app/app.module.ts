@@ -1,5 +1,5 @@
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { NgModule } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
@@ -17,6 +17,7 @@ import { OrganizationComponent } from './pages/authentication/create-account/org
 import { DonorComponent } from './pages/authentication/create-account/donor/donor.component';
 import { VolunteerComponent } from './pages/authentication/create-account/volunteer/volunteer.component';
 import { NgxMaskModule, IConfig } from 'ngx-mask';
+import { NgxSpinnerModule } from "ngx-spinner";
 
 const maskConfig: Partial<IConfig> = {
   validation: false, // Define se a máscara deve validar o input
@@ -32,7 +33,8 @@ const maskConfig: Partial<IConfig> = {
     RouterModule,
     AppRoutingModule,
     ReactiveFormsModule,
-    NgxMaskModule.forRoot(maskConfig)
+    NgxMaskModule.forRoot(maskConfig),
+    NgxSpinnerModule.forRoot({ type: 'ball-8bits' })
   ],
   declarations: [
     AppComponent,
@@ -43,6 +45,7 @@ const maskConfig: Partial<IConfig> = {
     DonorComponent,
     VolunteerComponent,
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class AppModule { }
