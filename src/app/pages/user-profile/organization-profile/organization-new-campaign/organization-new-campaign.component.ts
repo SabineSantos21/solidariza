@@ -1,7 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+import { NgxSpinnerService } from 'ngx-spinner';
 import { CampaignStatus } from 'src/app/shared/enums/campaignStatus';
 import { NewCampaign } from 'src/app/shared/models/campaign';
+import { CampaignService } from 'src/app/shared/services/campaign.service';
+import { LocalStorageService } from 'src/app/shared/services/local-storage.service';
 
 @Component({
   selector: 'app-organization-new-campaign',
@@ -15,14 +19,20 @@ export class OrganizationNewCampaignComponent implements OnInit {
   alertSuccess: any = "";
 
   campaignStatus: any = [];
+  user: any;
 
   constructor(
+    public spinner: NgxSpinnerService,
     public formBuilder: FormBuilder,
+    public campaignService: CampaignService,
+    public localStorageService: LocalStorageService,
+    public router: Router
   ) { }
 
   ngOnInit(): void {
     this.createForm(new NewCampaign());
     this.getCampaignStatus();
+    this.getUser();
   }
 
   public createForm(campaign: NewCampaign) {
@@ -65,6 +75,37 @@ export class OrganizationNewCampaignComponent implements OnInit {
         label: "Cancelada"
       },
     ]
+  }
+
+  getUser() {
+    this.user = this.localStorageService.get("user");
+  }
+
+  createCampaign() {
+    
+    this.getControl("userId").setValue(this.user.userId);
+    console.log(this.form)
+
+    if(this.form.invalid){
+      this.validateFields()
+    }
+    else {
+      this.spinner.show();
+      
+      this.campaignService.createCampaign(this.form.value).subscribe(
+        (data) => {
+          this.alertSuccess = "Campanha criada com sucesso"
+          this.router.navigate(["/user-profile"])
+          
+        },
+        (error) => {
+          this.alertError = "Erro ao criar campanha. Tente novamente mais tarde."
+        }
+      ).add(() => {
+        this.spinner.hide();
+      })
+
+    }
   }
 
 }
