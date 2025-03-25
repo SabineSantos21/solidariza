@@ -38,7 +38,9 @@ export class VolunteerEditComponent implements OnInit {
       name: new FormControl(profile.name, Validators.required),
       email: new FormControl(profile.email, Validators.required),
       phone: new FormControl(profile.phone, null),
-      description: new FormControl(profile.description, Validators.required)
+      description: new FormControl(profile.description, Validators.required),
+      city: new FormControl(profile.city, Validators.required),
+      state: new FormControl(profile.state, Validators.required),
     })
   }
 
@@ -53,6 +55,8 @@ export class VolunteerEditComponent implements OnInit {
     this.getControl("name").setValue(this.profile.name);
     this.getControl("phone").setValue(this.profile.phone);
     this.getControl("description").setValue(this.profile.description);
+    this.getControl("city").setValue(this.profile.city);
+    this.getControl("state").setValue(this.profile.state);
   }
 
   getControl(name: string): AbstractControl {

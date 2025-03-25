@@ -10,18 +10,17 @@
                     </div>
                 </div>
             </div>
+            
             <div class="card-body mt-8 pt-4">
                 <div class="text-center">
                     <h3>
                         {{ profile.name }}
                     </h3>
 
-                    <div class="h5 font-weight-300">
-                        <i class="ni location_pin mr-2"></i>{{ profile.city }}, {{ profile.state }}
-                    </div>
+                    <small>{{ profile.phone | mask: '(00) 0000-00009' }}</small>
 
-                    <div class="h5 mt-4">
-                        <i class="ni business_briefcase-24 mr-2"></i>{{ profile.address }}
+                    <div class="h5 font-weight-300" *ngIf="profile.city && profile.state">
+                        <i class="ni location_pin mr-2"></i>{{ profile.city }}, {{ profile.state }}
                     </div>
 
                     <hr class="my-4" />
@@ -92,9 +91,9 @@
 
                     <h6 class="heading-small text-muted mb-4">Informações para Contato</h6>
 
-                    <div class="pl-lg-4">
+                    <div class="row pl-lg-4">
 
-                        <div class="col-lg-6">
+                        <div class="col-lg-4">
                             <div 
                             *ngIf="getControl('phone'); let control" 
                             class="form-group"
@@ -110,6 +109,26 @@
                                 <small class="text-danger" *ngIf="!control.untouched && control.invalid">Campo
                                 <strong>Telefone</strong> é obrigatório</small>
 
+                            </div>
+                        </div>
+
+                        <div class="col-lg-4">
+                            <div *ngIf="getControl('city'); let control" class="form-group">
+                              <label class="form-control-label">Cidade</label>
+                              <input type="text" class="form-control form-control-alternative" formControlName="city">
+                              <small class="text-danger" *ngIf="!control.untouched && control.invalid">Campo
+                                <strong>Cidade</strong> é obrigatório</small>
+            
+                            </div>
+                        </div>
+            
+                        <div *ngIf="getControl('state'); let control" class="col-lg-4">
+                            <div class="form-group">
+                                <label class="form-control-label">Estado</label>
+                                <input type="text" class="form-control form-control-alternative" formControlName="state">
+                                <small class="text-danger" *ngIf="!control.untouched && control.invalid">Campo
+                                <strong>Estado</strong> é obrigatório</small>
+            
                             </div>
                         </div>
 
