@@ -51,7 +51,6 @@ export class UserProfileComponent implements OnInit {
     this.campaignService.getCampaignByUserId(userId).subscribe(
       data => {
         this.campaigns = data;
-        console.log(data)
       },
       error => {
 

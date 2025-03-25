@@ -22,6 +22,18 @@
             <small class="ml-2">{{ profile.name }}</small>
           </div>
 
+          <div class="d-flex align-items-center">
+            <div class="mr-4 d-flex align-items-center">
+              <i class="ni ni-calendar-grid-58"></i>
+              <small class="ml-2">{{ campaign.startDate | date: 'dd/MM/yyyy HH:mm' }}</small>
+            </div>
+
+            <div class="d-flex align-items-center">
+              <i class="ni ni-calendar-grid-58"></i>
+              <small class="ml-2">{{ campaign.endDate | date: 'dd/MM/yyyy HH:mm' }}</small>
+            </div>
+          </div>
+          
           <div>
             <!-- <button class="btn btn-secondary btn-sm mr-3" type="button">Saiba mais</button> -->
             

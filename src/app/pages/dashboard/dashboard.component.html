@@ -1,44 +1,12 @@
-<div class="header bg-gradient-info pb-8 pt-5 pt-md-8">
+<div class="header bg-gradient-info pb-8 pt-5 pt-md-8" *ngIf="user.type == 1">
   <div class="container-fluid">
-    <div class="header-body">
-      <div class="row mb-3">
-        <div class="col-xl-12 col-lg-12">
-          <div class="card card-stats mb-4 mb-xl-0">
-            <div class="card-body">
-              
-              <div class="d-flex align-items-center justify-content-between mt-2 mb-3">
-                <div>
-                  <img src="../../../assets/img/icons/campanha.svg" alt="" width="50">
-                  <span class="ml-2"><strong>Doe Calor, Doe Amor!</strong></span>
-                </div>
-              </div>
-              
-              <p>
-                Neste inverno, ajude a aquecer o coração de quem mais precisa. Participe da nossa Campanha do Agasalho e faça a diferença na vida de muitas pessoas. Estamos arrecadando casacos, cobertores, meias, luvas e qualquer peça que possa trazer conforto e calor.
-              </p>
-
-              <p>
-                📅 Período de Doação: 15 de outubro a 30 de novembro <br>
-                📍 Pontos de Coleta: Instituição Teste
-              </p>
-
-
-              <p>
-                Cada doação conta e pode transformar o inverno de alguém. Junte-se a nós nessa corrente do bem e espalhe calor humano!
-
-                Para mais informações, entre em contato conosco através do email contato.com.
-
-                Doe um agasalho e aqueça uma vida!
-              </p>
-
-              <div style="height: 1px; width: 100%; background-color: #d6d6d6;"></div>
-
-              <div class="d-flex align-items-center mt-2">
-                <img src="../../../assets/img/icons/organizacao.svg" alt="" width="25">
-                <small class="ml-2">Organização XPTO</small>                
-              </div>
-            </div>
-          </div>
+    <div class="row justify-content-center">
+      <div class="col-xl-12 order-xl-12 mb-5 mb-xl-0" *ngIf="campaigns.length > 0">
+        <div *ngFor="let campaign of campaigns">
+          <app-organization-campaign
+          [campaign]="campaign"
+          [profile]="campaign.user"
+          ></app-organization-campaign>
         </div>
       </div>
     </div>
