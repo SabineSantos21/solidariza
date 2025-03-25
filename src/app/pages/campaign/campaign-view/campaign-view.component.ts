@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { CampaignService } from 'src/app/shared/services/campaign.service';
+import { LocalStorageService } from 'src/app/shared/services/local-storage.service';
 
 @Component({
   selector: 'app-campaign-view',
@@ -12,6 +13,8 @@ export class CampaignViewComponent implements OnInit {
   campaignId: string;
   campaign: any = null;
 
+  user: any = null;
+
   alertError: any = "";
   alertSuccess: any = "";
 
@@ -20,12 +23,14 @@ export class CampaignViewComponent implements OnInit {
     public router: Router,
     private route: ActivatedRoute,
     public campaignService: CampaignService,
+    public localStorageService: LocalStorageService
   ) { }
 
   ngOnInit(): void {
     this.campaignId = this.route.snapshot.paramMap.get("id");
 
     if(this.campaignId) {
+      this.user = this.localStorageService.get("user");
       this.getCampaignById(this.campaignId);
     }
     else {

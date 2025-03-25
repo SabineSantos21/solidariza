@@ -30,10 +30,23 @@
 
                 <hr class="my-4" />
 
-                <div class="d-flex justify-content-around">
-                    <div class="d-flex align-items-center mb-2">
-                        <img src="../../../../assets/img/icons/location.svg" alt="localização" height="20">
-                        <span class="ml-3">teste 123</span>
+                <div class="d-flex justify-content-around mb-2">
+                    <div class="d-flex flex-column justify-content-center align-items-center mb-2">
+                        <div class="d-flex">
+                            <img src="../../../../assets/img/icons/organizacao_icon.svg" alt="localização" height="20">
+                            <span class="ml-2">{{ campaign.user.name }}</span>
+                        </div>
+
+                        <small>{{ campaign.user.documentNumber | mask: "00.000.000/0000-00" }}</small>
+                    </div>                    
+                    
+                    <div class="d-flex flex-column justify-content-center align-items-center mb-2"*ngIf="campaign.address != null">
+                        <div class="d-flex">
+                            <img src="../../../../assets/img/icons/location.svg" alt="localização" height="20">
+                            <span class="ml-2">{{ campaign.address }}</span>
+                        </div>
+
+                        <small>{{ campaign.city }}, {{ campaign.state }}</small>
                     </div>                    
                 </div>
                 
@@ -45,13 +58,25 @@
 
                     <div class="d-flex align-items-center mb-2">
                         <img src="../../../../assets/img/icons/calendar.svg" alt="localização" height="20">
-                        <span class="ml-2">{{ campaign.startDate | date:'dd/MM/yyyy HH:mm' }}</span>
+                        <span class="ml-2">Início: {{ campaign.startDate | date:'dd/MM/yyyy HH:mm' }}</span>
                     </div>
 
                     <div class="d-flex align-items-center mb-2">
                         <img src="../../../../assets/img/icons/calendar.svg" alt="localização" height="20">
-                        <span class="ml-2">{{ campaign.endDate | date:'dd/MM/yyyy HH:mm' }}</span>
+                        <span class="ml-2">Fim: {{ campaign.endDate | date:'dd/MM/yyyy HH:mm' }}</span>
                     </div>
+                </div>
+
+                <hr class="my-4" />
+
+                <div class="d-flex justify-content-between p-3">
+                    <button class="btn btn-secundary" type="button" [routerLink]="['/dashboard']">Voltar</button>
+                    
+                    <div>
+                        <button class="btn btn-warning" type="button" *ngIf="campaign.type == 1 && user.type == 3" [routerLink]="['/campaign-volunter']">Quer Ser Voluntário</button>
+                        <button class="btn btn-default ml-2" type="button" *ngIf="campaign.type == 1" [routerLink]="['/campaign-donation']">Quero Doar</button>
+                    </div>
+
                 </div>
             </div>
         </div>
