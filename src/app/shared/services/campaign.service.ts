@@ -16,6 +16,13 @@ export class CampaignService {
 
   constructor(private http: HttpClient) { }
 
+  getCampaigns(): Observable<any> {
+    return this.http.get(
+      `${environment.apiAddress}Campaign`,
+      httpOptions
+    );
+  }
+  
   getCampaignById(campaignId): Observable<any> {
     return this.http.get(
       `${environment.apiAddress}Campaign/${campaignId}`,

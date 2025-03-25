@@ -27,6 +27,9 @@ export class DashboardComponent implements OnInit {
       if(this.user.type == UserType.Organization) {
         this.getCampaignByUserId(this.user.userId);
       }
+      else {
+        this.getCampaigns();
+      }
 
     }
   }
@@ -37,7 +40,21 @@ export class DashboardComponent implements OnInit {
     this.campaignService.getCampaignByUserId(userId).subscribe(
       data => {
         this.campaigns = data;
+      },
+      error => {
 
+      }
+    ).add(() => {
+      this.spinner.hide();
+    })
+  }
+  
+  getCampaigns() {
+    this.spinner.show();
+
+    this.campaignService.getCampaigns().subscribe(
+      data => {
+        this.campaigns = data;
         console.log(this.campaigns)
       },
       error => {

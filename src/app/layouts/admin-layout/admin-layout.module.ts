@@ -18,6 +18,9 @@ import { IConfig, NgxMaskModule } from 'ngx-mask';
 import { OrganizationCampaignComponent } from 'src/app/pages/user-profile/organization-profile/organization-campaign/organization-campaign.component';
 import { OrganizationNewCampaignComponent } from 'src/app/pages/user-profile/organization-profile/organization-new-campaign/organization-new-campaign.component';
 import { OrganizationEditCampaignComponent } from 'src/app/pages/user-profile/organization-profile/organization-edit-campaign/organization-edit-campaign.component';
+import { CampaignViewComponent } from 'src/app/pages/campaign/campaign-view/campaign-view.component';
+import { CampaignVolunteerComponent } from 'src/app/pages/campaign/campaign-volunteer/campaign-volunteer.component';
+import { CampaignListComponent } from 'src/app/pages/campaign/campaign-list/campaign-list.component';
 // import { ToastrModule } from 'ngx-toastr';
 
 const maskConfig: Partial<IConfig> = {
@@ -34,7 +37,6 @@ const maskConfig: Partial<IConfig> = {
     ClipboardModule,
     ReactiveFormsModule,
     NgxMaskModule.forRoot(maskConfig)
-    
   ],
   declarations: [
     DashboardComponent,
@@ -47,6 +49,9 @@ const maskConfig: Partial<IConfig> = {
     OrganizationCampaignComponent,
     OrganizationNewCampaignComponent,
     OrganizationEditCampaignComponent,
+    CampaignViewComponent,
+    CampaignVolunteerComponent,
+    CampaignListComponent,
   ]
 })
 

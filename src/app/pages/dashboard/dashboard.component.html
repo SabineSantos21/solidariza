@@ -1,22 +1,23 @@
-<div class="header bg-gradient-info pb-8 pt-5 pt-md-8" *ngIf="user.type == 1">
+<div class="header bg-gradient-info pb-8 pt-5 pt-md-8">
   <div class="container-fluid">
     <div class="row justify-content-center">
       <div class="col-xl-12 order-xl-12 mb-5 mb-xl-0" *ngIf="campaigns.length > 0">
-        <div *ngFor="let campaign of campaigns">
+        <div *ngIf="user.type == 1">
           <app-organization-campaign
+          *ngFor="let campaign of campaigns" 
           [campaign]="campaign"
           [profile]="campaign.user"
           ></app-organization-campaign>
         </div>
-      </div>
-    </div>
-  </div>
-</div>
 
-<div class="header bg-gradient-info pb-8 pt-5 pt-md-8" *ngIf="user.type != 1">
-  <div class="container-fluid">
-    <div class="row justify-content-center">
-      
+        <div class="row justify-content-center" *ngIf="user.type != 1">
+          <app-campaign-list
+          *ngFor="let campaign of campaigns"
+          [campaign]="campaign"
+          [profile]="campaign.user"
+          ></app-campaign-list>
+      </div>
+      </div>
     </div>
   </div>
 </div>
