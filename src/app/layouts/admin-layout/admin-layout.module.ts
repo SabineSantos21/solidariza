@@ -7,10 +7,7 @@ import { ClipboardModule } from 'ngx-clipboard';
 
 import { AdminLayoutRoutes } from './admin-layout.routing';
 import { DashboardComponent } from '../../pages/dashboard/dashboard.component';
-import { IconsComponent } from '../../pages/icons/icons.component';
-import { MapsComponent } from '../../pages/maps/maps.component';
 import { UserProfileComponent } from '../../pages/user-profile/user-profile.component';
-import { TablesComponent } from '../../pages/tables/tables.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { VolunteerProfileComponent } from 'src/app/pages/user-profile/volunteer-profile/volunteer-profile.component';
 import { OrganizationProfileComponent } from 'src/app/pages/user-profile/organization-profile/organization-profile.component';
@@ -44,9 +41,6 @@ const maskConfig: Partial<IConfig> = {
     UserProfileComponent,
     VolunteerProfileComponent,
     OrganizationProfileComponent,
-    TablesComponent,
-    IconsComponent,
-    MapsComponent,
     ProfileEditComponent,
     OrganizationEditComponent,
     VolunteerEditComponent,
