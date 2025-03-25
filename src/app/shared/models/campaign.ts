@@ -1,4 +1,5 @@
 import { CampaignStatus } from "../enums/campaignStatus";
+import { CampaignType } from "../enums/campaignType";
 
 export class Campaign {
     public constructor(init?: Partial<Campaign>){
@@ -13,6 +14,10 @@ export class Campaign {
     startDate: Date;
     endDate: Date;
     status: CampaignStatus;
+    type: CampaignType;
+    address: string;
+    city: string;
+    state: string;
 }
 
 export class NewCampaign {
@@ -26,6 +31,10 @@ export class NewCampaign {
     startDate: Date;
     endDate: Date;
     status: CampaignStatus;
+    type: number;
+    address: string;
+    city: string;
+    state: string;
 }
 
 export class EditCampaign {
@@ -37,5 +46,9 @@ export class EditCampaign {
     description: number;
     startDate: Date;
     endDate: Date;
-    status: CampaignStatus;
+    status: number;
+    type: number;
+    address: string;
+    city: string;
+    state: string;
 }

@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormControl, FormControlName, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { CampaignStatus } from 'src/app/shared/enums/campaignStatus';
+import { CampaignType } from 'src/app/shared/enums/campaignType';
 import { NewCampaign } from 'src/app/shared/models/campaign';
 import { CampaignService } from 'src/app/shared/services/campaign.service';
 import { LocalStorageService } from 'src/app/shared/services/local-storage.service';
@@ -19,6 +20,7 @@ export class OrganizationNewCampaignComponent implements OnInit {
   alertSuccess: any = "";
 
   campaignStatus: any = [];
+  campaignType: any = [];
   user: any;
 
   constructor(
@@ -32,6 +34,7 @@ export class OrganizationNewCampaignComponent implements OnInit {
   ngOnInit(): void {
     this.createForm(new NewCampaign());
     this.getCampaignStatus();
+    this.getCampaignType();
     this.getUser();
   }
 
@@ -43,6 +46,10 @@ export class OrganizationNewCampaignComponent implements OnInit {
       startDate: new FormControl(campaign.startDate, Validators.required),
       endDate: new FormControl(campaign.endDate, Validators.required),
       status: new FormControl(campaign.status, Validators.required),
+      type: new FormControl(campaign.type, Validators.required),
+      address: new FormControl(campaign.address,null),
+      state: new FormControl(campaign.state,null),
+      city: new FormControl(campaign.city,null)
     })
   }
 
@@ -74,6 +81,19 @@ export class OrganizationNewCampaignComponent implements OnInit {
         id: CampaignStatus.Pending,
         label: "Cancelada"
       },
+    ]
+  }
+
+  getCampaignType() {
+    this.campaignType = [
+      {
+        id: CampaignType.Collection,
+        label: "Arrecadação"
+      },
+      {
+        id: CampaignType.In_Person,
+        label: "Presencial"
+      }
     ]
   }
 

@@ -1,1 +1,59 @@
-<p>campaign-view works!</p>
+<div class="header pb-3 pt-5 pt-lg-8 d-flex align-items-center"
+    style="min-height: 250px; background-size: cover; background-position: center top;">
+    <span class="mask bg-gradient-info opacity-8"></span>
+</div>
+<div class="container-fluid mt--7">
+    <div class="row justify-content-center" *ngIf="campaign != null">
+        <div class="col-xl-10 order-xl-12 mb-5 mb-xl-0">
+            <div class="card card-profile">
+                <div class="row justify-content-center">
+                    <div class="col-lg-3 order-lg-2">
+                        <div class="card-profile-image">
+                            <img src="../../../../assets/img/icons/campanha.svg">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card-header text-center border-0 pt-8 pt-md-4 pb-0 pb-md-4"></div>
+
+                <div class="card-body pt-0 pt-md-4 mt-3">
+                    <div class="text-center">
+                        <h3>
+                            {{ campaign.title }}
+                        </h3>
+
+                        <p>
+                            {{ campaign.description }}
+                        </p>
+                    </div>
+                </div>
+
+                <hr class="my-4" />
+
+                <div class="d-flex justify-content-around">
+                    <div class="d-flex align-items-center mb-2">
+                        <img src="../../../../assets/img/icons/location.svg" alt="localização" height="20">
+                        <span class="ml-3">teste 123</span>
+                    </div>                    
+                </div>
+                
+                <div class="d-flex justify-content-around">
+                    <div class="d-flex align-items-center mb-2">
+                        <img src="../../../../assets/img/icons/phone.svg" alt="localização" height="20">
+                        <span class="ml-2">{{ campaign.user.phone | mask:'(00) 0000-00009' }}</span>
+                    </div>
+
+                    <div class="d-flex align-items-center mb-2">
+                        <img src="../../../../assets/img/icons/calendar.svg" alt="localização" height="20">
+                        <span class="ml-2">{{ campaign.startDate | date:'dd/MM/yyyy HH:mm' }}</span>
+                    </div>
+
+                    <div class="d-flex align-items-center mb-2">
+                        <img src="../../../../assets/img/icons/calendar.svg" alt="localização" height="20">
+                        <span class="ml-2">{{ campaign.endDate | date:'dd/MM/yyyy HH:mm' }}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -3,6 +3,7 @@ import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { CampaignStatus } from 'src/app/shared/enums/campaignStatus';
+import { CampaignType } from 'src/app/shared/enums/campaignType';
 import { EditCampaign } from 'src/app/shared/models/campaign';
 import { CampaignService } from 'src/app/shared/services/campaign.service';
 
@@ -20,6 +21,7 @@ export class OrganizationEditCampaignComponent implements OnInit {
   campaign: any;
   campaignId: string;
   campaignStatus: any = [];
+  campaignType: any = [];
 
   constructor(
     public spinner: NgxSpinnerService,
@@ -35,6 +37,7 @@ export class OrganizationEditCampaignComponent implements OnInit {
     if(this.campaignId) {
       this.createForm(new EditCampaign());
       this.getCampaignStatus();    
+      this.getCampaignType();
       this.getCampaignById(this.campaignId)
     } 
     else {
@@ -49,6 +52,10 @@ export class OrganizationEditCampaignComponent implements OnInit {
       startDate: new FormControl(campaign.startDate, Validators.required),
       endDate: new FormControl(campaign.endDate, Validators.required),
       status: new FormControl(campaign.status, Validators.required),
+      type: new FormControl(campaign.type, Validators.required),
+      address: new FormControl(campaign.address,null),
+      state: new FormControl(campaign.state,null),
+      city: new FormControl(campaign.city,null)
     })
   }
 
@@ -58,7 +65,11 @@ export class OrganizationEditCampaignComponent implements OnInit {
       description: campaign.description,
       startDate: campaign.startDate,
       endDate: campaign.endDate,
-      status: campaign.status
+      status: campaign.status,
+      type: campaign.type,
+      address: campaign.address,
+      state: campaign.state,
+      city: campaign.city
     })
   }
 
@@ -107,6 +118,19 @@ export class OrganizationEditCampaignComponent implements OnInit {
       },
     ]
   }
+
+  getCampaignType() {
+      this.campaignType = [
+        {
+          id: CampaignType.Collection,
+          label: "Arrecadação"
+        },
+        {
+          id: CampaignType.In_Person,
+          label: "Presencial"
+        }
+      ]
+    }
 
   updateCampaign() {
 

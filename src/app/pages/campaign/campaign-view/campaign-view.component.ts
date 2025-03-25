@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+import { NgxSpinnerService } from 'ngx-spinner';
+import { CampaignService } from 'src/app/shared/services/campaign.service';
 
 @Component({
   selector: 'app-campaign-view',
@@ -6,10 +9,44 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./campaign-view.component.scss']
 })
 export class CampaignViewComponent implements OnInit {
+  campaignId: string;
+  campaign: any = null;
 
-  constructor() { }
+  alertError: any = "";
+  alertSuccess: any = "";
+
+  constructor(
+    public spinner: NgxSpinnerService,
+    public router: Router,
+    private route: ActivatedRoute,
+    public campaignService: CampaignService,
+  ) { }
 
   ngOnInit(): void {
+    this.campaignId = this.route.snapshot.paramMap.get("id");
+
+    if(this.campaignId) {
+      this.getCampaignById(this.campaignId);
+    }
+    else {
+      this.router.navigate(["/dashboard"]);
+    }
+  }
+
+  getCampaignById(campaignId) {
+    this.spinner.show();
+    
+    this.campaignService.getCampaignById(campaignId).subscribe(
+      data => {
+        this.campaign = data;
+        console.log(this.campaign)
+      },
+      error => {
+        this.alertError = "Erro ao buscar campanha"
+      }
+    ).add(() => {
+      this.spinner.hide();
+    })
   }
 
 }

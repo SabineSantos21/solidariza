@@ -28,13 +28,31 @@
     
                         <div class="pl-lg-4">
                             <div class="row">
-                                <div class="col-lg-12">
+                                <div class="col-lg-4">
                                     <div *ngIf="getControl('title'); let control" class="form-group">
                                         <label class="form-control-label">Título</label>
                                         <input type="text" class="form-control form-control-alternative"
                                             formControlName="title">
                                         <small class="text-danger" *ngIf="!control.untouched && control.invalid">Campo
                                             <strong>Título</strong>
+                                            é obrigatório</small>
+    
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-4">
+                                    <div *ngIf="getControl('type'); let control" class="form-group">
+                                        <label class="form-control-label">Tipo da Campanha</label>
+                                        
+                                        <select class="form-control form-control-alternative" formControlName="type">
+                                            <option selected disabled>Insira um Tipo</option>
+                                            <option *ngFor="let option of campaignType" [ngValue]="option.id">
+                                              {{ option.label }}
+                                            </option>
+                                        </select>
+
+                                        <small class="text-danger" *ngIf="!control.untouched && control.invalid">Campo
+                                            <strong>Tipo</strong>
                                             é obrigatório</small>
     
                                     </div>
@@ -69,7 +87,7 @@
                                         <input type="datetime-local" class="form-control form-control-alternative"
                                             formControlName="endDate">
                                         <small class="text-danger" *ngIf="!control.untouched && control.invalid">Campo
-                                            <strong>Data de Início</strong> é obrigatório</small>
+                                            <strong>Data Fim</strong> é obrigatório</small>
     
                                     </div>
                                 </div>
@@ -89,6 +107,28 @@
                                             <strong>Status</strong> é obrigatório</small>
     
                                     </div>
+                                </div>
+
+                                <div class="col-lg-4">
+                                    <div *ngIf="getControl('address'); let control" class="form-group">
+                                      <label class="form-control-label">Endereço</label>
+                                      <input class="form-control form-control-alternative" type="text" formControlName="address">
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-4">
+                                    <div *ngIf="getControl('city'); let control" class="form-group">
+                                        <label class="form-control-label">Cidade</label>
+                                        <input type="text" class="form-control form-control-alternative" formControlName="city">
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-4">
+                                    <div class="form-group">
+                                        <label class="form-control-label">Estado</label>
+                                        <input type="text" class="form-control form-control-alternative" formControlName="state">
+                                    </div>
+
                                 </div>
                             </div>
                         </div>
