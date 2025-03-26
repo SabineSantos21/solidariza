@@ -22,6 +22,7 @@ import { CampaignViewComponent } from 'src/app/pages/campaign/campaign-view/camp
 import { CampaignVolunteerComponent } from 'src/app/pages/campaign/campaign-volunteer/campaign-volunteer.component';
 import { CampaignListComponent } from 'src/app/pages/campaign/campaign-list/campaign-list.component';
 import { CampaignDonationComponent } from 'src/app/pages/campaign/campaign-donation/campaign-donation.component';
+import { ProfileComponent } from 'src/app/pages/profile/profile.component';
 // import { ToastrModule } from 'ngx-toastr';
 
 const maskConfig: Partial<IConfig> = {
@@ -54,6 +55,7 @@ const maskConfig: Partial<IConfig> = {
     CampaignVolunteerComponent,
     CampaignListComponent,
     CampaignDonationComponent,
+    ProfileComponent,
   ]
 })
 

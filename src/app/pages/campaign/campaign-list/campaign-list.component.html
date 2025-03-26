@@ -17,7 +17,7 @@
         <div style="height: 1px; width: 100%; background-color: #d6d6d6;"></div>
 
         <div class="d-flex align-items-center justify-content-between mt-2">
-          <div>
+          <div [routerLink]="['/profile', {id: campaign.user.userId}]" class="cursor-pointer">
             <img src="../../../assets/img/icons/organizacao.svg" alt="" width="25">
             <small class="ml-2">{{ profile.name }}</small>
           </div>

@@ -24,4 +24,11 @@ export class UserService {
       httpOptions
     );
   }
+
+  getUserById(userId): Observable<any> {
+    return this.http.get(
+      `${environment.apiAddress}User/${userId}`,
+      httpOptions
+    );
+  }
 }

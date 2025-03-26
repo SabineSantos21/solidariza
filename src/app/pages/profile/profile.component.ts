@@ -8,11 +8,11 @@ import { ProfileService } from 'src/app/shared/services/profile.service';
 import { UserService } from 'src/app/shared/services/user.service';
 
 @Component({
-  selector: 'app-user-profile',
-  templateUrl: './user-profile.component.html',
-  styleUrls: ['./user-profile.component.scss']
+  selector: 'app-profile',
+  templateUrl: './profile.component.html',
+  styleUrls: ['./profile.component.scss']
 })
-export class UserProfileComponent implements OnInit {
+export class ProfileComponent implements OnInit {
   userId: any;
   user: any = null;
   profile: any = null;
@@ -22,20 +22,20 @@ export class UserProfileComponent implements OnInit {
 
   constructor(
     private spinner: NgxSpinnerService,
-    private localStorageService: LocalStorageService,
     private profileService: ProfileService,
+    private localStorageService: LocalStorageService,
     private campaignService: CampaignService,
     private route: ActivatedRoute,
     public router: Router,
     private userService: UserService
   ) { }
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.userId = this.route.snapshot.paramMap.get("id");
     this.user = this.localStorageService.get("user");
 
-    if(this.userId ) {
-      if(this.userId == this.user.userId) {
+    if (this.userId) {
+      if (this.userId == this.user.userId) {
         this.showEditUser = true;
       }
       else {
@@ -45,7 +45,7 @@ export class UserProfileComponent implements OnInit {
       this.getUserById(this.userId)
       this.getProfileByUserId(this.userId);
     }
-    else if(this.user) {
+    else if (this.user) {
       this.showEditUser = true;
       this.getProfileByUserId(this.user.userId);
     }
@@ -54,38 +54,38 @@ export class UserProfileComponent implements OnInit {
     }
   }
 
-  getProfileByUserId(userId){
+  getProfileByUserId(userId) {
     this.spinner.show();
 
     this.profileService.getProfileByUserId(userId).subscribe(
       data => {
         this.profile = data;
 
-        if(this.user.type == UserType.Organization) {
+        if (this.user.type == UserType.Organization) {
           this.getCampaignByUserId(this.user.userId);
         }
       },
       error => {
-        
+
       }
     ).add(() => {
       this.spinner.hide();
     })
   }
 
-  getUserById(userId){
+  getUserById(userId) {
     this.spinner.show();
 
     this.userService.getUserById(userId).subscribe(
       data => {
         this.user = data;
 
-        if(this.user.type == UserType.Organization) {
+        if (this.user.type == UserType.Organization) {
           this.getCampaignByUserId(this.user.userId);
         }
       },
       error => {
-        
+
       }
     ).add(() => {
       this.spinner.hide();
@@ -106,4 +106,5 @@ export class UserProfileComponent implements OnInit {
       this.spinner.hide();
     })
   }
+
 }

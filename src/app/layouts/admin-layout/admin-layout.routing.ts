@@ -8,6 +8,7 @@ import { OrganizationEditCampaignComponent } from 'src/app/pages/user-profile/or
 import { CampaignViewComponent } from 'src/app/pages/campaign/campaign-view/campaign-view.component';
 import { CampaignVolunteerComponent } from 'src/app/pages/campaign/campaign-volunteer/campaign-volunteer.component';
 import { CampaignDonationComponent } from 'src/app/pages/campaign/campaign-donation/campaign-donation.component';
+import { ProfileComponent } from 'src/app/pages/profile/profile.component';
 
 export const AdminLayoutRoutes: Routes = [
     { path: 'dashboard',      component: DashboardComponent },
@@ -18,4 +19,5 @@ export const AdminLayoutRoutes: Routes = [
     { path: 'campaign-view',   component: CampaignViewComponent },
     { path: 'campaign-volunter',   component: CampaignVolunteerComponent },
     { path: 'campaign-donation',   component: CampaignDonationComponent },
+    { path: 'profile',   component: ProfileComponent },
 ];
