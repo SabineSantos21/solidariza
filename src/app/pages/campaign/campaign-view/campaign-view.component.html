@@ -73,7 +73,7 @@
                     <button class="btn btn-secundary" type="button" [routerLink]="['/dashboard']">Voltar</button>
                     
                     <div>
-                        <button class="btn btn-warning" type="button" *ngIf="campaign.type == 1 && user.type == 3" [routerLink]="['/campaign-volunter']">Quer Ser Voluntário</button>
+                        <button class="btn btn-warning" type="button" *ngIf="campaign.type == 1 && user.type == 3" [routerLink]="['/campaign-volunter', {id: campaignId}]">Quer Ser Voluntário</button>
                         <button class="btn btn-default ml-2" type="button" *ngIf="campaign.type == 1" [routerLink]="['/campaign-donation']">Quero Doar</button>
                     </div>
 

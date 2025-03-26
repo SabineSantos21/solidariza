@@ -1,1 +1,64 @@
-<p>campaign-volunteer works!</p>
+<div class="header pb-3 pt-5 pt-lg-8 d-flex align-items-center"
+    style="min-height: 250px; background-size: cover; background-position: center top;">
+    <span class="mask bg-gradient-info opacity-8"></span>
+</div>
+<div class="container-fluid mt--7">
+    <div class="row justify-content-center">
+        <div class="col-xl-10 order-xl-12 mb-5 mb-xl-0">
+            
+            <div class="card card-profile shadow" *ngIf="created == true">
+                <div class="row justify-content-center">
+                    <div class="col-lg-3 order-lg-2">
+                        <div class="card-profile-image">
+                            <img src="../../../../assets/img/volunteer-check.svg" class="rounded-circle">
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="mt-6">
+                    <div class="text-center mt-6 p-4">
+                        <h2 class="text-success">Parabéns! Sua candidatura foi concluída com sucesso! 🎉</h2>
+                        
+                        <div>
+                            <span>Agora você é um candidato a voluntário da campanha <strong>{{ campaign != null ? campaign.title : "" }}</strong></span> 
+                        </div>
+
+                        <div>
+                            <span>Sua inscrição está em andamento, e você poderá acompanhar todas as atualizações diretamente na plataforma.</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="d-flex justify-content-around mt-3 mb-4">
+                    <button class="btn btn-outline-default" type="button" [routerLink]="['/dashboard']">Retornar para Campanhas</button>
+                    <button class="btn btn-outline-warning" type="button" [routerLink]="['/dashboard']">Minhas Inscrições</button>
+                </div>
+            </div>
+
+            <div class="card card-profile shadow" *ngIf="created == false">
+                <div class="row justify-content-center">
+                    <div class="col-lg-3 order-lg-2">
+                        <div class="card-profile-image">
+                            <img src="../../../../assets/img/user-sad.svg" class="rounded-circle">
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="mt-6">
+                    <div class="text-center mt-6 p-4">
+                        <h2 class="text-warning">Não foi possível concluir sua candidatura desta vez</h2>
+                        <span>
+                            Mas não desanime! Tente novamente mais tarde. 💙
+                        </span>
+                    </div>
+                </div>
+
+                <div class="d-flex justify-content-around mt-3 mb-4">
+                    <button class="btn btn-outline-default" type="button" [routerLink]="['/dashboard']">Retornar para Campanhas</button>
+                    <button class="btn btn-outline-warning" type="button" [routerLink]="['/dashboard']">Minhas Inscrições</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
