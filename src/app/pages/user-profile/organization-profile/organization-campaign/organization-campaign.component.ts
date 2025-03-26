@@ -8,7 +8,8 @@ import { Component, Input, OnInit } from '@angular/core';
 export class OrganizationCampaignComponent implements OnInit {
   @Input() campaign: any;
   @Input() profile: any;
-
+  @Input() showEditUser: any;
+  
   constructor() { }
 
   ngOnInit(): void {

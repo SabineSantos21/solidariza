@@ -52,7 +52,7 @@
               Campanhas
             </h3>
 
-            <button _ngcontent-c15="" class="btn btn-primary align-middle" type="button" [routerLink]="['/new-campaign']">
+            <button *ngIf="showEditUser" class="btn btn-primary align-middle" type="button" [routerLink]="['/new-campaign']">
               <span class="align-middle">
                 <i class="ni ni-fat-add mr-1" style="font-size: 15px;"></i> Nova Campanha
               </span>
@@ -76,6 +76,7 @@
         <app-organization-campaign
         [campaign]="campaign"
         [profile]="profile"
+        [showEditUser]="showEditUser"
         ></app-organization-campaign>
       </div>
     </div>
