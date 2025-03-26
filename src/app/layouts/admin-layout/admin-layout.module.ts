@@ -23,6 +23,8 @@ import { CampaignVolunteerComponent } from 'src/app/pages/campaign/campaign-volu
 import { CampaignListComponent } from 'src/app/pages/campaign/campaign-list/campaign-list.component';
 import { CampaignDonationComponent } from 'src/app/pages/campaign/campaign-donation/campaign-donation.component';
 import { ProfileComponent } from 'src/app/pages/profile/profile.component';
+import { CampaignVolunteerViewComponent } from 'src/app/pages/campaign/campaign-volunteer-view/campaign-volunteer-view.component';
+import { CampaignVolunteerAprovationComponent } from 'src/app/pages/campaign/campaign-volunteer-aprovation/campaign-volunteer-aprovation.component';
 // import { ToastrModule } from 'ngx-toastr';
 
 const maskConfig: Partial<IConfig> = {
@@ -56,6 +58,8 @@ const maskConfig: Partial<IConfig> = {
     CampaignListComponent,
     CampaignDonationComponent,
     ProfileComponent,
+    CampaignVolunteerViewComponent,
+    CampaignVolunteerAprovationComponent,
   ]
 })
 

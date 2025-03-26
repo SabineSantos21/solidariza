@@ -29,6 +29,13 @@ export class CampaignVolunteerService {
       httpOptions
     );
   }
+  
+  getCampaignVolunteerByUserId(userId): Observable<any> {
+    return this.http.get(
+      `${environment.apiAddress}CampaignVolunteer/User/${userId}`,
+      httpOptions
+    );
+  }
 
   createCampaignVolunteer(campaignVolunteer): Observable<any> {
     return this.http.post(

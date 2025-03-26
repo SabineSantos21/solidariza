@@ -1,0 +1,59 @@
+<div class="header pb-3 pt-5 pt-lg-8 d-flex align-items-center"
+    style="min-height: 250px; background-size: cover; background-position: center top;">
+    <span class="mask bg-gradient-info opacity-8"></span>
+</div>
+
+<div class="container-fluid mt--7">
+    <div class="row">
+        <div class="col">
+            <div class="card shadow">
+                <div class="card-header border-0">
+                    <h3 class="mb-0">Minhas Inscrições</h3>
+                </div>
+                <div class="table-responsive">
+                    <table class="table align-items-center table-flush">
+                        <thead class="thead-light">
+                            <tr>
+                                <th scope="col">Título</th>
+                                <th scope="col">Data Início</th>
+                                <th scope="col">Data Fim</th>
+                                <th scope="col">Localização</th>
+                                <th scope="col">Status</th>
+                            </tr>
+                        </thead>
+                        <tbody *ngIf="campaignsVolunteer.length > 0">
+                            <tr *ngFor="let campaignVolunteer of campaignsVolunteer" class="cursor-pointer" [routerLink]="['/campaign-view', {id: campaignVolunteer.campaignId}]">
+                                <th scope="row">
+                                    <div class="media align-items-center"><a
+                                            class="mr-3">
+                                            <img
+                                                alt="Image placeholder"
+                                                src="../../../../assets/img/icons/campanha.svg" height="35"></a>
+                                        <div class="media-body"><span
+                                                class="mb-0 text-sm">{{ campaignVolunteer.campaign.title }}</span></div>
+                                    </div>
+                                </th>
+                                
+                                <td> {{ campaignVolunteer.campaign.startDate | date: 'dd/MM/yyyy HH:mm' }} </td>
+                                
+                                <td> {{ campaignVolunteer.campaign.endDate | date: 'dd/MM/yyyy HH:mm' }} </td>
+                                
+                                <td>
+                                    {{ campaignVolunteer.campaign.city }} {{ campaignVolunteer.campaign.city != null ? "," : "" }} {{ campaignVolunteer.campaign.state }}
+                                </td>
+                                
+                                <td>
+                                    <span class="{{campaignVolunteer.status.color}} text-uppercase">
+                                        <strong>
+                                            {{ campaignVolunteer.status.label }}
+                                        </strong>
+                                    </span>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>    
+</div>
