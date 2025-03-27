@@ -32,7 +32,7 @@
 
                 <div class="d-flex justify-content-around mb-2">
                     <div class="d-flex flex-column justify-content-center align-items-center mb-2">
-                        <div class="d-flex">
+                        <div class="d-flex cursor-pointer"  [routerLink]="['/profile', {id: campaign.userId}]">
                             <img src="../../../../assets/img/icons/organizacao_icon.svg" alt="localização" height="20">
                             <span class="ml-2">{{ campaign.user.name }}</span>
                         </div>

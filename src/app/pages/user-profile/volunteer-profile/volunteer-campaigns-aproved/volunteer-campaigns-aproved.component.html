@@ -1,0 +1,26 @@
+<div class="d-flex pr-4 pl-4">
+    <img src="../../../../../assets/img/icons/organizacao.svg" alt="" height="35" class="mr-2">
+    <h3>Campanhas em que Participou</h3>
+</div>
+
+<div class="row pr-4 pl-4 pb-4 mt-4" *ngIf="campaigns.length > 0">
+    <div class="col-lg-6" *ngFor="let campaign of campaigns">
+        <div class="card-body border rounded">
+            <div class="row cursor-pointer" [routerLink]="['/campaign-view', {id: campaign.campaign.campaignId}]">
+                <div class="col">
+                    <span class="h4 font-weight-bold mb-0 mt-3">{{ campaign.campaign.title }}</span>
+                </div>
+        
+                <div class="col-auto">
+                    <img src="../../../../../assets/img/icons/voluntarios.svg" alt="voluntário" >
+                </div>
+        
+            </div>
+        
+            <h5 class="card-title text-uppercase text-muted mb-0 cursor-pointer" [routerLink]="['/user-profile', {id: campaign.campaign.userId}]">
+                <img src="../../../../../assets/img/icons/organizacao_icon.svg" alt="" height="25">
+                {{ campaign.campaign.user.name }}
+            </h5>
+        </div>
+    </div>
+</div>

@@ -1,18 +1,22 @@
 <div class="card-body pt-0 pt-md-4">
-    <div class="text-center">
-      <h3>
-        {{ profile.name }}
-      </h3>
+  <div class="text-center">
+    <h3>
+      {{ profile.name }}
+    </h3>
 
-      <small>{{ profile.phone | mask: '(00) 0000-00009' }}</small>
+    <small>{{ profile.phone | mask: '(00) 0000-00009' }}</small>
 
-      <div class="h5 font-weight-300" *ngIf="profile.city && profile.state">
-        <i class="ni location_pin mr-2"></i>{{ profile.city }}, {{ profile.state }}
-      </div>
-
-      <hr class="my-4" />
-
-      <p>{{ profile.description }}</p>
-
+    <div class="h5 font-weight-300" *ngIf="profile.city && profile.state">
+      <i class="ni location_pin mr-2"></i>{{ profile.city }}, {{ profile.state }}
     </div>
+
+    <hr class="my-4" />
+
+    <p>{{ profile.description }}</p>
+
   </div>
+</div>
+
+<app-volunteer-campaigns-aproved
+[profile]="profile"
+></app-volunteer-campaigns-aproved>
