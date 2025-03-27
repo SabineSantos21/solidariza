@@ -46,6 +46,13 @@ export class ProfileService {
       httpOptions
     );
   }
+  
+  getProfileOrganization(): Observable<any> {
+    return this.http.get(
+      `${environment.apiAddress}Profile/Organization`,
+      httpOptions
+    );
+  }
 
   deleteProfile(profileId): Observable<any> {
     return this.http.delete(

@@ -27,6 +27,7 @@ import { CampaignVolunteerViewComponent } from 'src/app/pages/campaign/campaign-
 import { CampaignVolunteerAprovationComponent } from 'src/app/pages/campaign/campaign-volunteer-aprovation/campaign-volunteer-aprovation.component';
 import { CampaignVolunteerAprovationViewComponent } from 'src/app/pages/campaign/campaign-volunteer-aprovation/campaign-volunteer-aprovation-view/campaign-volunteer-aprovation-view.component';
 import { VolunteerCampaignsAprovedComponent } from 'src/app/pages/user-profile/volunteer-profile/volunteer-campaigns-aproved/volunteer-campaigns-aproved.component';
+import { OrganizationComponent } from 'src/app/pages/organization/organization.component';
 // import { ToastrModule } from 'ngx-toastr';
 
 const maskConfig: Partial<IConfig> = {
@@ -63,7 +64,8 @@ const maskConfig: Partial<IConfig> = {
     CampaignVolunteerViewComponent,
     CampaignVolunteerAprovationComponent,
     CampaignVolunteerAprovationViewComponent,
-    VolunteerCampaignsAprovedComponent
+    VolunteerCampaignsAprovedComponent,
+    OrganizationComponent
   ]
 })
 
