@@ -17,6 +17,7 @@ export const ROUTES_ORGANIZATION: RouteInfo[] = [
 
 export const ROUTES_VOLUNTEER: RouteInfo[] = [
     { path: '/dashboard', title: 'Campanhas',  icon: 'ni-app text-orange', class: '' },
+    { path: '/campaign-volunteer-view', title: 'Minhas Inscrições',  icon: 'ni-single-copy-04 text-indigo', class: '' },
     { path: '/icons', title: 'Instituições',  icon:'ni-favourite-28 text-blue', class: '' },
 ];
 
