@@ -12,6 +12,7 @@ declare interface RouteInfo {
 
 export const ROUTES_ORGANIZATION: RouteInfo[] = [
     { path: '/dashboard', title: 'Minhas Campanhas',  icon: 'ni-app text-orange', class: '' },
+    { path: '/campaign-volunteer-aprovation', title: 'Inscrições Campanhas',  icon: 'ni-single-copy-04 text-orange', class: '' },
     { path: '/icons', title: 'Instituições',  icon:'ni-favourite-28 text-blue', class: '' }
 ];
 

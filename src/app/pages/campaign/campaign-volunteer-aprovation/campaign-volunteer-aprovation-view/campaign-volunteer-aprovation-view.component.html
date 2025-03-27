@@ -1,0 +1,86 @@
+<div class="header pb-3 pt-5 pt-lg-8 d-flex align-items-center"
+    style="min-height: 250px; background-size: cover; background-position: center top;">
+    <span class="mask bg-gradient-info opacity-8"></span>
+</div>
+
+<div class="container-fluid mt--7">
+    <div class="row">
+        <div class="col">
+            <div class="card shadow">
+                <div class="card-header border-0 d-flex justify-content-between">
+                    <h3 class="mb-0">Voluntários</h3>
+
+                    <button class="btn btn-sm btn-outline-default" type="button" [routerLink]="['/campaign-volunteer-aprovation']">Retornar para Campanhas</button>
+                </div>
+                <div class="table-responsive">
+                    <table class="table align-items-center table-flush">
+                        <thead class="thead-light">
+                            <tr>
+                                <th scope="col"></th>
+                                <th scope="col">Nome</th>
+                                <th scope="col">Email</th>
+                                <th scope="col"></th>
+                                <th scope="col"></th>
+                                <th scope="col"></th>
+                            </tr>
+                        </thead>
+                        
+                        <tbody *ngIf="campaignsVolunteer.length == 0">
+                            <tr>
+                                <th>
+                                    Ainda não houve inscrições na sua campanha
+                                </th>
+                            </tr>
+                        </tbody>
+
+                        <tbody *ngIf="campaignsVolunteer.length > 0">
+                            <tr *ngFor="let campaignVolunteer of campaignsVolunteer" class="cursor-pointer">
+                                <th scope="row">
+                                    <div class="media align-items-center"><a
+                                            class="mr-3">
+                                            <img
+                                                alt="Image placeholder"
+                                                src="../../../../../assets/img/icons/voluntarios.svg" height="35"></a>
+                                    </div>
+                                </th>
+
+                                <td>
+                                    {{ campaignVolunteer.user.name }}
+                                </td>
+                                                                
+                                <td> {{ campaignVolunteer.user.email }} </td>
+                                
+                                <td [routerLink]="['/profile', {id: campaignVolunteer.user.userId}]"> 
+                                    <button class="btn btn-sm btn-outline-warning" type="button">Ver Perfil</button>
+                                </td>
+
+                                <td>
+                                    <span *ngIf="campaignVolunteer.isApproved == 1 && change == false" class="text-success">
+                                        <strong>APROVADO</strong>
+                                    </span>
+                                    
+                                    <span *ngIf="campaignVolunteer.isApproved == 2 && change == false" class="text-danger">
+                                        <strong>REPROVADO</strong>
+                                    </span>
+                                    
+                                    <div *ngIf="campaignVolunteer.isApproved == 3 || change == true">
+                                        <button class="btn btn-sm btn-outline-success" type="button" (click)="updateCampaignsVolunteer(1, campaignVolunteer.campaignVolunteerId)">Aprovado</button>
+                                        <button class="btn btn-sm btn-outline-danger" type="button" (click)="updateCampaignsVolunteer(2, campaignVolunteer.campaignVolunteerId)">Reprovado</button>
+                                    </div>
+
+                                </td>
+
+                                <td>
+                                    <span>
+                                        <i class="fas fa-user-edit text-default ml-3" *ngIf="!change" (click)="change = true"></i>
+                                        <i class="fas fa-times text-danger ml-3" *ngIf="change" (click)="change = false"></i>
+                                    </span>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>    
+</div>

@@ -11,6 +11,7 @@ import { CampaignDonationComponent } from 'src/app/pages/campaign/campaign-donat
 import { ProfileComponent } from 'src/app/pages/profile/profile.component';
 import { CampaignVolunteerViewComponent } from 'src/app/pages/campaign/campaign-volunteer-view/campaign-volunteer-view.component';
 import { CampaignVolunteerAprovationComponent } from 'src/app/pages/campaign/campaign-volunteer-aprovation/campaign-volunteer-aprovation.component';
+import { CampaignVolunteerAprovationViewComponent } from 'src/app/pages/campaign/campaign-volunteer-aprovation/campaign-volunteer-aprovation-view/campaign-volunteer-aprovation-view.component';
 
 export const AdminLayoutRoutes: Routes = [
     { path: 'dashboard',      component: DashboardComponent },
@@ -24,4 +25,5 @@ export const AdminLayoutRoutes: Routes = [
     { path: 'profile',   component: ProfileComponent },
     { path: 'campaign-volunteer-view',   component: CampaignVolunteerViewComponent },
     { path: 'campaign-volunteer-aprovation',   component: CampaignVolunteerAprovationComponent },
+    { path: 'campaign-volunteer-aprovation-view',   component: CampaignVolunteerAprovationViewComponent },
 ];
