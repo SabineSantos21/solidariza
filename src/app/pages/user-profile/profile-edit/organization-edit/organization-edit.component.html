@@ -164,6 +164,96 @@
 
         </form>
 
+        <h6 class="heading-small text-muted mb-4">Informações para Campanha de Doação</h6>
+
+        <div class="pl-lg-4">
+
+          <form [formGroup]="formOrganizationInfo">
+
+            <div class="row">
+              <div class="col-md-6">
+                <div *ngIf="getControlOrganizationInfo('pixType'); let control" class="form-group">
+                  <label class="form-control-label">Tipo Chave PIX</label>
+                  
+
+                  <select class="form-control form-control-alternative" formControlName="pixType">
+                    <option selected disabled>Tipos de Chave PIX</option>
+                    <option *ngFor="let option of pixTypeOptions" [ngValue]="option.id">
+                      {{ option.name }}
+                    </option>
+                  </select>
+
+                  <small class="text-danger" *ngIf="!control.untouched && control.invalid">Campo
+                    <strong>Tipo Chave Pix</strong> é obrigatório</small>
+
+                </div>
+              </div>
+              
+              <div class="col-md-6">
+                <div *ngIf="getControlOrganizationInfo('pixKey'); let control" class="form-group">
+                  <label class="form-control-label">Chave PIX</label>
+                  
+                  <input class="form-control form-control-alternative" type="text" formControlName="pixKey">
+                  
+                  <small class="text-danger" *ngIf="!control.untouched && control.invalid">Campo
+                    <strong>Chave Pix</strong> é obrigatório</small>
+
+                </div>
+              </div>
+              
+              <div class="col-md-6">
+                <div *ngIf="getControlOrganizationInfo('beneficiaryName'); let control" class="form-group">
+                  <label class="form-control-label">Nome do beneficiário</label>
+                  
+                  <input class="form-control form-control-alternative" type="text" formControlName="beneficiaryName" maxlength="25">
+                  
+                  <small class="text-danger" *ngIf="!control.untouched && control.invalid">Campo
+                    <strong>Nome do beneficiário</strong> é obrigatório</small>
+
+                </div>
+              </div>
+              
+              <div class="col-md-6">
+                <div *ngIf="getControlOrganizationInfo('beneficiaryCity'); let control" class="form-group">
+                  <label class="form-control-label">Cidade do beneficiário ou da transação</label>
+                  
+                  <input class="form-control form-control-alternative" type="text" formControlName="beneficiaryCity" maxlength="15">
+                  
+                  <small class="text-danger" *ngIf="!control.untouched && control.invalid">Campo
+                    <strong>Cidade do beneficiário ou da transação</strong> é obrigatório</small>
+
+                </div>
+              </div>
+              
+              <div class="col-md-6">
+                <div *ngIf="getControlOrganizationInfo('contactName'); let control" class="form-group">
+                  <label class="form-control-label">Nome para Contato</label>
+                  
+                  <input class="form-control form-control-alternative" type="text" formControlName="contactName">
+                  
+                  <small class="text-danger" *ngIf="!control.untouched && control.invalid">Campo
+                    <strong>Nome para Contato</strong> é obrigatório</small>
+
+                </div>
+              </div>
+              
+              <div class="col-md-6">
+                <div *ngIf="getControlOrganizationInfo('contactPhone'); let control" class="form-group">
+                  <label class="form-control-label">Telefone para Contato</label>
+                  
+                  <input class="form-control form-control-alternative" type="text" formControlName="contactPhone">
+                  
+                  <small class="text-danger" *ngIf="!control.untouched && control.invalid">Campo
+                    <strong>Telefone para Contato</strong> é obrigatório</small>
+
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+
+        <hr class="my-4" />
+
         <h6 class="heading-small text-muted mb-4">Links</h6>
 
         <div class="row">

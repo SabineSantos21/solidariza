@@ -5,6 +5,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { CampaignStatus } from 'src/app/shared/enums/campaignStatus';
 import { CampaignType } from 'src/app/shared/enums/campaignType';
 import { NewCampaign } from 'src/app/shared/models/campaign';
+import { NewOrganizationInfo } from 'src/app/shared/models/organizationInfo';
 import { CampaignService } from 'src/app/shared/services/campaign.service';
 import { LocalStorageService } from 'src/app/shared/services/local-storage.service';
 
@@ -52,7 +53,7 @@ export class OrganizationNewCampaignComponent implements OnInit {
       city: new FormControl(campaign.city,null)
     })
   }
-
+  
   getControl(name: string): AbstractControl {
     return this.form.get(name);
   }
@@ -66,7 +67,7 @@ export class OrganizationNewCampaignComponent implements OnInit {
         this.getControl(key).markAsTouched();
     });
   }
-
+  
   getCampaignStatus() {
     this.campaignStatus = [
       {
@@ -104,7 +105,6 @@ export class OrganizationNewCampaignComponent implements OnInit {
   createCampaign() {
     
     this.getControl("userId").setValue(this.user.userId);
-    console.log(this.form)
 
     if(this.form.invalid){
       this.validateFields()
@@ -127,5 +127,4 @@ export class OrganizationNewCampaignComponent implements OnInit {
 
     }
   }
-
 }

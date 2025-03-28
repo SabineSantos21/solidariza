@@ -2,9 +2,12 @@ import { Component, Input, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { LinkType } from 'src/app/shared/enums/linkType';
+import { PixType } from 'src/app/shared/enums/pixType';
 import { NewLink } from 'src/app/shared/models/link';
+import { NewOrganizationInfo } from 'src/app/shared/models/organizationInfo';
 import { NewProfile, UpdateProfile } from 'src/app/shared/models/profile';
 import { LinkService } from 'src/app/shared/services/link.service';
+import { OrganizationInfoService } from 'src/app/shared/services/organizationInfo.service';
 import { ProfileService } from 'src/app/shared/services/profile.service';
 
 @Component({
@@ -18,12 +21,16 @@ export class OrganizationEditComponent implements OnInit {
 
   form: FormGroup;
 
+  formOrganizationInfo: FormGroup;
+  organizationInfo: any;
+
   options: any = [];
   selectedOption?: any = null;
   link: any = null;
   isDropdownOpen = false;
 
   links: any = [];
+  pixTypeOptions: any = [];
 
   alertError: any = "";
   alertSuccess: any = "";
@@ -32,13 +39,17 @@ export class OrganizationEditComponent implements OnInit {
     private spinner: NgxSpinnerService,
     public profileService: ProfileService,
     public formBuilder: FormBuilder,
-    public linkService: LinkService
+    public linkService: LinkService,
+    public organizationInfoService: OrganizationInfoService
   ) { }
 
   ngOnInit(): void {
     this.createForm(new UpdateProfile())
+    this.createFormOrganizationInfo(new NewOrganizationInfo());
     this.fillFieldsByUser();
     this.getLinkIcons();
+    this.getOrganizationInfoByUserId(this.user.userId);
+    this.getPixType();
 
     if (this.profile) {
       this.fillfields();
@@ -59,6 +70,19 @@ export class OrganizationEditComponent implements OnInit {
     })
   }
 
+  public createFormOrganizationInfo(organizationInfo) {
+    this.formOrganizationInfo = this.formBuilder.group({
+      userId: new FormControl(organizationInfo.userId, Validators.required),
+      pixType: new FormControl(organizationInfo.pixType, Validators.required),
+      pixKey: new FormControl(organizationInfo.pixKey, Validators.required),
+      beneficiaryName: new FormControl(organizationInfo.beneficiaryName, Validators.required),
+      beneficiaryCity: new FormControl(organizationInfo.beneficiaryCity, Validators.required),
+      pixValue: new FormControl(organizationInfo.pixValue, null),
+      contactName: new FormControl(organizationInfo.contactName, Validators.required),
+      contactPhone: new FormControl(organizationInfo.contactPhone, Validators.required)
+    })
+  }
+
   fillFieldsByUser() {
     this.getControl("name").setValue(this.user.name);
     this.getControl("phone").setValue(this.user.phone);
@@ -75,6 +99,15 @@ export class OrganizationEditComponent implements OnInit {
     this.getControl("zip").setValue(this.profile.zip);
     this.getControl("phone").setValue(this.profile.phone);
     this.getControl("description").setValue(this.profile.description);
+  }
+
+  fillfieldsOrganizationInfo() {
+    this.getControlOrganizationInfo("pixKey").setValue(this.organizationInfo.pixKey);
+    this.getControlOrganizationInfo("pixType").setValue(this.organizationInfo.pixType);
+    this.getControlOrganizationInfo("beneficiaryName").setValue(this.organizationInfo.beneficiaryName);
+    this.getControlOrganizationInfo("beneficiaryCity").setValue(this.organizationInfo.beneficiaryCity);
+    this.getControlOrganizationInfo("contactName").setValue(this.organizationInfo.contactName);
+    this.getControlOrganizationInfo("contactPhone").setValue(this.organizationInfo.contactPhone);
   }
 
   getControl(name: string): AbstractControl {
@@ -111,10 +144,18 @@ export class OrganizationEditComponent implements OnInit {
 
     this.profileService.createProfile(newProfile).subscribe(
       data => {
-        this.alertSuccess = "Alterações Salvas com sucesso"
+        this.alertSuccess = "Alterações Salvas com sucesso";
+
+        if(this.organizationInfo) {
+          this.updateOrganizationInfo();
+        }
+        else {
+          this.createOrganizationInfo();
+        }
+
       },
       error => {
-        this.alertError = "Erro ao Salvar Perfil"
+        this.alertError = "Erro ao Salvar Perfil";
       }
     ).add(() => {
       this.spinner.hide()
@@ -126,7 +167,15 @@ export class OrganizationEditComponent implements OnInit {
 
     this.profileService.updateProfile(this.profile.profileId, profile).subscribe(
       data => {
-        this.alertSuccess = "Alterações Salvas com sucesso"
+        console.log(this.formOrganizationInfo);
+        
+
+        if(this.organizationInfo) {
+          this.updateOrganizationInfo();
+        }
+        else {
+          this.createOrganizationInfo();
+        }
       },
       error => {
         this.alertError = "Erro ao Salvar Perfil"
@@ -134,6 +183,82 @@ export class OrganizationEditComponent implements OnInit {
     ).add(() => {
       this.spinner.hide()
     })
+  }
+
+  getControlOrganizationInfo(name: string): AbstractControl {
+    return this.formOrganizationInfo.get(name);
+  }
+
+  private validateFieldsOrganizationInfo() {
+    Object.keys(this.formOrganizationInfo.controls).forEach((key) => {
+      if (
+        this.getControl(key).value == "" ||
+        this.getControl(key).value == null
+      )
+        this.getControl(key).markAsTouched();
+    });
+  }
+
+  getOrganizationInfoByUserId(userId) {
+    this.spinner.show();
+
+    this.organizationInfoService.getOrganizationInfoByUserId(userId).subscribe(
+      data => {
+        this.organizationInfo = data;
+
+        if(this.organizationInfo != null) this.fillfieldsOrganizationInfo();
+      }
+    ).add(() => {
+      this.spinner.hide();
+    })
+  }
+
+  updateOrganizationInfo() {
+    
+    this.getControlOrganizationInfo("userId").setValue(this.user.userId);
+
+    if(this.formOrganizationInfo.invalid){
+      this.validateFieldsOrganizationInfo()
+    }
+    else {
+      this.spinner.show();
+      
+      this.organizationInfoService.updateOrganizationInfo(this.organizationInfo.organizationInfoId,this.formOrganizationInfo.value).subscribe(
+        (data) => {
+          this.alertSuccess = "Alterações Salvas com sucesso"          
+        },
+        (error) => {
+          this.alertError = "Erro ao salvar informações. Tente novamente mais tarde."
+        }
+      ).add(() => {
+        this.spinner.hide();
+      })
+
+    }
+  }
+
+  createOrganizationInfo() {
+    
+    this.getControlOrganizationInfo("userId").setValue(this.user.userId);
+
+    if(this.formOrganizationInfo.invalid){
+      this.validateFieldsOrganizationInfo()
+    }
+    else {
+      this.spinner.show();
+      
+      this.organizationInfoService.createOrganizationInfo(this.formOrganizationInfo.value).subscribe(
+        (data) => {
+          this.alertSuccess = "Alterações Salvas com sucesso"          
+        },
+        (error) => {
+          this.alertError = "Erro ao salvar informações. Tente novamente mais tarde."
+        }
+      ).add(() => {
+        this.spinner.hide();
+      })
+
+    }
   }
 
   addLink() {
@@ -210,7 +335,7 @@ export class OrganizationEditComponent implements OnInit {
     }
 
   }
-  
+
   getLinkIcons() {
     this.options = [
       { id: LinkType.INSTAGRAM, name: 'Instagram', image: '../../../../assets/img/icons/social/instagram.svg' },
@@ -220,6 +345,16 @@ export class OrganizationEditComponent implements OnInit {
       { id: LinkType.WHATSAPP, name: 'Whatsapp', image: '../../../../assets/img/icons/social/whatsapp.svg' },
       { id: LinkType.YOUTUBE, name: 'YouTube', image: '../../../../assets/img/icons/social/youtube.svg' },
       { id: LinkType.OTHER, name: 'Outro', image: '../../../../assets/img/icons/social/link.svg' },
+    ];
+  }
+
+  getPixType() {
+    this.pixTypeOptions = [
+      { id: PixType.PHONE, name: 'Telefone' },
+      { id: PixType.EMAIL, name: 'Email' },
+      { id: PixType.CPF, name: 'CPF' },
+      { id: PixType.CNPJ, name: 'CNPJ' },
+      { id: PixType.OTHER, name: 'Outra' }
     ];
   }
 }
