@@ -6,8 +6,10 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./campaign-donation.component.scss']
 })
 export class CampaignDonationComponent implements OnInit {
+  qrCode: any;
 
-  constructor() { }
+  constructor(
+  ) { }
 
   ngOnInit(): void {
   }
