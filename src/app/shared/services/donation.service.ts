@@ -16,10 +16,9 @@ export class DonationService {
 
   constructor(private http: HttpClient) { }
 
-  getDonationQRCode(donationInfo): Observable<any> {
-    return this.http.post(
-      `${environment.apiAddress}/Donation/QRCode`,
-      donationInfo,
+  getDonationQRCode(campaignId): Observable<any> {
+    return this.http.get(
+      `${environment.apiAddress}Donation/QRCode/${campaignId}`,
       httpOptions
     );
   }

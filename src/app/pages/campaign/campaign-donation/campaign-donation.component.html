@@ -22,7 +22,7 @@
                             <span>Sua ajuda faz a diferença! Contribua de forma rápida e segura.</span> 
                         </div>
 
-                        <div class="row">
+                        <div class="row" *ngIf="organizationInfo">
                             <div class="col-lg-6 text-left">
                                 <h4>Escolha como doar:</h4>
                                 
@@ -32,14 +32,21 @@
                                 </ul>
                                 
                                 <ul class="mt-4">
-                                    <li>👤 Nome: Sabine Freiman</li>
-                                    <li>🆔 Tipo de Chave: CPF</li>
+                                    <li>👤 Nome: {{ organizationInfo.beneficiaryName }}</li>
+                                    <li>🆔 Tipo de Chave: {{ getPixType(organizationInfo.pixType) }}</li>
                                 </ul>
+
+                                <small><strong class="text-warning mt-2">Atenção:</strong> Se os dados estiverem corretos, prossiga com o pagamento. Caso contrário, entre em contato com o destinatário antes de continuar.</small>
                             </div>
 
                             <div class="col-lg-6">
-                                <h3 class="mt-4">🔑 Chave Pix: 520.970.458-11  <i class="fa fa-solid fa-copy"></i></h3>
-
+                                <ng-container *ngIf="getPixKeyMask(organizationInfo.pixType) as pixMask">
+                                    <h3>
+                                        🔑 Chave Pix: {{ organizationInfo.pixKey | mask: pixMask }} <i class="fa fa-solid fa-copy cursor-pointer" placement="top" ngbTooltip="{{ textTooltip }}" (click)="copiarPix(organizationInfo.pixKey)"></i>
+                                    </h3>
+                                </ng-container>
+                                  
+                                <img height="200" src="{{ organizationInfo.donationQRCode.qrcode_base64 }}" alt="">
                             </div>
                         </div>
                     </div>
