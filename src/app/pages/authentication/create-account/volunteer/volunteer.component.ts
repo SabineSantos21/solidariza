@@ -5,6 +5,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { DocumentType } from 'src/app/shared/enums/documentType';
 import { UserType } from 'src/app/shared/enums/userType';
 import { NewUser } from 'src/app/shared/models/user';
+import { LocalStorageService } from 'src/app/shared/services/local-storage.service';
 import { UserService } from 'src/app/shared/services/user.service';
 
 @Component({
@@ -25,6 +26,7 @@ export class VolunteerComponent implements OnInit {
     private formBuilder: FormBuilder,
     private userService: UserService,
     private router: Router,
+    private localStorageService: LocalStorageService
   ) { }
 
   ngOnInit(): void {
@@ -72,7 +74,7 @@ export class VolunteerComponent implements OnInit {
 
       this.userService.createUser(user).subscribe(
         (data) => {
-          this.router.navigate(["/dashboard"]);
+          this.router.navigate(["/login"]);
         },
         (error) => {
           this.alertError = "Erro ao criar usuário";
