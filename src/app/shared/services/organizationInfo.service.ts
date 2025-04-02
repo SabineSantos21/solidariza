@@ -52,4 +52,11 @@ export class OrganizationInfoService {
       httpOptions
     );
   }
+
+  organizationInfoValidateByOrganizationInfoId(organizationInfoId, cnpj): Observable<any> {
+    return this.http.post(
+      `${environment.apiAddress}OrganizationInfo/Validade/${organizationInfoId}/${cnpj}`,
+      httpOptions
+    );
+  }
 }

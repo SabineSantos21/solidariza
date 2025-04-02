@@ -3,6 +3,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { LinkType } from 'src/app/shared/enums/linkType';
 import { CampaignService } from 'src/app/shared/services/campaign.service';
 import { LinkService } from 'src/app/shared/services/link.service';
+import { OrganizationInfoService } from 'src/app/shared/services/organizationInfo.service';
 
 @Component({
   selector: 'app-organization-profile',
@@ -12,10 +13,13 @@ import { LinkService } from 'src/app/shared/services/link.service';
 export class OrganizationProfileComponent implements OnInit {
   @Input() user;
   @Input() profile;
+  @Input() showEditUser;
 
   links: any = [];
   socialAccounts: any = [];
   campaigns: any = [];
+
+  organizationInfo: any;
   
   otherLinks: any = [];
   showLinks: boolean = false;
@@ -26,13 +30,47 @@ export class OrganizationProfileComponent implements OnInit {
   constructor(
     public spinner: NgxSpinnerService,
     public linkService: LinkService,
-    public campaignService: CampaignService
+    public campaignService: CampaignService,
+    public organizationInfoService: OrganizationInfoService
   ) { }
 
   ngOnInit(): void {
     if (this.profile) {
+      this.getOrganizationInfo(this.user.userId);
       this.getLinks();
     }
+  }
+
+  getOrganizationInfo(userId) {
+    this.spinner.show();
+
+    this.organizationInfoService.getOrganizationInfoByUserId(userId).subscribe(
+      data => {
+        this.organizationInfo = data;
+        console.log(this.organizationInfo)
+      }
+    ).add(() => {
+      this.spinner.hide();
+    })
+  }
+
+  validateOrganization(organizationInfoId, cnpj) {
+    this.spinner.show();
+
+    this.organizationInfoService.organizationInfoValidateByOrganizationInfoId(organizationInfoId, this.removeSpecialCharacters(cnpj)).subscribe(
+      data => {
+        this.organizationInfo = data;
+      },
+      error => {
+        this.alertError = "Erro ao validar empresa. Tente novamente mais tarde."
+      }
+    ).add(() => {
+      this.spinner.hide();
+    })
+  }
+
+  removeSpecialCharacters(str: string): string {
+    return str.replace(/[^a-zA-Z0-9 ]/g, ""); // Mantém letras, números e espaço
   }
 
   getLinks() {

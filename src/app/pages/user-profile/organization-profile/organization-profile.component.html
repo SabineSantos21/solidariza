@@ -4,10 +4,11 @@
       {{ user.name }}<span class="font-weight-light"></span>
     </h3>
 
+    
     <div class="h5 font-weight-300">
       <i class="ni location_pin mr-2"></i>{{ profile.city }}, {{ profile.state }}
     </div>
-
+    
     <div class="d-flex justify-content-center mt-3">
       <div class="d-flex align-items-center mb-2 mr-3" *ngFor="let link of socialAccounts">
         <div *ngIf="link.type != 7">
@@ -16,6 +17,13 @@
           </a>
         </div>
       </div>
+    </div>
+    
+    <div class="alert alert-default d-flex justify-content-between text-left mt-2" role="alert" *ngIf="organizationInfo && organizationInfo.isOrganizationApproved == false && showEditUser">
+      <span>
+        <img src="../../../../assets/img/icons/warning.svg" height="35" class="mr-2"> {{organizationInfo.disapprovalReason}}
+      </span>
+      <button type="button" class="btn btn-secondary btn-sm" (click)="validateOrganization(organizationInfo.organizationInfoId, user.documentNumber)">Validar novamente</button>
     </div>
 
     <hr class="my-4" />
