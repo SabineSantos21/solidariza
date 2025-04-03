@@ -48,7 +48,7 @@ export class SidebarComponent implements OnInit {
       this.menuItems = ROUTES_ORGANIZATION.filter(menuItem => menuItem);
     }
     else if(this.user.type == UserType.Donor) {
-      this.menuItems = ROUTES_VOLUNTEER.filter(menuItem => menuItem);
+      this.menuItems = ROUTES_DONOR.filter(menuItem => menuItem);
     }
     else if(this.user.type == UserType.Volunteer) {
       this.menuItems = ROUTES_VOLUNTEER.filter(menuItem => menuItem);

@@ -1,5 +1,5 @@
 <div class="row">
-  <div class="col-xl-4 order-xl-2 mb-5 mb-xl-0">
+  <div class="col-xl-4 order-xl-2 mb-5 mb-xl-0" *ngIf="profile">
     <div class="card card-profile shadow">
       <div class="row justify-content-center">
         <div class="col-lg-3 order-lg-2">
@@ -16,17 +16,17 @@
             {{ profile.name }}
           </h3>
 
-          <div class="h5 font-weight-300">
+          <div class="h5 font-weight-300" *ngIf="profile.city">
             <i class="ni location_pin mr-2"></i>{{ profile.city }}, {{ profile.state }}
           </div>
 
-          <div class="h5 mt-4">
+          <div class="h5 mt-4" *ngIf="profile.address">
             <i class="ni business_briefcase-24 mr-2"></i>{{ profile.address }}
           </div>
 
-          <hr class="my-4" />
+          <hr class="my-4" *ngIf="profile.description" />
 
-          <p>{{ profile.description }}</p>
+          <p *ngIf="profile.description">{{ profile.description }}</p>
 
           <hr class="my-4" />
 

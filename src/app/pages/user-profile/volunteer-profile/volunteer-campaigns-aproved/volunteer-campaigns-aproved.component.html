@@ -1,6 +1,10 @@
-<div class="d-flex pr-4 pl-4">
+<div class="d-flex pr-4 pl-4 pb-4">
     <img src="../../../../../assets/img/icons/organizacao.svg" alt="" height="35" class="mr-2">
     <h3>Campanhas em que Participou</h3>
+</div>
+
+<div class="ml-3 mb-3" *ngIf="campaigns.length == 0">
+    <span>Nenhuma campanha encontrada</span>
 </div>
 
 <div class="row pr-4 pl-4 pb-4 mt-4" *ngIf="campaigns.length > 0">

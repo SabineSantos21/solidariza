@@ -5,7 +5,7 @@
     </h3>
 
     
-    <div class="h5 font-weight-300">
+    <div class="h5 font-weight-300" *ngIf="profile.city">
       <i class="ni location_pin mr-2"></i>{{ profile.city }}, {{ profile.state }}
     </div>
     
@@ -26,7 +26,7 @@
       <button type="button" class="btn btn-secondary btn-sm" (click)="validateOrganization(organizationInfo.organizationInfoId, user.documentNumber)">Validar novamente</button>
     </div>
 
-    <hr class="my-4" />
+    <hr class="my-4" *ngIf="profile.description" />
 
     <p>{{ profile.description }}</p>
 
@@ -50,15 +50,15 @@
     </div>
     
 
-    <hr class="my-4" />
+    <hr class="my-4" *ngIf="profile.address"/>
 
-    <div class="d-flex justify-content-around">
+    <div class="d-flex justify-content-around" *ngIf="profile.address">
       <div class="d-flex align-items-center mb-2">
         <img src="../../../../assets/img/icons/location.svg" alt="localização" height="20">
         <span class="ml-3">{{ profile.address }}</span>
       </div>
      
-      <div class="d-flex align-items-center mb-2">
+      <div class="d-flex align-items-center mb-2" *ngIf="profile.phone">
         <img src="../../../../assets/img/icons/phone.svg" alt="localização" height="20">
         <span class="ml-2">{{ profile.phone | mask:'(00) 0000-00009' }}</span>
       </div>

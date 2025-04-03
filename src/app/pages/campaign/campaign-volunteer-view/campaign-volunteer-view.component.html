@@ -21,6 +21,13 @@
                                 <th scope="col">Status</th>
                             </tr>
                         </thead>
+
+                        <tbody *ngIf="campaignsVolunteer.length == 0">
+                            <tr>
+                                <td>Nenhum dado encontrado</td>
+                            </tr>
+                        </tbody>
+
                         <tbody *ngIf="campaignsVolunteer.length > 0">
                             <tr *ngFor="let campaignVolunteer of campaignsVolunteer" class="cursor-pointer" [routerLink]="['/campaign-view', {id: campaignVolunteer.campaignId}]">
                                 <th scope="row">

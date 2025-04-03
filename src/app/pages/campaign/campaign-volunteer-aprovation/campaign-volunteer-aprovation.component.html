@@ -21,6 +21,13 @@
                                 <th scope="col"></th>
                             </tr>
                         </thead>
+                        
+                        <tbody *ngIf="campaigns.length == 0">
+                            <tr>
+                                <td>Nenhum dado encontrado</td>
+                            </tr>
+                        </tbody>
+                        
                         <tbody *ngIf="campaigns.length > 0">
                             <tr *ngFor="let campaign of campaigns" class="cursor-pointer">
                                 <th scope="row">
