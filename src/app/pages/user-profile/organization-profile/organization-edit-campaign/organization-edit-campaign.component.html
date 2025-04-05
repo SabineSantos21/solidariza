@@ -10,8 +10,16 @@
                         <div class="col-8">
                             <h3 class="mb-0">Editar Campanha</h3>
                         </div>
-                        <div class="col-4 text-right">
-                            <button class="btn btn-sm btn-success" (click)="updateCampaign()">Salvar</button>
+
+                        <div class="col-4 d-flex justify-content-end">
+                            <div class="col-6 text-right mr-3">
+                                <button class="btn btn-sm btn-danger" (click)="deleteCampaign(campaignId)">Deletar</button>
+                            </div>
+
+                            <div class="col-3 text-right">
+                                <button class="btn btn-sm btn-success" (click)="updateCampaign()">Salvar</button>
+                            </div>
+                            
                         </div>
                     </div>
                 </div>

@@ -153,4 +153,12 @@ export class OrganizationEditCampaignComponent implements OnInit {
     }
 
   }
+
+  deleteCampaign(campaignId) {
+    this.campaignService.deleteCampaign(campaignId).subscribe(
+      date => {
+        this.alertSuccess = "Campanha deletada com sucesso"
+      }
+    )
+  }
 }
