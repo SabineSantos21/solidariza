@@ -12,6 +12,8 @@ import { LocalStorageService } from 'src/app/shared/services/local-storage.servi
 export class DashboardComponent implements OnInit {
   user: any = [];
   campaigns: any = [];
+  campaignsList: any = [];
+  search: any;
 
   constructor(
     private spinner: NgxSpinnerService,
@@ -55,6 +57,7 @@ export class DashboardComponent implements OnInit {
     this.campaignService.getCampaigns().subscribe(
       data => {
         this.campaigns = data;
+        this.campaignsList = data;
         console.log(this.campaigns)
       },
       error => {
@@ -64,4 +67,15 @@ export class DashboardComponent implements OnInit {
       this.spinner.hide();
     })
   }
+
+  filterCampaigns() {
+    this.campaignsList = this.filterByUserName(this.campaigns, this.search);
+  }
+
+  filterByUserName(campaigns: any[], name: string): any[] {
+    return campaigns.filter(campaign => 
+      campaign.user?.name?.toLowerCase().includes(name.toLowerCase())
+    );
+  }
+  
 }

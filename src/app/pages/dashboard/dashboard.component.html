@@ -1,20 +1,37 @@
-<div class="header bg-gradient-info pb-8 pt-5 pt-md-8">
+<div class="header bg-gradient-info pb-8 pt-5 pt-md-4">
   <div class="container-fluid">
-    <div class="row justify-content-center">
-      <div class="col-xl-12 order-xl-12 mb-5 mb-xl-0" *ngIf="campaigns.length > 0">
+    <div class="row">
+      <div class="col-md-4">
+        <div class="form-group">
+          <div class="input-group mb-4">
+            <div class="input-group-prepend">
+              <span class="input-group-text"><i class="ni ni-zoom-split-in"></i></span>
+            </div>
+            <input class="form-control" placeholder="Buscar Organização" type="text" [(ngModel)]="search">
+          </div>
+        </div>
+      </div>
+      <div class="col-md-2">
+        <button type="button" class="btn btn-secondary" (click)="filterCampaigns()">Pesquisar</button>
+      </div>
+    </div>
+
+    <div class="row w-100 justify-content-center">
+      <div class="col-12 col-xl-12 order-xl-12 mb-5 mb-xl-0" *ngIf="campaignsList.length > 0">
+        
         <div *ngIf="user.type == 1">
-          <app-organization-campaign *ngFor="let campaign of campaigns" [campaign]="campaign"
+          <app-organization-campaign *ngFor="let campaign of campaignsList" [campaign]="campaign"
             [profile]="campaign.user"></app-organization-campaign>
         </div>
 
-        <div class="row justify-content-center" *ngIf="user.type != 1">
-          <app-campaign-list *ngFor="let campaign of campaigns" [campaign]="campaign"
+        <div *ngIf="user.type != 1">
+          <app-campaign-list *ngFor="let campaign of campaignsList" [campaign]="campaign"
             [profile]="campaign.user"></app-campaign-list>
         </div>
 
       </div>
       
-      <div class="col-xl-12 order-xl-12 mb-5 mb-xl-0" *ngIf="campaigns.length == 0">
+      <div class="col-xl-12 order-xl-12 mb-5 mb-xl-0" *ngIf="campaignsList.length == 0">
         <div *ngIf="user.type == 1">
           <div class="row justify-content-center">
             <div class="col-md-12 col-sm-12 d-flex justify-content-center">
