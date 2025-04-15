@@ -21,7 +21,7 @@ jobs:
       run: npm install --force
 
     - name: Build Angular project
-      run: npm run build -- --prod
+      run: npm run build
 
     - name: Archive production artifacts
       uses: actions/upload-artifact@v4
