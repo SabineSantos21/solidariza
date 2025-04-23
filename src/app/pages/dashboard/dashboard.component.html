@@ -11,7 +11,7 @@
           </div>
         </div>
       </div>
-      <div class="col-md-2">
+      <div class="col-md-2" *ngIf="campaignsList.length > 0">
         <button type="button" class="btn btn-secondary" (click)="filterCampaigns()">Pesquisar</button>
       </div>
     </div>
