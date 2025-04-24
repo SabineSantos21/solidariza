@@ -42,6 +42,7 @@ export class DashboardComponent implements OnInit {
     this.campaignService.getCampaignByUserId(userId).subscribe(
       data => {
         this.campaigns = data;
+        this.campaignsList = data;
       },
       error => {
 
