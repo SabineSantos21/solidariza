@@ -5,7 +5,11 @@
 export const environment = {
   production: false,
 
-  apiAddress: "http://localhost:7127/"
+  //DEV
+  // apiAddress: "http://localhost:7127/"
+  
+  //PROD
+  apiAddress: "https://solidariza-api-gbaveuf8fbfwbjbu.centralus-01.azurewebsites.net/"
 };
 
 /*
