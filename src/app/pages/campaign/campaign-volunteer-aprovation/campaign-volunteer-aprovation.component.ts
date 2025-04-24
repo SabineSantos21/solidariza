@@ -34,8 +34,6 @@ export class CampaignVolunteerAprovationComponent implements OnInit {
     this.campaignService.getCampaignByUserId(userId).subscribe(
       data => {
         this.campaigns = data;
-
-        console.log(this.campaigns)
       }
     ).add(() => {
       this.spinner.hide();

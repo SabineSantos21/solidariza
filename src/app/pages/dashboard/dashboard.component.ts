@@ -59,7 +59,6 @@ export class DashboardComponent implements OnInit {
       data => {
         this.campaigns = data;
         this.campaignsList = data;
-        console.log(this.campaigns)
       },
       error => {
 

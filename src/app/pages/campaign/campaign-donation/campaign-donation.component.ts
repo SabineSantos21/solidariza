@@ -46,7 +46,6 @@ export class CampaignDonationComponent implements OnInit {
     this.donationService.getDonationQRCode(campaignId).subscribe(
       data => {
         this.organizationInfo = data
-        console.log("organizationInfo", this.organizationInfo)
       },
       error => {
         this.alertError = "Erro ao buscar Qr Code"

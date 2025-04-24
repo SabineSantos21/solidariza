@@ -17,7 +17,6 @@ export class VolunteerCampaignsAprovedComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    console.log(this.profile)
     this.getCampaignsVolunteerByUserIdAndAproved(this.profile.userId);
   }
 
@@ -27,8 +26,6 @@ export class VolunteerCampaignsAprovedComponent implements OnInit {
     this.campaignsVolunteerService.getCampaignVolunteerByUserIdAndAproved(userId).subscribe(
       data => {
         this.campaigns = data;
-
-        console.log(this.campaigns);
       }
     ).add(() => {
       this.spinner.hide();

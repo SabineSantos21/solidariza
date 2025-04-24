@@ -40,9 +40,7 @@ export class CampaignVolunteerAprovationViewComponent implements OnInit {
     this.campaignVolunteerService.getCampaignVolunteerByCampaignId(campaignId).subscribe(
       data => {
         this.campaignsVolunteer = data;
-        this.change = false;
-        
-        console.log(this.campaignsVolunteer)
+        this.change = false;        
       }
     ).add(() => {
       this.spinner.hide();
@@ -51,8 +49,6 @@ export class CampaignVolunteerAprovationViewComponent implements OnInit {
 
   updateCampaignsVolunteer(value, campaignsVolunteerId) {
     this.spinner.show();
-
-    console.log('chegueii')
 
     var updateCampaignVolunteer = {
       isApproved : value

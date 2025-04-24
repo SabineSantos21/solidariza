@@ -166,9 +166,7 @@ export class OrganizationEditComponent implements OnInit {
     this.spinner.show();
 
     this.profileService.updateProfile(this.profile.profileId, profile).subscribe(
-      data => {
-        console.log(this.formOrganizationInfo);
-        
+      data => {       
 
         if(this.organizationInfo) {
           this.updateOrganizationInfo();
@@ -352,7 +350,6 @@ export class OrganizationEditComponent implements OnInit {
     this.pixTypeOptions = [
       { id: PixType.PHONE, name: 'Telefone' },
       { id: PixType.EMAIL, name: 'Email' },
-      { id: PixType.CPF, name: 'CPF' },
       { id: PixType.CNPJ, name: 'CNPJ' },
       { id: PixType.OTHER, name: 'Outra' }
     ];

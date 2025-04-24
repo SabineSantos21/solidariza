@@ -44,7 +44,6 @@ export class CampaignViewComponent implements OnInit {
     this.campaignService.getCampaignById(campaignId).subscribe(
       data => {
         this.campaign = data;
-        console.log(this.campaign)
       },
       error => {
         this.alertError = "Erro ao buscar campanha"

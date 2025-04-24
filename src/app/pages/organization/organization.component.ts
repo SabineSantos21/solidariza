@@ -25,8 +25,6 @@ export class OrganizationComponent implements OnInit {
     this.profileService.getProfileOrganization().subscribe(
       data => {
         this.organizations = data;
-
-        console.log(this.organizations)
       }
     ).add(() => {
       this.spinner.hide();

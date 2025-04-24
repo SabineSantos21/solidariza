@@ -47,7 +47,6 @@ export class OrganizationProfileComponent implements OnInit {
     this.organizationInfoService.getOrganizationInfoByUserId(userId).subscribe(
       data => {
         this.organizationInfo = data;
-        console.log(this.organizationInfo)
       }
     ).add(() => {
       this.spinner.hide();
