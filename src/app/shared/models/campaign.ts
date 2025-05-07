@@ -43,7 +43,7 @@ export class EditCampaign {
     }
 
     title: string;
-    description: number;
+    description: string;
     startDate: Date;
     endDate: Date;
     status: number;

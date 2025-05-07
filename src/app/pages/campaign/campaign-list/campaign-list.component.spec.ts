@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { CampaignListComponent } from './campaign-list.component';
+import { Component } from '@angular/core';
 
 describe('CampaignListComponent', () => {
   let component: CampaignListComponent;
@@ -17,7 +17,20 @@ describe('CampaignListComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it('deve criar o componente', () => {
     expect(component).toBeTruthy();
   });
+
+  it('deve aceitar valores nos inputs campaign e profile', () => {
+    const mockCampaign = { id: 1, name: 'Campanha Teste' };
+    const mockProfile = { id: 2, name: 'Organização Teste' };
+
+    component.campaign = mockCampaign;
+    component.profile = mockProfile;
+    fixture.detectChanges();
+
+    expect(component.campaign).toEqual(mockCampaign);
+    expect(component.profile).toEqual(mockProfile);
+  });
+
 });
