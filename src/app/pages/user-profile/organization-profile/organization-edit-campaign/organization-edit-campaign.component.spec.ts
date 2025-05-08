@@ -24,6 +24,19 @@ describe('OrganizationEditCampaignComponent', () => {
       'updateCampaign',
       'deleteCampaign'
     ]);
+    campaignServiceSpy.getCampaignById.and.returnValue(of({
+        title: '',
+        description: '',
+        startDate: '',
+        endDate: '',
+        status: '',
+        type: '',
+        address: '',
+        state: '',
+        city: ''
+      }));
+    campaignServiceSpy.updateCampaign.and.returnValue(of({}));
+    campaignServiceSpy.deleteCampaign.and.returnValue(of({}));
     routerSpy = jasmine.createSpyObj('Router', ['navigate']);
     activatedRouteMock = {
       snapshot: {
@@ -71,7 +84,6 @@ describe('OrganizationEditCampaignComponent', () => {
     activatedRouteMock.snapshot.paramMap.get = () => null;
     fixture = TestBed.createComponent(OrganizationEditCampaignComponent);
     component = fixture.componentInstance;
-    fixture.detectChanges();
     component.ngOnInit();
     expect(routerSpy.navigate).toHaveBeenCalledWith(['/user-profile']);
   });

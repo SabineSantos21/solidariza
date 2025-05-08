@@ -6,6 +6,7 @@ import { DonationService } from 'src/app/shared/services/donation.service';
 import { CampaignService } from 'src/app/shared/services/campaign.service';
 import { of, throwError } from 'rxjs';
 import { PixType } from 'src/app/shared/enums/pixType';
+import { RouterTestingModule } from '@angular/router/testing';
 
 describe('CampaignDonationComponent', () => {
   let component: CampaignDonationComponent;
@@ -19,17 +20,18 @@ describe('CampaignDonationComponent', () => {
   beforeEach(async () => {
     spinnerSpy = jasmine.createSpyObj('NgxSpinnerService', ['show', 'hide']);
     donationServiceSpy = jasmine.createSpyObj('DonationService', ['getDonationQRCode']);
-    campaignServiceSpy = jasmine.createSpyObj('CampaignService', []);
+    donationServiceSpy.getDonationQRCode.and.returnValue(of({})); 
+    campaignServiceSpy = jasmine.createSpyObj('CampaignService', ['dummy']);
     routerSpy = jasmine.createSpyObj('Router', ['navigate']);
     
     activatedRouteMock = {
       snapshot: {
         paramMap: {
-          get: () => '123' // valor padrão para id de campanha
+          get: () => '123'
         }
       }
     };
-
+  
     await TestBed.configureTestingModule({
       declarations: [ CampaignDonationComponent ],
       providers: [
@@ -38,9 +40,10 @@ describe('CampaignDonationComponent', () => {
         { provide: CampaignService, useValue: campaignServiceSpy },
         { provide: ActivatedRoute, useValue: activatedRouteMock },
         { provide: Router, useValue: routerSpy }
-      ]
+      ],
+      imports: [ RouterTestingModule ]
     }).compileComponents();
-
+  
     fixture = TestBed.createComponent(CampaignDonationComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
@@ -110,7 +113,7 @@ describe('CampaignDonationComponent', () => {
   it('copiarPix não deve fazer nada se a chave for vazia', async () => {
     const clipboardSpy = spyOn(navigator.clipboard, 'writeText');
     await component.copiarPix('');
-    expect(clipboardSpy).not.toHaveBeenCalled(); // Não deve tentar copiar nada
+    expect(clipboardSpy).not.toHaveBeenCalled();
   });
 
 });

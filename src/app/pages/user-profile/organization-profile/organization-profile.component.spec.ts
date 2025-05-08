@@ -22,6 +22,11 @@ describe('OrganizationProfileComponent', () => {
     organizationInfoServiceSpy = jasmine.createSpyObj('OrganizationInfoService', [
       'getOrganizationInfoByUserId', 'organizationInfoValidateByOrganizationInfoId'
     ]);
+    // Retornos padrão, assim nunca quebra o subscribe
+    linkServiceSpy.getLinksByProfileId.and.returnValue(of([]));
+    campaignServiceSpy.getCampaignByUserId.and.returnValue(of([]));
+    organizationInfoServiceSpy.getOrganizationInfoByUserId.and.returnValue(of({}));
+    organizationInfoServiceSpy.organizationInfoValidateByOrganizationInfoId.and.returnValue(of({}));
 
     await TestBed.configureTestingModule({
       declarations: [ OrganizationProfileComponent ],
@@ -31,12 +36,11 @@ describe('OrganizationProfileComponent', () => {
         { provide: CampaignService, useValue: campaignServiceSpy },
         { provide: OrganizationInfoService, useValue: organizationInfoServiceSpy }
       ]
-    })
-    .compileComponents();
+    }).compileComponents();
 
     fixture = TestBed.createComponent(OrganizationProfileComponent);
     component = fixture.componentInstance;
-    // Preenche o mínimo para permitir testes de ngOnInit e métodos dependentes
+    // Prepare dados mínimos
     component.user = { userId: 'org12' };
     component.profile = { profileId: 'prof1' };
     fixture.detectChanges();
@@ -48,7 +52,6 @@ describe('OrganizationProfileComponent', () => {
 
   describe('ngOnInit', () => {
     it('deve chamar getOrganizationInfo e getLinks se profile estiver definido', fakeAsync(() => {
-      // Spies
       spyOn(component, 'getOrganizationInfo').and.callFake(() => {});
       spyOn(component, 'getLinks').and.callFake(() => {});
 
@@ -119,7 +122,6 @@ describe('OrganizationProfileComponent', () => {
     expect(component.links).toEqual(links);
     expect(component.getSocialAccounts).toHaveBeenCalledWith(links[0]);
     expect(component.getSocialAccounts).toHaveBeenCalledWith(links[1]);
-    // Confere se redes sociais e otherLinks foram preenchidas direito:
     expect(component.socialAccounts.length).toBeGreaterThan(0);
     expect(component.otherLinks.length).toBeGreaterThan(0);
   }));

@@ -6,6 +6,10 @@ import { CampaignService } from 'src/app/shared/services/campaign.service';
 import { LocalStorageService } from 'src/app/shared/services/local-storage.service';
 import { of, throwError } from 'rxjs';
 
+// IMPORTAÇÕES QUE RESOLVEM SEUS ERROS:
+import { RouterTestingModule } from '@angular/router/testing';
+import { NgxMaskModule } from 'ngx-mask'; // ou NgxMaskPipe/provideNgxMask (caso sua versão precise)
+
 describe('CampaignViewComponent', () => {
   let component: CampaignViewComponent;
   let fixture: ComponentFixture<CampaignViewComponent>;
@@ -19,8 +23,9 @@ describe('CampaignViewComponent', () => {
     spinnerSpy = jasmine.createSpyObj('NgxSpinnerService', ['show', 'hide']);
     routerSpy = jasmine.createSpyObj('Router', ['navigate']);
     campaignServiceSpy = jasmine.createSpyObj('CampaignService', ['getCampaignById']);
+    campaignServiceSpy.getCampaignById.and.returnValue(of({}));  // <-- Retorno padrão pro subscribe nunca ser undefined
     localStorageSpy = jasmine.createSpyObj('LocalStorageService', ['get']);
-
+  
     activatedRouteMock = {
       snapshot: {
         paramMap: {
@@ -28,7 +33,7 @@ describe('CampaignViewComponent', () => {
         }
       }
     };
-
+  
     await TestBed.configureTestingModule({
       declarations: [ CampaignViewComponent ],
       providers: [
@@ -37,9 +42,13 @@ describe('CampaignViewComponent', () => {
         { provide: ActivatedRoute, useValue: activatedRouteMock },
         { provide: CampaignService, useValue: campaignServiceSpy },
         { provide: LocalStorageService, useValue: localStorageSpy }
+      ],
+      imports: [
+        RouterTestingModule,
+        NgxMaskModule.forRoot() // Isso resolve o erro do pipe 'mask'
       ]
     }).compileComponents();
-
+  
     fixture = TestBed.createComponent(CampaignViewComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();

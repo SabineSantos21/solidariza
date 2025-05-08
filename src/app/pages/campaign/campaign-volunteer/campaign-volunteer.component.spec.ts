@@ -6,6 +6,7 @@ import { CampaignVolunteerService } from 'src/app/shared/services/campaignVolunt
 import { CampaignService } from 'src/app/shared/services/campaign.service';
 import { LocalStorageService } from 'src/app/shared/services/local-storage.service';
 import { of, throwError } from 'rxjs';
+import { RouterTestingModule } from '@angular/router/testing';
 
 describe('CampaignVolunteerComponent', () => {
   let component: CampaignVolunteerComponent;
@@ -21,8 +22,11 @@ describe('CampaignVolunteerComponent', () => {
     spinnerSpy = jasmine.createSpyObj('NgxSpinnerService', ['show', 'hide']);
     routerSpy = jasmine.createSpyObj('Router', ['navigate']);
     localStorageSpy = jasmine.createSpyObj('LocalStorageService', ['get']);
+    localStorageSpy.get.and.returnValue({ userId: 7 });
     campaignVolunteerServiceSpy = jasmine.createSpyObj('CampaignVolunteerService', ['createCampaignVolunteer']);
+    campaignVolunteerServiceSpy.createCampaignVolunteer.and.returnValue(of({}));
     campaignServiceSpy = jasmine.createSpyObj('CampaignService', ['getCampaignById']);
+    campaignServiceSpy.getCampaignById.and.returnValue(of({}));
 
     activatedRouteMock = {
       snapshot: {
@@ -34,6 +38,7 @@ describe('CampaignVolunteerComponent', () => {
 
     await TestBed.configureTestingModule({
       declarations: [ CampaignVolunteerComponent ],
+      imports: [ RouterTestingModule ], // Permite usar [routerLink] no template
       providers: [
         { provide: NgxSpinnerService, useValue: spinnerSpy },
         { provide: Router, useValue: routerSpy },

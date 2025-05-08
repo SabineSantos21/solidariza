@@ -23,9 +23,12 @@ describe('ProfileComponent', () => {
   beforeEach(async () => {
     spinnerSpy = jasmine.createSpyObj('NgxSpinnerService', ['show', 'hide']);
     profileServiceSpy = jasmine.createSpyObj('ProfileService', ['getProfileByUserId']);
+    profileServiceSpy.getProfileByUserId.and.returnValue(of({})); // <-- Padrão
     localStorageSpy = jasmine.createSpyObj('LocalStorageService', ['get']);
     campaignServiceSpy = jasmine.createSpyObj('CampaignService', ['getCampaignByUserId']);
+    campaignServiceSpy.getCampaignByUserId.and.returnValue(of([])); // <-- Padrão
     userServiceSpy = jasmine.createSpyObj('UserService', ['getUserById']);
+    userServiceSpy.getUserById.and.returnValue(of({})); // <-- Padrão
     routerSpy = jasmine.createSpyObj('Router', ['navigate']);
 
     activatedRouteMock = {

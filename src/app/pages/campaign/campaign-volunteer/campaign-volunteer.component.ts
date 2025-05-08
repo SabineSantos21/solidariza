@@ -32,6 +32,12 @@ export class CampaignVolunteerComponent implements OnInit {
 
     if(this.campaignId) {
       this.volunteer = this.localStorageService.get("user");
+
+      if (!this.volunteer || !this.volunteer) {
+        this.router.navigate(["/"]);
+        return;
+      }
+
       this.createCampaignVolunteer();
     }
     else {

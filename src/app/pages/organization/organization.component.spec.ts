@@ -13,6 +13,7 @@ describe('OrganizationComponent', () => {
   beforeEach(async () => {
     spinnerSpy = jasmine.createSpyObj('NgxSpinnerService', ['show', 'hide']);
     profileServiceSpy = jasmine.createSpyObj('ProfileService', ['getProfileOrganization']);
+    profileServiceSpy.getProfileOrganization.and.returnValue(of([])); // RETORNO PADRÃO!
 
     await TestBed.configureTestingModule({
       declarations: [OrganizationComponent],

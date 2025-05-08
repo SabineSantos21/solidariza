@@ -6,36 +6,36 @@
         <div class="d-flex align-items-center justify-content-between mt-2 mb-3">
           <div>
             <img src="../../../assets/img/icons/campanha.svg" alt="" width="20">
-            <span class="ml-2"><strong>{{ campaign.title }}</strong></span>
+            <span class="ml-2"><strong>{{ campaign?.title }}</strong></span>
           </div>
         </div>
 
         <p>
-          {{ campaign.description }}
+          {{ campaign?.description }}
         </p>
 
         <div style="height: 1px; width: 100%; background-color: #d6d6d6;"></div>
 
         <div class="d-flex align-items-center justify-content-between mt-2">
-          <div [routerLink]="['/profile', {id: campaign.user.userId}]" class="cursor-pointer">
+          <div [routerLink]="['/profile', {id: campaign?.user?.userId}]" class="cursor-pointer">
             <img src="../../../assets/img/icons/organizacao.svg" alt="" width="25">
-            <small class="ml-2">{{ profile.name }}</small>
+            <small class="ml-2">{{ profile?.name }}</small>
           </div>
 
           <div class="d-flex align-items-center">
             <div class="mr-4 d-flex align-items-center">
               <i class="ni ni-calendar-grid-58"></i>
-              <small class="ml-2">{{ campaign.startDate | date: 'dd/MM/yyyy HH:mm' }}</small>
+              <small class="ml-2">{{ campaign?.startDate | date: 'dd/MM/yyyy HH:mm' }}</small>
             </div>
 
             <div class="d-flex align-items-center">
               <i class="ni ni-calendar-grid-58"></i>
-              <small class="ml-2">{{ campaign.endDate | date: 'dd/MM/yyyy HH:mm' }}</small>
+              <small class="ml-2">{{ campaign?.endDate | date: 'dd/MM/yyyy HH:mm' }}</small>
             </div>
           </div>
           
           <div>
-            <button class="btn btn-secondary btn-sm mr-3" type="button" [routerLink]="['/campaign-view', {id: campaign.campaignId}]">Saiba mais</button>            
+            <button class="btn btn-secondary btn-sm mr-3" type="button" [routerLink]="['/campaign-view', {id: campaign?.campaignId}]">Saiba mais</button>            
           </div>
         </div>
       </div>

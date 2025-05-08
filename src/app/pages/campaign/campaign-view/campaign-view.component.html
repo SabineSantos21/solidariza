@@ -19,11 +19,11 @@
                 <div class="card-body pt-0 pt-md-4 mt-3">
                     <div class="text-center">
                         <h3>
-                            {{ campaign.title }}
+                            {{ campaign?.title }}
                         </h3>
 
                         <p>
-                            {{ campaign.description }}
+                            {{ campaign?.description }}
                         </p>
                     </div>
                 </div>
@@ -32,38 +32,38 @@
 
                 <div class="d-flex justify-content-around mb-2">
                     <div class="d-flex flex-column justify-content-center align-items-center mb-2">
-                        <div class="d-flex cursor-pointer"  [routerLink]="['/profile', {id: campaign.userId}]">
+                        <div class="d-flex cursor-pointer"  [routerLink]="['/profile', {id: campaign?.userId}]">
                             <img src="../../../../assets/img/icons/organizacao_icon.svg" alt="localização" height="20">
-                            <span class="ml-2">{{ campaign.user.name }}</span>
+                            <span class="ml-2">{{ campaign?.user?.name }}</span>
                         </div>
 
-                        <small>{{ campaign.user.documentNumber | mask: "00.000.000/0000-00" }}</small>
+                        <small>{{ campaign?.user?.documentNumber | mask: "00.000.000/0000-00" }}</small>
                     </div>                    
                     
-                    <div class="d-flex flex-column justify-content-center align-items-center mb-2"*ngIf="campaign.address != null">
+                    <div class="d-flex flex-column justify-content-center align-items-center mb-2"*ngIf="campaign?.address != null">
                         <div class="d-flex">
                             <img src="../../../../assets/img/icons/location.svg" alt="localização" height="20">
-                            <span class="ml-2">{{ campaign.address }}</span>
+                            <span class="ml-2">{{ campaign?.address }}</span>
                         </div>
 
-                        <small>{{ campaign.city }}, {{ campaign.state }}</small>
+                        <small>{{ campaign?.city }}, {{ campaign?.state }}</small>
                     </div>                    
                 </div>
                 
                 <div class="d-flex justify-content-around">
                     <div class="d-flex align-items-center mb-2">
                         <img src="../../../../assets/img/icons/phone.svg" alt="localização" height="20">
-                        <span class="ml-2">{{ campaign.user.phone | mask:'(00) 0000-00009' }}</span>
+                        <span class="ml-2">{{ campaign?.user?.phone | mask:'(00) 0000-00009' }}</span>
                     </div>
 
                     <div class="d-flex align-items-center mb-2">
                         <img src="../../../../assets/img/icons/calendar.svg" alt="localização" height="20">
-                        <span class="ml-2">Início: {{ campaign.startDate | date:'dd/MM/yyyy HH:mm' }}</span>
+                        <span class="ml-2">Início: {{ campaign?.startDate | date:'dd/MM/yyyy HH:mm' }}</span>
                     </div>
 
                     <div class="d-flex align-items-center mb-2">
                         <img src="../../../../assets/img/icons/calendar.svg" alt="localização" height="20">
-                        <span class="ml-2">Fim: {{ campaign.endDate | date:'dd/MM/yyyy HH:mm' }}</span>
+                        <span class="ml-2">Fim: {{ campaign?.endDate | date:'dd/MM/yyyy HH:mm' }}</span>
                     </div>
                 </div>
 
@@ -73,8 +73,8 @@
                     <button class="btn btn-secundary" type="button" [routerLink]="['/dashboard']">Voltar</button>
                     
                     <div>
-                        <button class="btn btn-outline-warning" type="button" *ngIf="campaign.type == 1 && user.type == 3" [routerLink]="['/campaign-volunter', {id: campaignId}]">Quer Ser Voluntário</button>
-                        <button class="btn btn-outline-default ml-2" type="button" *ngIf="campaign.type == 1 && user.type != 1" [routerLink]="['/campaign-donation', {id: campaign.campaignId}]">Quero Doar</button>
+                        <button class="btn btn-outline-warning" type="button" *ngIf="campaign?.type == 1 && user?.type == 3" [routerLink]="['/campaign-volunter', {id: campaignId}]">Quer Ser Voluntário</button>
+                        <button class="btn btn-outline-default ml-2" type="button" *ngIf="campaign?.type == 1 && user?.type != 1" [routerLink]="['/campaign-donation', {id: campaign?.campaignId}]">Quero Doar</button>
                     </div>
 
                 </div>

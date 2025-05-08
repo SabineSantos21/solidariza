@@ -25,7 +25,7 @@ export class CampaignVolunteerAprovationComponent implements OnInit {
 
     if(!this.user) this.router.navigate(['/login'])
 
-    this.getCampaigns(this.user.userId);
+    this.getCampaigns(this.user?.userId);
   }
 
   getCampaigns(userId) {

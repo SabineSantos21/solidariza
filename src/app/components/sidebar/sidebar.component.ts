@@ -44,6 +44,11 @@ export class SidebarComponent implements OnInit {
   ngOnInit() {
     this.user = this.localStorageService.get("user")
 
+    if (!this.user || !this.user.type) {
+      this.router.navigate(['/login']);
+      return;
+    }
+
     if(this.user.type == UserType.Organization) {
       this.menuItems = ROUTES_ORGANIZATION.filter(menuItem => menuItem);
     }

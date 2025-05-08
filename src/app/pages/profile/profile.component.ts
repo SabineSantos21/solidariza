@@ -34,8 +34,10 @@ export class ProfileComponent implements OnInit {
     this.userId = this.route.snapshot.paramMap.get("id");
     this.user = this.localStorageService.get("user");
 
+    if (!this.userId || !this.user) this.router.navigate(['/']);
+
     if (this.userId) {
-      if (this.userId == this.user.userId) {
+      if (this.userId == this.user?.userId) {
         this.showEditUser = true;
       }
       else {

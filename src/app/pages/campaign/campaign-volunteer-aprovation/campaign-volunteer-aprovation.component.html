@@ -37,19 +37,19 @@
                                                 alt="Image placeholder"
                                                 src="../../../../assets/img/icons/campanha.svg" height="35"></a>
                                         <div class="media-body"><span
-                                                class="mb-0 text-sm">{{ campaign.title }}</span></div>
+                                                class="mb-0 text-sm">{{ campaign?.title }}</span></div>
                                     </div>
                                 </th>
                                                                 
-                                <td> {{ campaign.startDate | date: 'dd/MM/yyyy HH:mm' }} </td>
+                                <td> {{ campaign?.startDate | date: 'dd/MM/yyyy HH:mm' }} </td>
                                 
-                                <td> {{ campaign.endDate | date: 'dd/MM/yyyy HH:mm' }} </td>
+                                <td> {{ campaign?.endDate | date: 'dd/MM/yyyy HH:mm' }} </td>
                                 
                                 <td>
-                                    {{ campaign.city }} {{ campaign.city != null ? "," : "" }} {{ campaign.state }}
+                                    {{ campaign?.city }} {{ campaign?.city != null ? "," : "" }} {{ campaign?.state }}
                                 </td>
 
-                                <td [routerLink]="['/campaign-volunteer-aprovation-view', {id: campaign.campaignId}]">
+                                <td [routerLink]="['/campaign-volunteer-aprovation-view', {id: campaign?.campaignId}]">
                                     <button class="btn btn-sm btn-outline-default" type="button">Ver Inscrições</button>
                                 </td>
                             </tr>

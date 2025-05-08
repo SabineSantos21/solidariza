@@ -17,7 +17,9 @@ describe('CampaignVolunteerAprovationComponent', () => {
   beforeEach(async () => {
     spinnerSpy = jasmine.createSpyObj('NgxSpinnerService', ['show', 'hide']);
     campaignServiceSpy = jasmine.createSpyObj('CampaignService', ['getCampaignByUserId']);
+    campaignServiceSpy.getCampaignByUserId.and.returnValue(of([])); // <- Retorno padrão!
     localStorageSpy = jasmine.createSpyObj('LocalStorageService', ['get']);
+    localStorageSpy.get.and.returnValue({ userId: 1, name: 'default' }); // <- Retorno padrão!
     routerSpy = jasmine.createSpyObj('Router', ['navigate']);
 
     await TestBed.configureTestingModule({

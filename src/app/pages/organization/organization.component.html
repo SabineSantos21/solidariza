@@ -1,25 +1,25 @@
 <div class="header bg-gradient-info pb-8 pt-5 pt-md-8">
     <div class="container-fluid">
         <div class="header-body">
-            <div class="row" *ngIf="organizations.length > 0">
+            <div class="row" *ngIf="organizations?.length > 0">
                 <div class="col-xl-6 mb-4" *ngFor="let organization of organizations">
                     <div class="card card-body border rounded d-flex flex-column justify-content-between" style="height: 35vh;">
                         <div class="row mb-3">
                             <div class="col-10 d-flex flex-column">
-                                <span class="h2 font-weight-bold mb-0 mt-3">{{ organization.name }}</span>
+                                <span class="h2 font-weight-bold mb-0 mt-3">{{ organization?.name }}</span>
 
                                 <div class="h5 font-weight-300">
-                                    <i class="ni location_pin mr-2"></i>{{ organization.city }}, {{ organization.state }}
+                                    <i class="ni location_pin mr-2"></i>{{ organization?.city }}, {{ organization?.state }}
                                 </div>                            
                                    
-                                <div class="col-auto h5 font-weight-300 mb-2" *ngIf="organization.address">
+                                <div class="col-auto h5 font-weight-300 mb-2" *ngIf="organization?.address">
                                     <img src="../../../../assets/img/icons/location.svg" alt="localização" height="20">
-                                    <span class="ml-3">{{ organization.address }}</span>
+                                    <span class="ml-3">{{ organization?.address }}</span>
                                 </div>
     
-                                <div class="col-auto h5 font-weight-300" *ngIf="organization.phone">
+                                <div class="col-auto h5 font-weight-300" *ngIf="organization?.phone">
                                     <img src="../../../../assets/img/icons/phone.svg" alt="localização" height="20">
-                                    <span class="ml-2">{{ organization.phone | mask:'(00) 0000-00009' }}</span>
+                                    <span class="ml-2">{{ organization?.phone | mask:'(00) 0000-00009' }}</span>
                                 </div>
                             </div>
 
@@ -30,7 +30,7 @@
                         </div>
                     
                         <div class="d-flex justify-content-end">
-                            <button class="btn btn-secondary btn-sm mr-3" type="button" [routerLink]="['/profile', {id: organization.userId}]">Ver Perfil </button>            
+                            <button class="btn btn-secondary btn-sm mr-3" type="button" [routerLink]="['/profile', {id: organization?.userId}]">Ver Perfil </button>            
                         </div>
                     </div>
                 </div>

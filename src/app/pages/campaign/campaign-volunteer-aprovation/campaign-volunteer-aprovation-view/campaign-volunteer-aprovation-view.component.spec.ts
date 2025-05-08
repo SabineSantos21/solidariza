@@ -21,6 +21,9 @@ describe('CampaignVolunteerAprovationViewComponent', () => {
       'updateCampaignVolunteer'
     ]);
 
+    campaignVolunteerServiceSpy.getCampaignVolunteerByCampaignId.and.returnValue(of([]));
+    campaignVolunteerServiceSpy.updateCampaignVolunteer.and.returnValue(of({}));
+
     activatedRouteMock = {
       snapshot: {
         paramMap: {
