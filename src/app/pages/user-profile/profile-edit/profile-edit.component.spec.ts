@@ -1,62 +1,67 @@
-// import { ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
-// import { ProfileEditComponent } from './profile-edit.component';
-// import { NgxSpinnerService } from 'ngx-spinner';
-// import { ProfileService } from 'src/app/shared/services/profile.service';
-// import { LocalStorageService } from 'src/app/shared/services/local-storage.service';
-// import { of } from 'rxjs';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ProfileEditComponent } from './profile-edit.component';
+import { NgxSpinnerService } from 'ngx-spinner';
+import { ProfileService } from 'src/app/shared/services/profile.service';
+import { LocalStorageService } from 'src/app/shared/services/local-storage.service';
+import { of } from 'rxjs';
+import { NO_ERRORS_SCHEMA } from '@angular/core';
 
-// describe('ProfileEditComponent', () => {
-//   let component: ProfileEditComponent;
-//   let fixture: ComponentFixture<ProfileEditComponent>;
-//   let spinnerSpy: jasmine.SpyObj<NgxSpinnerService>;
-//   let profileServiceSpy: jasmine.SpyObj<ProfileService>;
-//   let localStorageSpy: jasmine.SpyObj<LocalStorageService>;
+describe('ProfileEditComponent', () => {
+  let component: ProfileEditComponent;
+  let fixture: ComponentFixture<ProfileEditComponent>;
+  let mockSpinner: any;
+  let mockProfileService: any;
+  let mockLocalStorageService: any;
 
-//   beforeEach(async () => {
-//     spinnerSpy = jasmine.createSpyObj('NgxSpinnerService', ['show', 'hide']);
-//     profileServiceSpy = jasmine.createSpyObj('ProfileService', ['getProfileByUserId']);
-//     localStorageSpy = jasmine.createSpyObj('LocalStorageService', ['get']);
+  beforeEach(async () => {
+    mockSpinner = { show: jasmine.createSpy('show'), hide: jasmine.createSpy('hide') };
+    mockProfileService = {
+      getProfileByUserId: jasmine.createSpy('getProfileByUserId').and.returnValue(of({ id: 1, name: 'UserProfile' }))
+    };
+    mockLocalStorageService = {
+      get: jasmine.createSpy('get').and.returnValue({ userId: 42, name: 'TestUser' })
+    };
 
-//     await TestBed.configureTestingModule({
-//       declarations: [ProfileEditComponent],
-//       providers: [
-//         { provide: NgxSpinnerService, useValue: spinnerSpy },
-//         { provide: ProfileService, useValue: profileServiceSpy },
-//         { provide: LocalStorageService, useValue: localStorageSpy }
-//       ]
-//     }).compileComponents();
+    await TestBed.configureTestingModule({
+      declarations: [ProfileEditComponent],
+      providers: [
+        { provide: NgxSpinnerService, useValue: mockSpinner },
+        { provide: ProfileService, useValue: mockProfileService },
+        { provide: LocalStorageService, useValue: mockLocalStorageService }
+      ],
+      schemas: [NO_ERRORS_SCHEMA]
+    }).compileComponents();
+  });
 
-//     fixture = TestBed.createComponent(ProfileEditComponent);
-//     component = fixture.componentInstance;
-//     fixture.detectChanges();
-//   });
+  beforeEach(() => {
+    fixture = TestBed.createComponent(ProfileEditComponent);
+    component = fixture.componentInstance;
+    fixture.detectChanges();
+  });
 
-//   it('deve criar o componente', () => {
-//     expect(component).toBeTruthy();
-//   });
+  it('deve criar o componente', () => {
+    expect(component).toBeTruthy();
+  });
 
-//   it('ngOnInit deve chamar getUser', () => {
-//     spyOn(component, 'getUser').and.callThrough();
-//     component.ngOnInit();
-//     expect(component.getUser).toHaveBeenCalled();
-//   });
+  it('deve chamar getUser no ngOnInit', () => {
+    spyOn(component, 'getUser').and.callThrough();
+    component.ngOnInit();
+    expect(component.getUser).toHaveBeenCalled();
+  });
 
-//   it('getUser deve buscar user no localStorage e chamar getProfileByUserId', () => {
-//     localStorageSpy.get.and.returnValue({ userId: 'uxt' });
-//     spyOn(component, 'getProfileByUserId').and.callThrough();
-//     component.getUser();
-//     expect(localStorageSpy.get).toHaveBeenCalledWith('user');
-//     expect(component.getProfileByUserId).toHaveBeenCalledWith('uxt');
-//   });
+  it('deve popular user e chamar getProfileByUserId em getUser', () => {
+    spyOn(component, 'getProfileByUserId').and.callThrough();
+    component.getUser();
+    expect(component.user).toEqual({ userId: 42, name: 'TestUser' });
+    expect(component.getProfileByUserId).toHaveBeenCalledWith(42);
+  });
 
-//   it('getProfileByUserId deve preencher profile, controlar loading e spinner', fakeAsync(() => {
-//     profileServiceSpy.getProfileByUserId.and.returnValue(of({ name: 'Maria', id: 'yy' }));
-//     component.getProfileByUserId('zz');
-//     tick();
-//     expect(spinnerSpy.show).toHaveBeenCalled();
-//     expect(component.profile).toEqual({ name: 'Maria', id: 'yy' });
-//     expect(component.loading).toBeTrue();
-//     expect(spinnerSpy.hide).toHaveBeenCalled();
-//   }));
-
-// });
+  it('deve buscar perfil pelo userId e definir profile e loading', () => {
+    component.getProfileByUserId(42);
+    expect(mockSpinner.show).toHaveBeenCalled();
+    expect(mockProfileService.getProfileByUserId).toHaveBeenCalledWith(42);
+    expect(component.profile).toEqual({ id: 1, name: 'UserProfile' });
+    expect(component.loading).toBeTrue();
+    expect(mockSpinner.hide).toHaveBeenCalled();
+  });
+});

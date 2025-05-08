@@ -1,141 +1,166 @@
-// import { ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
-// import { UserProfileComponent } from './user-profile.component';
-// import { NgxSpinnerService } from 'ngx-spinner';
-// import { LocalStorageService } from 'src/app/shared/services/local-storage.service';
-// import { ProfileService } from 'src/app/shared/services/profile.service';
-// import { CampaignService } from 'src/app/shared/services/campaign.service';
-// import { UserService } from 'src/app/shared/services/user.service';
-// import { ActivatedRoute, Router } from '@angular/router';
-// import { of } from 'rxjs';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { UserProfileComponent } from './user-profile.component';
+import { NgxSpinnerService } from 'ngx-spinner';
+import { LocalStorageService } from 'src/app/shared/services/local-storage.service';
+import { ProfileService } from 'src/app/shared/services/profile.service';
+import { CampaignService } from 'src/app/shared/services/campaign.service';
+import { UserService } from 'src/app/shared/services/user.service';
+import { ActivatedRoute, Router } from '@angular/router';
+import { of } from 'rxjs';
+import { NO_ERRORS_SCHEMA } from '@angular/core';
 
-// enum UserType {
-//   Organization = 'Organization',
-//   Donor = 'Donor',
-//   Volunteer = 'Volunteer'
-// }
+describe('UserProfileComponent', () => {
+  let component: UserProfileComponent;
+  let fixture: ComponentFixture<UserProfileComponent>;
+  let mockSpinner: any;
+  let mockLocalStorage: any;
+  let mockProfileService: any;
+  let mockCampaignService: any;
+  let mockUserService: any;
+  let mockActivatedRoute: any;
+  let mockRouter: any;
 
-// describe('UserProfileComponent', () => {
-//   let component: UserProfileComponent;
-//   let fixture: ComponentFixture<UserProfileComponent>;
-//   let spinnerSpy: jasmine.SpyObj<NgxSpinnerService>;
-//   let localStorageSpy: jasmine.SpyObj<LocalStorageService>;
-//   let profileServiceSpy: jasmine.SpyObj<ProfileService>;
-//   let campaignServiceSpy: jasmine.SpyObj<CampaignService>;
-//   let userServiceSpy: jasmine.SpyObj<UserService>;
-//   let routerSpy: jasmine.SpyObj<Router>;
-//   let activatedRouteMock: any;
+  beforeEach(async () => {
+    mockSpinner = { show: jasmine.createSpy('show'), hide: jasmine.createSpy('hide') };
+    mockLocalStorage = { get: jasmine.createSpy('get') };
+    mockProfileService = { getProfileByUserId: jasmine.createSpy('getProfileByUserId') };
+    mockCampaignService = { getCampaignByUserId: jasmine.createSpy('getCampaignByUserId') };
+    mockUserService = { getUserById: jasmine.createSpy('getUserById') };
+    mockRouter = { navigate: jasmine.createSpy('navigate') };
+    mockActivatedRoute = {
+      snapshot: { paramMap: { get: jasmine.createSpy('get') } }
+    };
 
-//   beforeEach(async () => {
-//     spinnerSpy = jasmine.createSpyObj('NgxSpinnerService', ['show', 'hide']);
-//     localStorageSpy = jasmine.createSpyObj('LocalStorageService', ['get']);
-//     profileServiceSpy = jasmine.createSpyObj('ProfileService', ['getProfileByUserId']);
-//     campaignServiceSpy = jasmine.createSpyObj('CampaignService', ['getCampaignByUserId']);
-//     userServiceSpy = jasmine.createSpyObj('UserService', ['getUserById']);
-//     routerSpy = jasmine.createSpyObj('Router', ['navigate']);
+    await TestBed.configureTestingModule({
+      declarations: [UserProfileComponent],
+      providers: [
+        { provide: NgxSpinnerService, useValue: mockSpinner },
+        { provide: LocalStorageService, useValue: mockLocalStorage },
+        { provide: ProfileService, useValue: mockProfileService },
+        { provide: CampaignService, useValue: mockCampaignService },
+        { provide: UserService, useValue: mockUserService },
+        { provide: Router, useValue: mockRouter },
+        { provide: ActivatedRoute, useValue: mockActivatedRoute }
+      ],
+      schemas: [NO_ERRORS_SCHEMA]
+    }).compileComponents();
+  });
 
-//     activatedRouteMock = {
-//       snapshot: {
-//         paramMap: {
-//           get: () => '990' // default userId
-//         }
-//       }
-//     };
+  beforeEach(() => {
+    fixture = TestBed.createComponent(UserProfileComponent);
+    component = fixture.componentInstance;
+  });
 
-//     await TestBed.configureTestingModule({
-//       declarations: [UserProfileComponent],
-//       providers: [
-//         { provide: NgxSpinnerService, useValue: spinnerSpy },
-//         { provide: LocalStorageService, useValue: localStorageSpy },
-//         { provide: ProfileService, useValue: profileServiceSpy },
-//         { provide: CampaignService, useValue: campaignServiceSpy },
-//         { provide: UserService, useValue: userServiceSpy },
-//         { provide: Router, useValue: routerSpy },
-//         { provide: ActivatedRoute, useValue: activatedRouteMock }
-//       ]
-//     }).compileComponents();
+  it('deve criar o componente', () => {
+    expect(component).toBeTruthy();
+  });
 
-//     fixture = TestBed.createComponent(UserProfileComponent);
-//     component = fixture.componentInstance;
-//     fixture.detectChanges();
-//   });
+  describe('ngOnInit()', () => {
+    it('deve mostrar perfil editável se userId == user.userId', () => {
+      mockActivatedRoute.snapshot.paramMap.get.and.returnValue('99');
+      mockLocalStorage.get.and.returnValue({ userId: 99, type: 1 });
 
-//   it('deve criar o componente', () => {
-//     expect(component).toBeTruthy();
-//   });
+      spyOn(component, 'getUserById');
+      spyOn(component, 'getProfileByUserId');
 
-//   describe('ngOnInit', () => {
-//     it('userId presente, igual ao user.userId: showEditUser = true, busca user/profile', fakeAsync(() => {
-//       localStorageSpy.get.and.returnValue({ userId: '990', type: UserType.Donor });
-//       userServiceSpy.getUserById.and.returnValue(of({ userId: '990', type: UserType.Donor }));
-//       profileServiceSpy.getProfileByUserId.and.returnValue(of({}));
-//       component.ngOnInit();
-//       tick();
-//       expect(component.showEditUser).toBeTrue();
-//       expect(profileServiceSpy.getProfileByUserId).toHaveBeenCalledWith('990');
-//       expect(userServiceSpy.getUserById).toHaveBeenCalledWith('990');
-//     }));
+      component.ngOnInit();
+      expect(component.showEditUser).toBeTrue();
+      expect(component.getUserById).toHaveBeenCalledWith('99');
+      expect(component.getProfileByUserId).toHaveBeenCalledWith('99');
+    });
 
-//     it('userId presente, diferente do user.userId: showEditUser = false, busca user/profile', fakeAsync(() => {
-//       localStorageSpy.get.and.returnValue({ userId: 'ORIG', type: UserType.Donor });
-//       userServiceSpy.getUserById.and.returnValue(of({ userId: '990', type: UserType.Donor }));
-//       profileServiceSpy.getProfileByUserId.and.returnValue(of({}));
-//       component.ngOnInit();
-//       tick();
-//       expect(component.showEditUser).toBeFalse();
-//       expect(profileServiceSpy.getProfileByUserId).toHaveBeenCalledWith('990');
-//       expect(userServiceSpy.getUserById).toHaveBeenCalledWith('990');
-//     }));
+    it('deve mostrar perfil não editável se userId != user.userId', () => {
+      mockActivatedRoute.snapshot.paramMap.get.and.returnValue('100');
+      mockLocalStorage.get.and.returnValue({ userId: 1, type: 1 });
 
-//     it('não tem userId, mas tem user: showEditUser = true, busca somente o profile', fakeAsync(() => {
-//       activatedRouteMock.snapshot.paramMap.get = () => null;
-//       localStorageSpy.get.and.returnValue({ userId: '51', type: UserType.Volunteer });
-//       profileServiceSpy.getProfileByUserId.and.returnValue(of({}));
-//       component.ngOnInit();
-//       tick();
-//       expect(component.showEditUser).toBeTrue();
-//       expect(profileServiceSpy.getProfileByUserId).toHaveBeenCalledWith('51');
-//     }));
+      spyOn(component, 'getUserById');
+      spyOn(component, 'getProfileByUserId');
 
-//     it('não tem user nem userId: redireciona para /login', () => {
-//       activatedRouteMock.snapshot.paramMap.get = () => null;
-//       localStorageSpy.get.and.returnValue(null);
-//       component.ngOnInit();
-//       expect(routerSpy.navigate).toHaveBeenCalledWith(['/login']);
-//     });
-//   });
+      component.ngOnInit();
+      expect(component.showEditUser).toBeFalse();
+      expect(component.getUserById).toHaveBeenCalledWith('100');
+      expect(component.getProfileByUserId).toHaveBeenCalledWith('100');
+    });
 
-//   it('getProfileByUserId popula profile e busca campanhas se user Organization', fakeAsync(() => {
-//     component.user = { userId: '1', type: UserType.Organization };
-//     profileServiceSpy.getProfileByUserId.and.returnValue(of({}));
-//     campaignServiceSpy.getCampaignByUserId.and.returnValue(of(['camp']));
-//     component.getProfileByUserId('1');
-//     tick();
-//     expect(spinnerSpy.show).toHaveBeenCalled();
-//     expect(profileServiceSpy.getProfileByUserId).toHaveBeenCalledWith('1');
-//     expect(campaignServiceSpy.getCampaignByUserId).toHaveBeenCalledWith('1');
-//     expect(spinnerSpy.hide).toHaveBeenCalled();
-//   }));
+    it('deve buscar perfil do usuário do localStorage se não houver userId', () => {
+      mockActivatedRoute.snapshot.paramMap.get.and.returnValue(null);
+      mockLocalStorage.get.and.returnValue({ userId: 5, type: 1 });
 
-//   it('getUserById popula user e busca campanhas se user Organization', fakeAsync(() => {
-//     userServiceSpy.getUserById.and.returnValue(of({ userId: '5', type: UserType.Organization }));
-//     campaignServiceSpy.getCampaignByUserId.and.returnValue(of(['C']));
+      spyOn(component, 'getProfileByUserId');
 
-//     component.getUserById('5');
-//     tick();
-//     expect(spinnerSpy.show).toHaveBeenCalled();
-//     expect(userServiceSpy.getUserById).toHaveBeenCalledWith('5');
-//     expect(component.user.userId).toBe('5');
-//     expect(campaignServiceSpy.getCampaignByUserId).toHaveBeenCalledWith('5');
-//     expect(spinnerSpy.hide).toHaveBeenCalled();
-//   }));
+      component.ngOnInit();
+      expect(component.showEditUser).toBeTrue();
+      expect(component.getProfileByUserId).toHaveBeenCalledWith(5);
+    });
 
-//   it('getCampaignByUserId popula campaigns e spinner', fakeAsync(() => {
-//     campaignServiceSpy.getCampaignByUserId.and.returnValue(of(['A', 'B']));
-//     component.getCampaignByUserId('12');
-//     tick();
-//     expect(spinnerSpy.show).toHaveBeenCalled();
-//     expect(campaignServiceSpy.getCampaignByUserId).toHaveBeenCalledWith('12');
-//     expect(component.campaigns).toEqual(['A', 'B']);
-//     expect(spinnerSpy.hide).toHaveBeenCalled();
-//   }));
-// });
+    it('deve redirecionar para login se não houver userId nem usuário local', () => {
+      mockActivatedRoute.snapshot.paramMap.get.and.returnValue(null);
+      mockLocalStorage.get.and.returnValue(null);
+
+      component.ngOnInit();
+      expect(mockRouter.navigate).toHaveBeenCalledWith(['/login']);
+    });
+  });
+
+  describe('getProfileByUserId()', () => {
+    beforeEach(() => {
+      component.user = { userId: 42, type: 2 }; // type: 2 != Organization
+      mockProfileService.getProfileByUserId.and.returnValue(of({ nome: 'Profile Test' }));
+    });
+
+    it('deve buscar e setar profile e esconder spinner', () => {
+      component.getProfileByUserId(42);
+      expect(mockSpinner.show).toHaveBeenCalled();
+      expect(mockProfileService.getProfileByUserId).toHaveBeenCalledWith(42);
+      expect(component.profile).toEqual({ nome: 'Profile Test' });
+      expect(mockSpinner.hide).toHaveBeenCalled();
+    });
+
+    it('deve chamar getCampaignByUserId se usuario for Organization', () => {
+      // type: 1 (Organization)
+      component.user = { userId: 88, type: 1 };
+
+      mockProfileService.getProfileByUserId.and.returnValue(of({ nome: 'Profile Org' }));
+      spyOn(component, 'getCampaignByUserId');
+
+      component.getProfileByUserId(88);
+      expect(component.getCampaignByUserId).toHaveBeenCalledWith(88);
+    });
+  });
+
+  describe('getUserById()', () => {
+    beforeEach(() => {
+      mockUserService.getUserById.and.returnValue(of({ userId: 70, type: 2 }));
+      component.user = null;
+    });
+
+    it('deve buscar usuário, setar user e esconder spinner', () => {
+      component.getUserById(70);
+      expect(mockSpinner.show).toHaveBeenCalled();
+      expect(mockUserService.getUserById).toHaveBeenCalledWith(70);
+      expect(component.user).toEqual({ userId: 70, type: 2 });
+      expect(mockSpinner.hide).toHaveBeenCalled();
+    });
+
+    it('deve chamar getCampaignByUserId se usuario for Organization', () => {
+      mockUserService.getUserById.and.returnValue(of({ userId: 71, type: 1 }));
+      spyOn(component, 'getCampaignByUserId');
+      component.getUserById(71);
+      expect(component.getCampaignByUserId).toHaveBeenCalledWith(71);
+    });
+  });
+
+  describe('getCampaignByUserId()', () => {
+    beforeEach(() => {
+      mockCampaignService.getCampaignByUserId.and.returnValue(of([{ id: 1, title: 'C1' }]));
+    });
+
+    it('deve buscar campanhas e setar campaigns', () => {
+      component.getCampaignByUserId(10);
+      expect(mockSpinner.show).toHaveBeenCalled();
+      expect(mockCampaignService.getCampaignByUserId).toHaveBeenCalledWith(10);
+      expect(component.campaigns).toEqual([{ id: 1, title: 'C1' }]);
+      expect(mockSpinner.hide).toHaveBeenCalled();
+    });
+  });
+});

@@ -1,33 +1,54 @@
-// import { ComponentFixture, TestBed } from '@angular/core/testing';
-// import { VolunteerProfileComponent } from './volunteer-profile.component';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { VolunteerProfileComponent } from './volunteer-profile.component';
+import { Pipe, PipeTransform } from '@angular/core';
 
-// describe('VolunteerProfileComponent', () => {
-//   let component: VolunteerProfileComponent;
-//   let fixture: ComponentFixture<VolunteerProfileComponent>;
+// Mock pipe mask
+@Pipe({ name: 'mask' })
+class MockMaskPipe implements PipeTransform {
+  transform(value: any, ...args: any[]) {
+    return value;
+  }
+}
 
-//   beforeEach(async () => {
-//     await TestBed.configureTestingModule({
-//       declarations: [ VolunteerProfileComponent ]
-//     }).compileComponents();
+describe('VolunteerProfileComponent', () => {
+  let component: VolunteerProfileComponent;
+  let fixture: ComponentFixture<VolunteerProfileComponent>;
 
-//     fixture = TestBed.createComponent(VolunteerProfileComponent);
-//     component = fixture.componentInstance;
-//     fixture.detectChanges();
-//   });
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
+      declarations: [
+        VolunteerProfileComponent,
+        MockMaskPipe // Adicione aqui
+      ]
+    })
+    .compileComponents();
+  });
 
-//   it('deve criar o componente', () => {
-//     expect(component).toBeTruthy();
-//   });
+  beforeEach(() => {
+    fixture = TestBed.createComponent(VolunteerProfileComponent);
+    component = fixture.componentInstance;
+    fixture.detectChanges();
+  });
 
-//   it('deve aceitar valores nos inputs user e profile', () => {
-//     const mockUser = { id: 1, name: 'Voluntário', email: 'v@teste.com' };
-//     const mockProfile = { id: 2, description: 'Testando' };
+  it('deve criar o componente', () => {
+    expect(component).toBeTruthy();
+  });
 
-//     component.user = mockUser;
-//     component.profile = mockProfile;
-//     fixture.detectChanges();
+  it('deve aceitar e armazenar o input user', () => {
+    const mockUser = { id: 1, nome: 'Voluntário' };
+    component.user = mockUser;
+    fixture.detectChanges();
+    expect(component.user).toEqual(mockUser);
+  });
 
-//     expect(component.user).toEqual(mockUser);
-//     expect(component.profile).toEqual(mockProfile);
-//   });
-// });
+  it('deve aceitar e armazenar o input profile', () => {
+    const mockProfile = { id: 2, cidade: 'São Paulo' };
+    component.profile = mockProfile;
+    fixture.detectChanges();
+    expect(component.profile).toEqual(mockProfile);
+  });
+
+  it('deve chamar ngOnInit sem erro', () => {
+    expect(() => component.ngOnInit()).not.toThrow();
+  });
+});
