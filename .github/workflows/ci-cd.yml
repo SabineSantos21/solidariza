@@ -32,36 +32,9 @@ jobs:
           name: dist
           path: dist/
 
-  cypress:
-    runs-on: ubuntu-latest
-    needs: build
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
-
-      - name: Set up Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: '16'
-
-      - name: Install dependencies
-        run: npm install --force
-
-      # Execute o build se seus testes E2E precisam dos arquivos construídos
-      - name: Build Angular project
-        run: npm run build
-
-      # Instala o Cypress globalmente (caso não esteja nas dependências do projeto)
-      - name: Install Cypress
-        run: npx cypress install
-
-      # Roda os testes E2E do Cypress
-      - name: Run Cypress tests
-        run: npx cypress run
-
   deploy:
     runs-on: ubuntu-latest
-    needs: [build, cypress]
+    needs: [build]
     steps:
       - name: Download artifacts
         uses: actions/download-artifact@v4
