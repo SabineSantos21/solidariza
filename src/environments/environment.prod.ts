@@ -5,5 +5,5 @@ export const environment = {
   // apiAddress: "http://localhost:7127/"
   
   //PROD
-  apiAddress: "https://solidariza-api-gbaveuf8fbfwbjbu.centralus-01.azurewebsites.net/"
+  apiAddress: "https://solidarizaapi-cnbqcwduhta9bdbm.centralus-01.azurewebsites.net/"
 };
