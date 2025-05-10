@@ -73,7 +73,13 @@ export class DonorComponent implements OnInit {
           this.router.navigate(["/login"]);
         },
         (error) => {
-          this.alertError = "Erro ao criar usuário";
+          if(error.status == 400) {
+            console.log(error.error)
+            this.alertError = error.error;
+          } 
+          else {
+            this.alertError = "Erro ao criar usuário";
+          }
         }
       ).add(() => {
         this.spinner.hide();
