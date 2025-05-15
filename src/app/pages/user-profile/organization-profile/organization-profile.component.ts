@@ -144,6 +144,7 @@ export class OrganizationProfileComponent implements OnInit {
           icon: '../../../../assets/img/icons/social/link.svg', 
           link: link.url
         })
+        break;
 
       default:
         break

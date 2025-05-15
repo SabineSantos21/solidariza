@@ -5,13 +5,10 @@ import { Component, OnInit } from '@angular/core';
   templateUrl: './create-account.component.html',
   styleUrls: ['./create-account.component.scss']
 })
-export class CreateAccountComponent implements OnInit {
+export class CreateAccountComponent {
   formShow = 'options'
 
   constructor() { }
-
-  ngOnInit(): void {
-  }
 
   showForm(value) {
     this.formShow = value;

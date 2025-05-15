@@ -66,7 +66,7 @@ export class DonorComponent implements OnInit {
     else if (this.validatePassword() && this.checkPolicy && this.checkCookie) {
       this.spinner.show();
 
-      var user = this.form.value;
+      let user = this.form.value;
 
       this.userService.createUser(user).subscribe(
         (data) => {
