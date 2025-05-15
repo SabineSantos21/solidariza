@@ -88,7 +88,7 @@ export class VolunteerEditComponent implements OnInit {
   createProfile(profile) {
     this.spinner.show();
 
-    var newProfile = new NewProfile(profile);
+    let newProfile = new NewProfile(profile);
     newProfile.userId = this.user.userId;
 
     this.profileService.createProfile(newProfile).subscribe(

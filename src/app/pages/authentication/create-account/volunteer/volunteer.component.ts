@@ -70,7 +70,7 @@ export class VolunteerComponent implements OnInit {
     else if (this.checkPolicy && this.checkCookie && this.validatePassword()) {
       this.spinner.show();
 
-      var user = this.form.value;
+      let user = this.form.value;
 
       this.userService.createUser(user).subscribe(
         (data) => {
@@ -86,8 +86,8 @@ export class VolunteerComponent implements OnInit {
   }
 
   validatePassword() {
-    var password = this.form.value.password;
-    var confirmPassword = this.form.value.confirmPassword;
+    let password = this.form.value.password;
+    let confirmPassword = this.form.value.confirmPassword;
 
     if (!password || !confirmPassword) {
       this.alertError = 'Os campos de senha não podem estar vazios.';

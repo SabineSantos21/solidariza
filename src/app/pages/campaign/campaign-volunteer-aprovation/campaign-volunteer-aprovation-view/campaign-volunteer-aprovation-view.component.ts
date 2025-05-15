@@ -50,7 +50,7 @@ export class CampaignVolunteerAprovationViewComponent implements OnInit {
   updateCampaignsVolunteer(value, campaignsVolunteerId) {
     this.spinner.show();
 
-    var updateCampaignVolunteer = {
+    let updateCampaignVolunteer = {
       isApproved : value
     }
 

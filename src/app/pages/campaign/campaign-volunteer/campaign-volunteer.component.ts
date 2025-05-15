@@ -63,7 +63,7 @@ export class CampaignVolunteerComponent implements OnInit {
   createCampaignVolunteer() {
     this.spinner.show();
 
-    var newCampaignVolunteer = {
+    let newCampaignVolunteer = {
       userId: this.volunteer.userId,
       campaignId: this.campaignId
     }

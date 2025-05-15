@@ -139,7 +139,7 @@ export class OrganizationEditComponent implements OnInit {
   createProfile(profile) {
     this.spinner.show();
 
-    var newProfile = new NewProfile(profile);
+    let newProfile = new NewProfile(profile);
     newProfile.userId = this.user.userId;
 
     this.profileService.createProfile(newProfile).subscribe(
@@ -260,7 +260,7 @@ export class OrganizationEditComponent implements OnInit {
   }
 
   addLink() {
-    var link: NewLink = new NewLink({
+    let link: NewLink = new NewLink({
       profileId: this.profile.profileId,
       type: this.selectedOption.id,
       url: this.link

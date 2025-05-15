@@ -88,8 +88,8 @@ export class DonorComponent implements OnInit {
   }
 
   validatePassword() {
-    var password = this.form.value.password;
-    var confirmPassword = this.form.value.confirmPassword;
+    let password = this.form.value.password;
+    let confirmPassword = this.form.value.confirmPassword;
 
     if (!password || !confirmPassword) {
       this.alertError = 'Os campos de senha não podem estar vazios.';
