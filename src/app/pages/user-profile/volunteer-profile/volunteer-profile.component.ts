@@ -5,14 +5,11 @@ import { Component, Input, OnInit } from '@angular/core';
   templateUrl: './volunteer-profile.component.html',
   styleUrls: ['./volunteer-profile.component.scss']
 })
-export class VolunteerProfileComponent implements OnInit {
+export class VolunteerProfileComponent {
   @Input() user;
   @Input() profile;
 
   constructor(
   ) { }
-
-  ngOnInit(): void {
-  }
 
 }

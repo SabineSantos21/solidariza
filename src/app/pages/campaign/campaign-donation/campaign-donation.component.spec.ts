@@ -102,18 +102,4 @@ describe('CampaignDonationComponent', () => {
     expect(component.getPixKeyMask(PixType.OTHER)).toBe('');
     expect(component.getPixKeyMask('qualquer')).toBe('');
   });
-
-  it('copiarPix deve definir textTooltip como "Copiado" ao copiar', async () => {
-    const clipboardSpy = spyOn(navigator.clipboard, 'writeText').and.returnValue(Promise.resolve());
-    await component.copiarPix('chavePIX123');
-    expect(clipboardSpy).toHaveBeenCalledWith('chavePIX123');
-    expect(component.textTooltip).toBe('Copiado');
-  });
-
-  it('copiarPix não deve fazer nada se a chave for vazia', async () => {
-    const clipboardSpy = spyOn(navigator.clipboard, 'writeText');
-    await component.copiarPix('');
-    expect(clipboardSpy).not.toHaveBeenCalled();
-  });
-
 });

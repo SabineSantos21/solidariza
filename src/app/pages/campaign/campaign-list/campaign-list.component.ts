@@ -5,13 +5,10 @@ import { Component, Input, OnInit } from '@angular/core';
   templateUrl: './campaign-list.component.html',
   styleUrls: ['./campaign-list.component.scss']
 })
-export class CampaignListComponent implements OnInit {
+export class CampaignListComponent {
   @Input() campaign;
   @Input() profile;
 
   constructor() { }
-
-  ngOnInit(): void {
-  }
 
 }

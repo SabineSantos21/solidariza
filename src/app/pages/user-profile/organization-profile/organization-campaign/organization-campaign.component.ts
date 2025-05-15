@@ -5,14 +5,11 @@ import { Component, Input, OnInit } from '@angular/core';
   templateUrl: './organization-campaign.component.html',
   styleUrls: ['./organization-campaign.component.scss']
 })
-export class OrganizationCampaignComponent implements OnInit {
+export class OrganizationCampaignComponent {
   @Input() campaign: any;
   @Input() profile: any;
   @Input() showEditUser: any;
   
   constructor() { }
-
-  ngOnInit(): void {
-  }
 
 }
