@@ -110,14 +110,6 @@ body
     outline: 0 !important;
 }
 
-hr
-{
-    overflow: visible;
-
-    box-sizing: content-box;
-    height: 0;
-}
-
 h1,
 h2,
 h3,
@@ -265,16 +257,6 @@ samp
 {
     font-family: SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace;
     font-size: 1em;
-}
-
-pre
-{
-    overflow: auto;
-
-    margin-top: 0;
-    margin-bottom: 1rem;
-
-    -ms-overflow-style: scrollbar;
 }
 
 figure
@@ -579,6 +561,11 @@ hr
 
     border: 0;
     border-top: 1px solid rgba(0, 0, 0, .1);
+
+    overflow: visible;
+
+    box-sizing: content-box;
+    height: 0;
 }
 
 small,
@@ -724,7 +711,15 @@ pre
     display: block;
 
     color: #212529;
+
+    overflow: auto;
+
+    margin-top: 0;
+    margin-bottom: 1rem;
+
+    -ms-overflow-style: scrollbar;
 }
+
 pre code
 {
     font-size: inherit;
@@ -4149,16 +4144,13 @@ input[type='button'].btn-block
     border-right: 0;
     border-bottom: .3em solid transparent;
     border-left: .3em solid;
+
+    vertical-align: 0;
 }
 
 .dropright .dropdown-toggle:empty::after
 {
     margin-left: 0;
-}
-
-.dropright .dropdown-toggle::after
-{
-    vertical-align: 0;
 }
 
 .dropleft .dropdown-menu
@@ -4181,10 +4173,7 @@ input[type='button'].btn-block
 
     content: '';
     vertical-align: .255em;
-}
 
-.dropleft .dropdown-toggle::after
-{
     display: none;
 }
 
@@ -4202,16 +4191,13 @@ input[type='button'].btn-block
     border-top: .3em solid transparent;
     border-right: .3em solid;
     border-bottom: .3em solid transparent;
+
+    vertical-align: 0;
 }
 
 .dropleft .dropdown-toggle:empty::after
 {
     margin-left: 0;
-}
-
-.dropleft .dropdown-toggle::before
-{
-    vertical-align: 0;
 }
 
 .dropdown-menu[x-placement^='top'],
@@ -5547,6 +5533,7 @@ input[type='button'].btn-block
 {
     padding-right: 0;
     padding-left: 0;
+    flex-wrap: nowrap;
 }
 .navbar-expand .navbar-nav
 {
@@ -5561,11 +5548,7 @@ input[type='button'].btn-block
     padding-right: 1rem;
     padding-left: 1rem;
 }
-.navbar-expand > .container,
-.navbar-expand > .container-fluid
-{
-    flex-wrap: nowrap;
-}
+
 .navbar-expand .navbar-collapse
 {
     display: flex !important;
@@ -6025,11 +6008,6 @@ input[type='button'].btn-block
     content: '/';
 
     color: #8898aa;
-}
-
-.breadcrumb-item + .breadcrumb-item:hover::before
-{
-    text-decoration: underline;
 }
 
 .breadcrumb-item + .breadcrumb-item:hover::before
@@ -8003,19 +7981,6 @@ button.bg-danger:focus
     background-color: #ec0c38 !important;
 }
 
-.bg-light
-{
-    background-color: #adb5bd !important;
-}
-
-a.bg-light:hover,
-a.bg-light:focus,
-button.bg-light:hover,
-button.bg-light:focus
-{
-    background-color: #919ca6 !important;
-}
-
 .bg-dark
 {
     background-color: #212529 !important;
@@ -8042,19 +8007,6 @@ button.bg-default:focus
     background-color: #0b1526 !important;
 }
 
-.bg-white
-{
-    background-color: #fff !important;
-}
-
-a.bg-white:hover,
-a.bg-white:focus,
-button.bg-white:hover,
-button.bg-white:focus
-{
-    background-color: #e6e6e6 !important;
-}
-
 .bg-neutral
 {
     background-color: #fff !important;
@@ -8079,11 +8031,6 @@ button.bg-darker:hover,
 button.bg-darker:focus
 {
     background-color: black !important;
-}
-
-.bg-white
-{
-    background-color: #fff !important;
 }
 
 .bg-transparent
@@ -8192,16 +8139,6 @@ button.bg-darker:focus
 }
 
 .border-neutral
-{
-    border-color: #fff !important;
-}
-
-.border-darker
-{
-    border-color: black !important;
-}
-
-.border-white
 {
     border-color: #fff !important;
 }
@@ -14658,11 +14595,6 @@ a.text-default:focus
     color: #0b1526 !important;
 }
 
-.text-white
-{
-    color: #fff !important;
-}
-
 a.text-white:hover,
 a.text-white:focus
 {
@@ -14713,8 +14645,7 @@ a.text-darker:focus
 
 .text-hide
 {
-    font: 0/0 a;
-
+    font: 0/0 a sans-serif; 
     color: transparent;
     border: 0;
     background-color: transparent;
@@ -15154,11 +15085,6 @@ button.bg-lighter:focus
     background: linear-gradient(87deg, #2bffc6 0, #2be0ff 100%) !important;
 }
 
-.bg-gradient-white
-{
-    background: linear-gradient(87deg, #fff 0, white 100%) !important;
-}
-
 .bg-gradient-gray
 {
     background: linear-gradient(87deg, #8898aa 0, #888aaa 100%) !important;
@@ -15167,11 +15093,6 @@ button.bg-lighter:focus
 .bg-gradient-gray-dark
 {
     background: linear-gradient(87deg, #32325d 0, #44325d 100%) !important;
-}
-
-.bg-gradient-light
-{
-    background: linear-gradient(87deg, #ced4da 0, #cecfda 100%) !important;
 }
 
 .bg-gradient-lighter
@@ -15398,66 +15319,6 @@ button.section-darker:hover,
 button.section-darker:focus
 {
     background-color: black !important;
-}
-
-.bg-gradient-primary
-{
-    background: linear-gradient(87deg, #5e72e4 0, #825ee4 100%) !important;
-}
-
-.bg-gradient-secondary
-{
-    background: linear-gradient(87deg, #f7fafc 0, #f7f8fc 100%) !important;
-}
-
-.bg-gradient-success
-{
-    background: linear-gradient(87deg, #2dce89 0, #2dcecc 100%) !important;
-}
-
-.bg-gradient-info
-{
-    background: linear-gradient(87deg, #11cdef 0, #1171ef 100%) !important;
-}
-
-.bg-gradient-warning
-{
-    background: linear-gradient(87deg, #fb6340 0, #fbb140 100%) !important;
-}
-
-.bg-gradient-danger
-{
-    background: linear-gradient(87deg, #f5365c 0, #f56036 100%) !important;
-}
-
-.bg-gradient-light
-{
-    background: linear-gradient(87deg, #adb5bd 0, #adaebd 100%) !important;
-}
-
-.bg-gradient-dark
-{
-    background: linear-gradient(87deg, #212529 0, #212229 100%) !important;
-}
-
-.bg-gradient-default
-{
-    background: linear-gradient(87deg, #172b4d 0, #1a174d 100%) !important;
-}
-
-.bg-gradient-white
-{
-    background: linear-gradient(87deg, #fff 0, white 100%) !important;
-}
-
-.bg-gradient-neutral
-{
-    background: linear-gradient(87deg, #fff 0, white 100%) !important;
-}
-
-.bg-gradient-darker
-{
-    background: linear-gradient(87deg, black 0, black 100%) !important;
 }
 
 .fill-primary
@@ -15715,7 +15576,7 @@ button.section-darker:focus
     opacity: .8 !important;
 }
 
-.opacity-8
+.opacity-9
 {
     opacity: .9 !important;
 }
@@ -16503,17 +16364,6 @@ a.text-cyan:hover,
 a.text-cyan:focus
 {
     color: #00f7b5 !important;
-}
-
-.text-white
-{
-    color: #fff !important;
-}
-
-a.text-white:hover,
-a.text-white:focus
-{
-    color: #e6e6e6 !important;
 }
 
 .text-gray
