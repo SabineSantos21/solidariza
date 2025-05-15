@@ -47,8 +47,4 @@ describe('VolunteerProfileComponent', () => {
     fixture.detectChanges();
     expect(component.profile).toEqual(mockProfile);
   });
-
-  it('deve chamar ngOnInit sem erro', () => {
-    expect(() => component.ngOnInit()).not.toThrow();
-  });
 });
