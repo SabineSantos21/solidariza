@@ -21,7 +21,7 @@ export class CampaignViewComponent implements OnInit {
   constructor(
     public spinner: NgxSpinnerService,
     public router: Router,
-    private route: ActivatedRoute,
+    private readonly route: ActivatedRoute,
     public campaignService: CampaignService,
     public localStorageService: LocalStorageService
   ) { }

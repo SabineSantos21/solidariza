@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { PixType } from 'src/app/shared/enums/pixType';
-import { CampaignService } from 'src/app/shared/services/campaign.service';
 import { DonationService } from 'src/app/shared/services/donation.service';
 
 @Component({
@@ -22,11 +21,10 @@ export class CampaignDonationComponent implements OnInit {
   textTooltip: string = "Copiar"
 
   constructor(
-    private spinner: NgxSpinnerService,
-    private donationService: DonationService,
-    private campaignService: CampaignService,
-    private route: ActivatedRoute,
-    public router: Router,
+    private readonly spinner: NgxSpinnerService,
+    private readonly donationService: DonationService,
+    private readonly route: ActivatedRoute,
+    public readonly router: Router,
   ) { }
 
   ngOnInit(): void {

@@ -16,11 +16,11 @@ export class LoginComponent implements OnInit {
   alertError: any = "";
 
   constructor(
-    private spinner: NgxSpinnerService,
-    private formBuilder: FormBuilder,
-    private router: Router,
-    private loginService: LoginService,
-    private localStorageService: LocalStorageService
+    private readonly spinner: NgxSpinnerService,
+    private readonly formBuilder: FormBuilder,
+    private readonly router: Router,
+    private readonly loginService: LoginService,
+    private readonly localStorageService: LocalStorageService
   ) {}
 
   ngOnInit() {
