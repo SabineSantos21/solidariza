@@ -39,7 +39,7 @@
                                     <div class="media align-items-center"><a
                                             class="mr-3">
                                             <img
-                                                src="../../../../../assets/img/icons/voluntarios.svg" height="35"></a>
+                                                src="../../../../../assets/img/icons/voluntarios.svg" height="35" alt="Ícone de voluntário"></a>
                                     </div>
                                 </th>
 
@@ -72,7 +72,10 @@
                                 <td>
                                     <span>
                                         <i class="fas fa-user-edit text-default ml-3" *ngIf="!change" (click)="change = true"></i>
-                                        <i class="fas fa-times text-danger ml-3" *ngIf="change" (click)="change = false"></i>
+                                        <i class="fas fa-times text-danger ml-3" 
+                                        *ngIf="change" 
+                                        (click)="change = false"
+                                        ></i>
                                     </span>
                                 </td>
                             </tr>
