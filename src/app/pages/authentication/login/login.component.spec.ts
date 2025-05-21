@@ -57,7 +57,7 @@ describe('LoginComponent', () => {
 
   it('deve chamar loginService, armazenar token e usuário e navegar em caso de sucesso', fakeAsync(() => {
     component.form.controls['email'].setValue('teste@email.com');
-    component.form.controls['password'].setValue('Senha123!');
+    component.form.controls['password'].setValue('Teste@3948393029304');
    
     const mockResponse = {
       token: 'abc_token',
@@ -69,7 +69,7 @@ describe('LoginComponent', () => {
     tick();
 
     expect(spinnerSpy.show).toHaveBeenCalled();
-    expect(loginServiceSpy.login).toHaveBeenCalledWith({ email: 'teste@email.com', password: 'Senha123!' });
+    expect(loginServiceSpy.login).toHaveBeenCalledWith({ email: 'teste@email.com', password: 'Teste@3948393029304' });
     expect(localStorageSpy.set).toHaveBeenCalledWith('token', mockResponse.token);
     expect(localStorageSpy.set).toHaveBeenCalledWith('user', mockResponse.user);
     expect(routerSpy.navigate).toHaveBeenCalledWith(['/dashboard']);
