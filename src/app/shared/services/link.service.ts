@@ -14,7 +14,7 @@ const httpOptions = {
 })
 export class LinkService {
 
-  constructor(private http: HttpClient) { }
+  constructor(private readonly http: HttpClient) { }
 
   createLink(link): Observable<any> {
     return this.http.post(

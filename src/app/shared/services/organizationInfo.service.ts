@@ -14,7 +14,7 @@ const httpOptions = {
 })
 export class OrganizationInfoService {
 
-  constructor(private http: HttpClient) { }
+  constructor(private readonly http: HttpClient) { }
 
   createOrganizationInfo(organizationInfo): Observable<any> {
     return this.http.post(

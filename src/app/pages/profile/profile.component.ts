@@ -21,13 +21,13 @@ export class ProfileComponent implements OnInit {
   showEditUser: boolean = false;
 
   constructor(
-    private spinner: NgxSpinnerService,
-    private profileService: ProfileService,
-    private localStorageService: LocalStorageService,
-    private campaignService: CampaignService,
-    private route: ActivatedRoute,
+    private readonly spinner: NgxSpinnerService,
+    private readonly profileService: ProfileService,
+    private readonly localStorageService: LocalStorageService,
+    private readonly campaignService: CampaignService,
+    private readonly route: ActivatedRoute,
     public router: Router,
-    private userService: UserService
+    private readonly userService: UserService
   ) { }
 
   ngOnInit(): void {

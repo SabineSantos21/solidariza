@@ -15,7 +15,7 @@ const httpOptions = {
 })
 export class ProfileService {
 
-  constructor(private http: HttpClient) { }
+  constructor(private readonly http: HttpClient) { }
 
   createProfile(profile): Observable<any> {
     return this.http.post(

@@ -16,9 +16,9 @@ export class CampaignVolunteerAprovationViewComponent implements OnInit {
   change: boolean = false;
 
   constructor(
-    private spinner: NgxSpinnerService,
-    private campaignVolunteerService: CampaignVolunteerService,    
-    private route: ActivatedRoute,
+    private readonly spinner: NgxSpinnerService,
+    private readonly campaignVolunteerService: CampaignVolunteerService,    
+    private readonly route: ActivatedRoute,
     public router: Router,
   ) { }
 

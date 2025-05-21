@@ -14,9 +14,9 @@ export class CampaignVolunteerViewComponent implements OnInit {
   campaignsVolunteer: any = [];
 
   constructor(
-    private spinner: NgxSpinnerService,
-    private campaignVolunteerService: CampaignVolunteerService,
-    private localStorageService: LocalStorageService
+    private readonly spinner: NgxSpinnerService,
+    private readonly campaignVolunteerService: CampaignVolunteerService,
+    private readonly localStorageService: LocalStorageService
   ) { }
 
   ngOnInit(): void {

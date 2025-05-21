@@ -15,7 +15,7 @@ const httpOptions = {
 })
 export class UserService {
 
-  constructor(private http: HttpClient) { }
+  constructor(private readonly http: HttpClient) { }
 
   createUser(user: User): Observable<any> {
     return this.http.post(

@@ -11,8 +11,8 @@ export class OrganizationComponent implements OnInit {
   organizations: any = [];
 
   constructor(
-    private spinner: NgxSpinnerService,
-    private profileService: ProfileService
+    private readonly spinner: NgxSpinnerService,
+    private readonly profileService: ProfileService
   ) { }
 
   ngOnInit(): void {

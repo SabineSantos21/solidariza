@@ -14,7 +14,7 @@ const httpOptions = {
 })
 export class DonationService {
 
-  constructor(private http: HttpClient) { }
+  constructor(private readonly http: HttpClient) { }
 
   getDonationQRCode(campaignId): Observable<any> {
     return this.http.get(

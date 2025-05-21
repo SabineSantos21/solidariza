@@ -18,7 +18,7 @@ export class ProfileEditComponent implements OnInit {
   loading = false
 
   constructor(
-    private spinner: NgxSpinnerService,
+    private readonly spinner: NgxSpinnerService,
     public profileService: ProfileService,
     public localStorageService: LocalStorageService,
   ) { }

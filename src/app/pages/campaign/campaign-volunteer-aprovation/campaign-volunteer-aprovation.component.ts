@@ -14,10 +14,10 @@ export class CampaignVolunteerAprovationComponent implements OnInit {
   campaigns: any = [];
 
   constructor(
-    private spinner: NgxSpinnerService,
-    private campaignService: CampaignService,
-    private localStorageService: LocalStorageService,
-    private router: Router
+    private readonly spinner: NgxSpinnerService,
+    private readonly campaignService: CampaignService,
+    private readonly localStorageService: LocalStorageService,
+    private readonly router: Router
   ) { }
 
   ngOnInit(): void {

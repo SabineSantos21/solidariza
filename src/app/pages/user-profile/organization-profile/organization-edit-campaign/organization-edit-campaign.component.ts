@@ -28,7 +28,7 @@ export class OrganizationEditCampaignComponent implements OnInit {
     public formBuilder: FormBuilder,
     public campaignService: CampaignService,
     public router: Router,
-    private route: ActivatedRoute,
+    private readonly route: ActivatedRoute,
   ) { }
 
   ngOnInit(): void {

@@ -16,9 +16,9 @@ export class DashboardComponent implements OnInit {
   search: any;
 
   constructor(
-    private spinner: NgxSpinnerService,
-    private localStorageService: LocalStorageService,
-    private campaignService: CampaignService
+    private readonly spinner: NgxSpinnerService,
+    private readonly localStorageService: LocalStorageService,
+    private readonly campaignService: CampaignService
   ) {}
 
   ngOnInit() {

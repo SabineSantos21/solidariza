@@ -12,8 +12,8 @@ export class VolunteerCampaignsAprovedComponent implements OnInit {
   campaigns: any = [];
 
   constructor(
-    private spinner: NgxSpinnerService,
-    private campaignsVolunteerService: CampaignVolunteerService
+    private readonly spinner: NgxSpinnerService,
+    private readonly campaignsVolunteerService: CampaignVolunteerService
   ) { }
 
   ngOnInit(): void {

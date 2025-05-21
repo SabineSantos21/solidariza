@@ -36,7 +36,7 @@ export class OrganizationEditComponent implements OnInit {
   alertSuccess: any = "";
 
   constructor(
-    private spinner: NgxSpinnerService,
+    private readonly spinner: NgxSpinnerService,
     public profileService: ProfileService,
     public formBuilder: FormBuilder,
     public linkService: LinkService,

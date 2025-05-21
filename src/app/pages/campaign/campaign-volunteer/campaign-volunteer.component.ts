@@ -21,7 +21,7 @@ export class CampaignVolunteerComponent implements OnInit {
   constructor(
     public spinner: NgxSpinnerService,
     public router: Router,
-    private route: ActivatedRoute,
+    private readonly route: ActivatedRoute,
     public localStorageService: LocalStorageService,
     public campaignVolunteerService: CampaignVolunteerService,
     public campaignService: CampaignService

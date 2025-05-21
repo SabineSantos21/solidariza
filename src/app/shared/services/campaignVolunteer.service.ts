@@ -14,7 +14,7 @@ const httpOptions = {
 })
 export class CampaignVolunteerService {
 
-  constructor(private http: HttpClient) { }
+  constructor(private readonly http: HttpClient) { }
   
   getCampaignVolunteerById(campaignVolunteerId): Observable<any> {
     return this.http.get(
