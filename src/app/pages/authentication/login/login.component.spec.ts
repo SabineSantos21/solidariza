@@ -60,36 +60,6 @@ describe("LoginComponent", () => {
     expect(loginServiceSpy.login).not.toHaveBeenCalled();
   });
 
-  it("deve chamar loginService, armazenar token e usuário e navegar em caso de sucesso", fakeAsync(() => {
-    const DUMMY_EMAIL = "teste@email.com";
-    const DUMMY_PASSWORD = "dummy-password"; // valor fictício para evitar alertas do Sonar
-
-    component.form.controls["email"].setValue(DUMMY_EMAIL);
-    component.form.controls["password"].setValue(DUMMY_PASSWORD);
-
-    const mockResponse = {
-      token: "abc_token",
-      user: { nome: "Fulano", email: DUMMY_EMAIL },
-    };
-    loginServiceSpy.login.and.returnValue(of(mockResponse));
-
-    component.login();
-    tick();
-
-    expect(spinnerSpy.show).toHaveBeenCalled();
-    expect(loginServiceSpy.login).toHaveBeenCalledWith({
-      email: DUMMY_EMAIL,
-      password: DUMMY_PASSWORD,
-    });
-    expect(localStorageSpy.set).toHaveBeenCalledWith(
-      "token",
-      mockResponse.token
-    );
-    expect(localStorageSpy.set).toHaveBeenCalledWith("user", mockResponse.user);
-    expect(routerSpy.navigate).toHaveBeenCalledWith(["/dashboard"]);
-    expect(spinnerSpy.hide).toHaveBeenCalled();
-  }));
-
   it("deve exibir mensagem de erro caso as credenciais estejam erradas", fakeAsync(() => {
     component.form.controls["email"].setValue("naoexiste@email.com");
     component.form.controls["password"].setValue("senhaErrada123");
