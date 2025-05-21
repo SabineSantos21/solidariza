@@ -21,7 +21,7 @@
     
     <div class="alert alert-default d-flex justify-content-between text-left mt-2" role="alert" *ngIf="organizationInfo && organizationInfo.isOrganizationApproved == false && showEditUser">
       <span>
-        <img src="../../../../assets/img/icons/warning.svg" height="35" class="mr-2"> {{organizationInfo.disapprovalReason}}
+        <img src="../../../../assets/img/icons/warning.svg" height="35" class="mr-2" alt="Atenção"> {{organizationInfo.disapprovalReason}}
       </span>
       <button type="button" class="btn btn-secondary btn-sm" (click)="validateOrganization(organizationInfo.organizationInfoId, user.documentNumber)">Validar novamente</button>
     </div>
