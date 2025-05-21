@@ -10,7 +10,7 @@ import { NgxSpinnerService } from "ngx-spinner";
 import { Router } from "@angular/router";
 import { LoginService } from "src/app/shared/services/login.service";
 import { LocalStorageService } from "src/app/shared/services/local-storage.service";
-import { of, throwError } from "rxjs";
+import { throwError } from "rxjs";
 
 describe("LoginComponent", () => {
   let component: LoginComponent;

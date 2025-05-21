@@ -55,8 +55,8 @@ export class DonorComponent implements OnInit {
   }
 
   public createUser() {
-    this.checkPolicy = this.checkPolicy == null ? false : this.checkPolicy;
-    this.checkCookie = this.checkCookie == null ? false : this.checkCookie;
+    this.checkPolicy = this.checkPolicy ?? false;
+    this.checkCookie = this.checkCookie ?? false;
 
     if (this.form.invalid) {
       this.validateFields();
