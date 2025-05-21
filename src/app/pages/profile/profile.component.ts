@@ -10,7 +10,6 @@ import { UserService } from 'src/app/shared/services/user.service';
 @Component({
   selector: 'app-profile',
   templateUrl: './profile.component.html',
-  styleUrls: ['./profile.component.scss']
 })
 export class ProfileComponent implements OnInit {
   userId: any;

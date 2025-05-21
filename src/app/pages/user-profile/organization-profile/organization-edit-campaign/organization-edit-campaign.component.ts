@@ -10,7 +10,6 @@ import { CampaignService } from 'src/app/shared/services/campaign.service';
 @Component({
   selector: 'app-organization-edit-campaign',
   templateUrl: './organization-edit-campaign.component.html',
-  styleUrls: ['./organization-edit-campaign.component.scss']
 })
 export class OrganizationEditCampaignComponent implements OnInit {
   form: FormGroup;

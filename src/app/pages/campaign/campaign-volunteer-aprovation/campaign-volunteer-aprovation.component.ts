@@ -7,7 +7,6 @@ import { LocalStorageService } from 'src/app/shared/services/local-storage.servi
 @Component({
   selector: 'app-campaign-volunteer-aprovation',
   templateUrl: './campaign-volunteer-aprovation.component.html',
-  styleUrls: ['./campaign-volunteer-aprovation.component.scss']
 })
 export class CampaignVolunteerAprovationComponent implements OnInit {
   user: any = null;

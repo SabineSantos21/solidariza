@@ -1,18 +1,16 @@
 import { Component, OnInit } from '@angular/core';
-import { AbstractControl, FormBuilder, FormControl, FormControlName, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { CampaignStatus } from 'src/app/shared/enums/campaignStatus';
 import { CampaignType } from 'src/app/shared/enums/campaignType';
 import { NewCampaign } from 'src/app/shared/models/campaign';
-import { NewOrganizationInfo } from 'src/app/shared/models/organizationInfo';
 import { CampaignService } from 'src/app/shared/services/campaign.service';
 import { LocalStorageService } from 'src/app/shared/services/local-storage.service';
 
 @Component({
   selector: 'app-organization-new-campaign',
   templateUrl: './organization-new-campaign.component.html',
-  styleUrls: ['./organization-new-campaign.component.scss']
 })
 export class OrganizationNewCampaignComponent implements OnInit {
   form: FormGroup;

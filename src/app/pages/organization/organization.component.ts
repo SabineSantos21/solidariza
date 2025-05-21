@@ -5,7 +5,6 @@ import { ProfileService } from 'src/app/shared/services/profile.service';
 @Component({
   selector: 'app-organization',
   templateUrl: './organization.component.html',
-  styleUrls: ['./organization.component.scss']
 })
 export class OrganizationComponent implements OnInit {
   organizations: any = [];

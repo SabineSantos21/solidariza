@@ -7,7 +7,6 @@ import { ProfileService } from 'src/app/shared/services/profile.service';
 @Component({
   selector: 'app-volunteer-edit',
   templateUrl: './volunteer-edit.component.html',
-  styleUrls: ['./volunteer-edit.component.scss']
 })
 export class VolunteerEditComponent implements OnInit {
   @Input() user;
