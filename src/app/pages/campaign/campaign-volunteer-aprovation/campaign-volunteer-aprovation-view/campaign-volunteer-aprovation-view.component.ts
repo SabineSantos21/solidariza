@@ -6,7 +6,6 @@ import { CampaignVolunteerService } from 'src/app/shared/services/campaignVolunt
 @Component({
   selector: 'app-campaign-volunteer-aprovation-view',
   templateUrl: './campaign-volunteer-aprovation-view.component.html',
-  styleUrls: ['./campaign-volunteer-aprovation-view.component.scss']
 })
 export class CampaignVolunteerAprovationViewComponent implements OnInit {
   campaignId: string;

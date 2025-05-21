@@ -8,7 +8,6 @@ import { LocalStorageService } from 'src/app/shared/services/local-storage.servi
 @Component({
   selector: 'app-campaign-volunteer',
   templateUrl: './campaign-volunteer.component.html',
-  styleUrls: ['./campaign-volunteer.component.scss']
 })
 export class CampaignVolunteerComponent implements OnInit {
   volunteer: any = null;
