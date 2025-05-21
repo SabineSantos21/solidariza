@@ -22,11 +22,10 @@ export class VolunteerComponent implements OnInit {
   checkCookie = null;
 
   constructor(
-    private spinner: NgxSpinnerService,
-    private formBuilder: FormBuilder,
-    private userService: UserService,
-    private router: Router,
-    private localStorageService: LocalStorageService
+    private readonly spinner: NgxSpinnerService,
+    private readonly formBuilder: FormBuilder,
+    private readonly userService: UserService,
+    private readonly router: Router
   ) { }
 
   ngOnInit(): void {

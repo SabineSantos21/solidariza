@@ -5,7 +5,6 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { DocumentType } from 'src/app/shared/enums/documentType';
 import { UserType } from 'src/app/shared/enums/userType';
 import { NewUser } from 'src/app/shared/models/user';
-import { LocalStorageService } from 'src/app/shared/services/local-storage.service';
 import { UserService } from 'src/app/shared/services/user.service';
 
 @Component({
@@ -22,11 +21,10 @@ export class OrganizationComponent implements OnInit {
   checkCookie = null;
 
   constructor(
-    private spinner: NgxSpinnerService,
-    private formBuilder: FormBuilder,
-    private userService: UserService,
-    private router: Router,
-    private localStorageService: LocalStorageService
+    private readonly spinner: NgxSpinnerService,
+    private readonly formBuilder: FormBuilder,
+    private readonly userService: UserService,
+    private readonly router: Router
   ) { }
 
   ngOnInit(): void {
