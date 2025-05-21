@@ -38,7 +38,7 @@
                             <div class="row">
                                 <div class="col-lg-4">
                                     <div *ngIf="getControl('title'); let control" class="form-group">
-                                        <label class="form-control-label">Título</label>
+                                        Título
                                         <input type="text" class="form-control form-control-alternative"
                                             formControlName="title">
                                         <small class="text-danger" *ngIf="!control.untouched && control.invalid">Campo
@@ -50,7 +50,7 @@
 
                                 <div class="col-lg-4">
                                     <div *ngIf="getControl('type'); let control" class="form-group">
-                                        <label class="form-control-label">Tipo da Campanha</label>
+                                        Tipo da Campanha
                                         
                                         <select class="form-control form-control-alternative" formControlName="type">
                                             <option selected disabled>Insira um Tipo</option>
@@ -68,7 +68,7 @@
     
                                 <div class="col-lg-12">
                                     <div *ngIf="getControl('description'); let control" class="form-group">
-                                        <label class="form-control-label">Descrição</label>
+                                        Descrição
                                         <textarea rows="4" class="form-control form-control-alternative"
                                             formControlName="description">
                                         </textarea> 
@@ -80,7 +80,7 @@
     
                                 <div class="col-lg-4">
                                     <div *ngIf="getControl('startDate'); let control" class="form-group">
-                                        <label class="form-control-label">Data Início</label>
+                                        Data Início
                                         <input type="datetime-local" class="form-control form-control-alternative"
                                             formControlName="startDate">
                                         <small class="text-danger" *ngIf="!control.untouched && control.invalid">Campo
@@ -91,7 +91,7 @@
                                 
                                 <div class="col-lg-4">
                                     <div *ngIf="getControl('endDate'); let control" class="form-group">
-                                        <label class="form-control-label">Data Fim</label>
+                                        Data Fim
                                         <input type="datetime-local" class="form-control form-control-alternative"
                                             formControlName="endDate">
                                         <small class="text-danger" *ngIf="!control.untouched && control.invalid">Campo
@@ -102,7 +102,7 @@
                                 
                                 <div class="col-lg-4">
                                     <div *ngIf="getControl('status'); let control" class="form-group">
-                                        <label class="form-control-label">Status</label>
+                                        Status
                                         
                                         <select class="form-control form-control-alternative" formControlName="status">
                                             <option selected disabled>Insira um Status</option>
@@ -119,21 +119,21 @@
 
                                 <div class="col-lg-4">
                                     <div *ngIf="getControl('address'); let control" class="form-group">
-                                      <label class="form-control-label">Endereço</label>
+                                      Endereço
                                       <input class="form-control form-control-alternative" type="text" formControlName="address">
                                     </div>
                                 </div>
 
                                 <div class="col-lg-4">
                                     <div *ngIf="getControl('city'); let control" class="form-group">
-                                        <label class="form-control-label">Cidade</label>
+                                        Cidade
                                         <input type="text" class="form-control form-control-alternative" formControlName="city">
                                     </div>
                                 </div>
 
                                 <div class="col-lg-4">
                                     <div class="form-group">
-                                        <label class="form-control-label">Estado</label>
+                                        Estado
                                         <input type="text" class="form-control form-control-alternative" formControlName="state">
                                     </div>
 

@@ -47,7 +47,7 @@ export class VolunteerEditComponent implements OnInit {
     this.getControl("name").setValue(this.user.name);
     
     this.getControl("email").setValue(this.user.email);
-    this.getControl("email").disabled
+    this.getControl("email").disable(); 
   }
 
   fillfields() {

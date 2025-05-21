@@ -65,7 +65,7 @@
             <div class="row">
               <div class="col-lg-12">
                 <div *ngIf="getControl('name'); let control" class="form-group">
-                  <label class="form-control-label">Nome</label>
+                  Nome
                   <input type="text" class="form-control form-control-alternative" formControlName="name">
                   <small class="text-danger" *ngIf="!control.untouched && control.invalid">Campo <strong>Nome</strong>
                     é obrigatório</small>
@@ -75,7 +75,7 @@
 
               <div class="col-lg-6">
                 <div *ngIf="getControl('email'); let control" class="form-group">
-                  <label class="form-control-label">Email</label>
+                  Email
                   <input type="email" class="form-control form-control-alternative" formControlName="email" disabled>
                   <small class="text-danger" *ngIf="!control.untouched && control.invalid">Campo
                     <strong>E-mail</strong> é obrigatório</small>
@@ -85,7 +85,7 @@
 
               <div class="col-lg-6">
                 <div *ngIf="getControl('phone'); let control" class="form-group">
-                  <label class="form-control-label">Telefone</label>
+                  Telefone
                   <input type="text" class="form-control form-control-alternative" formControlName="phone"
                     mask="(00) 0000-00009">
                   <small class="text-danger" *ngIf="!control.untouched && control.invalid">Campo
@@ -105,7 +105,7 @@
             <div class="row">
               <div class="col-md-12">
                 <div *ngIf="getControl('address'); let control" class="form-group">
-                  <label class="form-control-label">Endereço</label>
+                  Endereço
                   <input class="form-control form-control-alternative" type="text" formControlName="address">
                   <small class="text-danger" *ngIf="!control.untouched && control.invalid">Campo
                     <strong>Endereço</strong> é obrigatório</small>
@@ -118,7 +118,7 @@
 
               <div class="col-lg-4">
                 <div *ngIf="getControl('city'); let control" class="form-group">
-                  <label class="form-control-label">Cidade</label>
+                  Cidade
                   <input type="text" class="form-control form-control-alternative" formControlName="city">
                   <small class="text-danger" *ngIf="!control.untouched && control.invalid">Campo
                     <strong>Cidade</strong> é obrigatório</small>
@@ -128,7 +128,7 @@
 
               <div *ngIf="getControl('state'); let control" class="col-lg-4">
                 <div class="form-group">
-                  <label class="form-control-label">Estado</label>
+                  Estado
                   <input type="text" class="form-control form-control-alternative" formControlName="state">
                   <small class="text-danger" *ngIf="!control.untouched && control.invalid">Campo
                     <strong>Estado</strong> é obrigatório</small>
@@ -138,7 +138,7 @@
 
               <div class="col-lg-4">
                 <div *ngIf="getControl('zip'); let control" class="form-group">
-                  <label class="form-control-label">CEP</label>
+                  CEP
                   <input type="text" class="form-control form-control-alternative" formControlName="zip">
                   <small class="text-danger" *ngIf="!control.untouched && control.invalid">Campo <strong>CEP</strong>
                     é obrigatório</small>
@@ -154,7 +154,7 @@
           <h6 class="heading-small text-muted mb-4">Descrição</h6>
           <div class="pl-lg-4">
             <div class="form-group">
-              <label>Bio</label>
+              Bio
               <textarea rows="4" class="form-control form-control-alternative" formControlName="description">
                   </textarea>
             </div>
@@ -173,7 +173,7 @@
             <div class="row">
               <div class="col-md-6">
                 <div *ngIf="getControlOrganizationInfo('pixType'); let control" class="form-group">
-                  <label class="form-control-label">Tipo Chave PIX</label>
+                  Tipo Chave PIX
                   
 
                   <select class="form-control form-control-alternative" formControlName="pixType">
@@ -191,7 +191,7 @@
               
               <div class="col-md-6">
                 <div *ngIf="getControlOrganizationInfo('pixKey'); let control" class="form-group">
-                  <label class="form-control-label">Chave PIX</label>
+                  Chave PIX
                   
                   <input class="form-control form-control-alternative" type="text" formControlName="pixKey">
                   
@@ -203,7 +203,7 @@
               
               <div class="col-md-6">
                 <div *ngIf="getControlOrganizationInfo('beneficiaryName'); let control" class="form-group">
-                  <label class="form-control-label">Nome do beneficiário</label>
+                  Nome do beneficiário
                   
                   <input class="form-control form-control-alternative" type="text" formControlName="beneficiaryName" maxlength="25">
                   
@@ -215,7 +215,7 @@
               
               <div class="col-md-6">
                 <div *ngIf="getControlOrganizationInfo('beneficiaryCity'); let control" class="form-group">
-                  <label class="form-control-label">Cidade do beneficiário ou da transação</label>
+                  Cidade do beneficiário ou da transação
                   
                   <input class="form-control form-control-alternative" type="text" formControlName="beneficiaryCity" maxlength="15">
                   
@@ -227,7 +227,7 @@
               
               <div class="col-md-6">
                 <div *ngIf="getControlOrganizationInfo('contactName'); let control" class="form-group">
-                  <label class="form-control-label">Nome para Contato</label>
+                  Nome para Contato
                   
                   <input class="form-control form-control-alternative" type="text" formControlName="contactName">
                   
@@ -239,7 +239,7 @@
               
               <div class="col-md-6">
                 <div *ngIf="getControlOrganizationInfo('contactPhone'); let control" class="form-group">
-                  <label class="form-control-label">Telefone para Contato</label>
+                  Telefone para Contato
                   
                   <input class="form-control form-control-alternative" type="text" formControlName="contactPhone">
                   

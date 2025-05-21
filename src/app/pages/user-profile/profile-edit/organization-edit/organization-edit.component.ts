@@ -87,7 +87,7 @@ export class OrganizationEditComponent implements OnInit {
     this.getControl("phone").setValue(this.user.phone);
 
     this.getControl("email").setValue(this.user.email);
-    this.getControl("email").disabled
+    this.getControl("email").disable(); 
   }
 
   fillfields() {

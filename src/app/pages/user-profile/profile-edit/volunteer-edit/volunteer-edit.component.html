@@ -64,7 +64,7 @@
                         <div class="row">
                             <div class="col-lg-6">
                                 <div *ngIf="getControl('name'); let control" class="form-group">
-                                    <label class="form-control-label">Nome</label>
+                                    Nome
                                     <input type="text" class="form-control form-control-alternative"
                                         formControlName="name">
                                     <small class="text-danger" *ngIf="!control.untouched && control.invalid">Campo
@@ -76,7 +76,7 @@
 
                             <div class="col-lg-6">
                                 <div *ngIf="getControl('email'); let control" class="form-group">
-                                    <label class="form-control-label">Email</label>
+                                    Email
                                     <input type="email" class="form-control form-control-alternative"
                                         formControlName="email" disabled>
                                     <small class="text-danger" *ngIf="!control.untouched && control.invalid">Campo
@@ -98,7 +98,7 @@
                             *ngIf="getControl('phone'); let control" 
                             class="form-group"
                             >
-                                <label class="form-control-label">Telefone</label>
+                                Telefone
                                 <input 
                                 type="text" 
                                 class="form-control form-control-alternative"
@@ -114,7 +114,7 @@
 
                         <div class="col-lg-4">
                             <div *ngIf="getControl('city'); let control" class="form-group">
-                              <label class="form-control-label">Cidade</label>
+                              Cidade
                               <input type="text" class="form-control form-control-alternative" formControlName="city">
                               <small class="text-danger" *ngIf="!control.untouched && control.invalid">Campo
                                 <strong>Cidade</strong> é obrigatório</small>
@@ -124,7 +124,7 @@
             
                         <div *ngIf="getControl('state'); let control" class="col-lg-4">
                             <div class="form-group">
-                                <label class="form-control-label">Estado</label>
+                                Estado
                                 <input type="text" class="form-control form-control-alternative" formControlName="state">
                                 <small class="text-danger" *ngIf="!control.untouched && control.invalid">Campo
                                 <strong>Estado</strong> é obrigatório</small>
@@ -140,7 +140,7 @@
 
                     <div class="pl-lg-4">
                         <div class="form-group">
-                            <label>Bio</label>
+                            Bio
                             <textarea 
                             rows="4" 
                             class="form-control form-control-alternative"
