@@ -29,8 +29,8 @@ jobs:
         run: |
           npm install -g sonar-scanner
           sonar-scanner \
-            -Dsonar.projectKey=YOUR_PROJECT_KEY \
-            -Dsonar.host.url=YOUR_SONARQUBE_SERVER \
+            -Dsonar.projectKey=solidariza \
+            -Dsonar.host.url="https://sonarcloud.io" \
             -Dsonar.login=$SONAR_TOKEN \
             -Dsonar.javascript.lcov.reportPaths=coverage/lcov.info
 
