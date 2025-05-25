@@ -30,6 +30,7 @@ jobs:
           npm install -g sonar-scanner
           sonar-scanner \
             -Dsonar.projectKey=solidariza \
+            -Dsonar.organization="Sabine Freiman" \
             -Dsonar.host.url="https://sonarcloud.io" \
             -Dsonar.login=$SONAR_TOKEN \
             -Dsonar.javascript.lcov.reportPaths=coverage/lcov.info
