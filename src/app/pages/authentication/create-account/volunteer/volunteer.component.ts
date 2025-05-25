@@ -14,9 +14,8 @@ import { UserService } from 'src/app/shared/services/user.service';
 })
 export class VolunteerComponent implements OnInit {
   form: FormGroup;
-  alertError: any = "";
-  alertSuccess: any = "";
-
+  alertError: any = '';
+  alertSuccess: any = '';
   checkPolicy = null;
   checkCookie = null;
 
@@ -25,10 +24,10 @@ export class VolunteerComponent implements OnInit {
     private readonly formBuilder: FormBuilder,
     private readonly userService: UserService,
     private readonly router: Router
-  ) { }
+  ) {}
 
   ngOnInit(): void {
-    this.createForm(new NewUser())
+    this.createForm(new NewUser());
   }
 
   public createForm(user: NewUser) {
@@ -41,7 +40,7 @@ export class VolunteerComponent implements OnInit {
       phone: new FormControl(user.phone, Validators.required),
       password: new FormControl(user.password, Validators.required),
       confirmPassword: new FormControl(null, Validators.required)
-    })
+    });
   }
 
   getControl(name: string): AbstractControl {
@@ -50,11 +49,10 @@ export class VolunteerComponent implements OnInit {
 
   private validateFields() {
     Object.keys(this.form.controls).forEach((key) => {
-      if (
-        this.getControl(key).value == "" ||
-        this.getControl(key).value == null
-      )
-        this.getControl(key).markAsTouched();
+      const control = this.getControl(key);
+      if (control.value === '' || control.value == null) {
+        control.markAsTouched();
+      }
     });
   }
 
@@ -64,28 +62,24 @@ export class VolunteerComponent implements OnInit {
 
     if (this.form.invalid) {
       this.validateFields();
-    }
-    else if (this.checkPolicy && this.checkCookie && this.validatePassword()) {
+    } else if (this.checkPolicy && this.checkCookie && this.validatePassword()) {
       this.spinner.show();
-
-      let user = this.form.value;
-
+      const user = this.form.value;
       this.userService.createUser(user).subscribe(
-        (data) => {
-          this.router.navigate(["/login"]);
+        () => {
+          this.router.navigate(['/login']);
         },
-        (error) => {
-          this.alertError = "Erro ao criar usuário";
+        () => {
+          this.alertError = 'Erro ao criar usuário';
         }
       ).add(() => {
         this.spinner.hide();
-      })
+      });
     }
   }
 
-  validatePassword() {
-    let password = this.form.value.password;
-    let confirmPassword = this.form.value.confirmPassword;
+  validatePassword(): boolean {
+    const { password, confirmPassword } = this.form.value;
 
     if (!password || !confirmPassword) {
       this.alertError = 'Os campos de senha não podem estar vazios.';
@@ -105,5 +99,4 @@ export class VolunteerComponent implements OnInit {
 
     return true;
   }
-
 }
