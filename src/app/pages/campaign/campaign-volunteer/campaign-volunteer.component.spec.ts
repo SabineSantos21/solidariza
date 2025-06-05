@@ -123,4 +123,61 @@ describe('CampaignVolunteerComponent', () => {
     expect(spinnerSpy.show).toHaveBeenCalled();
     expect(spinnerSpy.hide).toHaveBeenCalled();
   }));
+
+  it('ngOnInit deve redirecionar para "/" se volunteer for nulo', () => {
+  localStorageSpy.get.and.returnValue(null);
+  component.campaignId = '101'; // Simulando paramMap.get retorna id
+  component.ngOnInit();
+  expect(routerSpy.navigate).toHaveBeenCalledWith(['/']);
+});
+
+it('ngOnInit deve setar campaignId mesmo quando id não for passado', () => {
+  activatedRouteMock.snapshot.paramMap.get = () => undefined;
+  fixture = TestBed.createComponent(CampaignVolunteerComponent);
+  component = fixture.componentInstance;
+  component.ngOnInit();
+  expect(routerSpy.navigate).toHaveBeenCalledWith(['/dashboard']);
+});
+
+it('getCampaignById cobre callback de erro (sem ação, mas cobre caminho)', fakeAsync(() => {
+  component.campaignId = 'ABC';
+  campaignServiceSpy.getCampaignById.and.returnValue(throwError(() => new Error('Falha na API')));
+  component.getCampaignById();
+  tick();
+  expect(spinnerSpy.hide).toHaveBeenCalled();
+}));
+
+it('createCampaignVolunteer cobre callback de erro (não define created/também cobre .add)', fakeAsync(() => {
+  localStorageSpy.get.and.returnValue({ userId: '22' });
+  component.campaignId = 'lol';
+  campaignVolunteerServiceSpy.createCampaignVolunteer.and.returnValue(throwError(() => "Ocorreu erro!"));
+  component.createCampaignVolunteer();
+  tick();
+  expect(component.created).toBeFalse();
+  expect(spinnerSpy.hide).toHaveBeenCalled();
+}));
+
+it('createCampaignVolunteer cobre execução quando volunteer é undefined (evita erro de leitura)', fakeAsync(() => {
+  localStorageSpy.get.and.returnValue(undefined);
+  component.campaignId = '55';
+  // Força o método executar, não deve gerar erro no teste
+  // Simula ngOnInit também
+  spyOn(component, "createCampaignVolunteer").and.callThrough();
+  component.ngOnInit();
+  expect(routerSpy.navigate).toHaveBeenCalledWith(['/']);
+  // createCampaignVolunteer não deve ser chamada porque volunteer falta
+}));
+
+it('createCampaignVolunteer cobre fluxo de sucesso e chamada de getCampaignById', fakeAsync(() => {
+  // Garante chamada de getCampaignById no subscribe de sucesso
+  localStorageSpy.get.and.returnValue({ userId: 7 });
+  component.campaignId = '101';
+  spyOn(component, 'getCampaignById');
+  campaignVolunteerServiceSpy.createCampaignVolunteer.and.returnValue(of({}));
+  component.createCampaignVolunteer();
+  tick();
+  expect(component.created).toBeTrue();
+  expect(component.getCampaignById).toHaveBeenCalled();
+  expect(spinnerSpy.hide).toHaveBeenCalled();
+}));
 });
