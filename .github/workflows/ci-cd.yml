@@ -18,17 +18,20 @@ jobs:
         with:
           node-version: '16'
 
-      - name: Install dependencies
-        run: npm install --force
+      - name: Clean previous coverage folder
+        run: rm -rf coverage || true
 
-      - name: Run unit tests with coverage
-        run: npm run test -- --watch=false --browsers=ChromeHeadless --code-coverage
+      - name: Run unit tests with coverage (debug mode)
+        run: |
+          echo "Starting tests with coverage..."
+          npm run test -- --watch=false --browsers=ChromeHeadless --code-coverage --no-progress --log-level debug
+          echo "Tests finished."
 
       - name: Verify lcov.info exists
         run: |
           echo "✅ Verificando cobertura..."
-          ls -la coverage/
-          ls -la coverage/solidariza/
+          ls -la coverage || echo "coverage/ não existe"
+          ls -la coverage/solidariza || echo "coverage/solidariza não existe"
           cat coverage/solidariza/lcov.info || echo "❌ Arquivo lcov.info não encontrado!"
 
       - name: SonarCloud Scan
