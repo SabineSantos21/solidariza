@@ -107,6 +107,8 @@
             "main": "src/test.ts",
             "polyfills": "src/polyfills.ts",
             "tsConfig": "src/tsconfig.spec.json",
+            "codeCoverage": true,
+            "codeCoverageExclude": [],
             "karmaConfig": "src/karma.conf.js",
             "styles": [
               "src/styles.scss"
