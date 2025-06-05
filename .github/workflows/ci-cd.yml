@@ -36,8 +36,7 @@ jobs:
         run: |
           echo "📂 Verificando arquivos de cobertura..."
           ls -la coverage || echo "❌ Pasta coverage/ não existe"
-          ls -la coverage/argon-dashboard-angular || echo "❌ coverage/argon-dashboard-angular não existe"
-          cat coverage/argon-dashboard-angular/lcov.info || echo "❌ Arquivo lcov.info não encontrado!"
+          cat coverage/lcov.info || echo "❌ Arquivo lcov.info não encontrado!"
 
       - name: SonarCloud Scan
         uses: SonarSource/sonarcloud-github-action@v2.2.0
@@ -47,7 +46,7 @@ jobs:
           args: >
             -Dsonar.projectKey="SabineSantos21_solidariza"
             -Dsonar.organization="sabinesantos21"
-            -Dsonar.javascript.lcov.reportPaths=coverage/argon-dashboard-angular/lcov.info
+            -Dsonar.javascript.lcov.reportPaths=coverage/lcov.info
 
       - name: Build Angular project
         run: npm run build
