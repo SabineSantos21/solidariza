@@ -35,13 +35,19 @@ jobs:
       - name: Verify lcov.info exists
         run: |
           echo "📂 Verificando arquivos de cobertura..."
-          ls -la coverage/argon-dashboard-angular || echo "❌ Pasta coverage/argon-dashboard-angular não existe"
+          ls -la coverage || echo "❌ Pasta coverage/ não existe"
+          ls -la coverage/argon-dashboard-angular || echo "❌ coverage/argon-dashboard-angular não existe"
           cat coverage/argon-dashboard-angular/lcov.info || echo "❌ Arquivo lcov.info não encontrado!"
 
       - name: SonarCloud Scan
         uses: SonarSource/sonarcloud-github-action@v2.2.0
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        with:
+          args: >
+            -Dsonar.projectKey="SabineSantos21_solidariza"
+            -Dsonar.organization="sabinesantos21"
+            -Dsonar.javascript.lcov.reportPaths=coverage/argon-dashboard-angular/lcov.info
 
       - name: Build Angular project
         run: npm run build
