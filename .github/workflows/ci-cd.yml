@@ -25,7 +25,7 @@ jobs:
         run: rm -rf coverage || true
 
       - name: Run unit tests with coverage (via npx)
-        run: npx ng test --code-coverage --watch=false --browsers=ChromeHeadless --no-progress --log-level debug
+        run: npx ng test --code-coverage --watch=false --browsers=ChromeHeadless --no-progress
 
       - name: Verify lcov.info exists
         run: |
