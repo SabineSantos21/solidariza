@@ -24,7 +24,7 @@ jobs:
         run: npm install --force
 
       - name: Clean previous coverage folder
-        run: rm -rf src/coverage || true
+        run: rm -rf src\coverage || true
 
       - name: Run unit tests with coverage
         run: |
@@ -34,7 +34,7 @@ jobs:
 
       - name: Corrigir caminhos no lcov.info (substituir \ por /)
         run: |
-          LCOV_PATH="src/coverage/lcov.info"
+          LCOV_PATH="src\coverage\lcov.info"
           if [ -f "$LCOV_PATH" ]; then
             sed -i 's|\|/|g' "$LCOV_PATH"
             echo "Caminhos corrigidos em $LCOV_PATH"
