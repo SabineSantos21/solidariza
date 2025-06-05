@@ -21,11 +21,8 @@ jobs:
       - name: Clean previous coverage folder
         run: rm -rf coverage || true
 
-      - name: Run unit tests with coverage (debug mode)
-        run: |
-          echo "Starting tests with coverage..."
-          npx ng test --code-coverage --watch=false --browsers=ChromeHeadless --no-progress --log-level debug
-          echo "Tests finished."
+      - name: Run unit tests with coverage (via npm)
+        run: npm run test -- --watch=false --browsers=ChromeHeadless --no-progress --log-level debug
 
       - name: Verify lcov.info exists
         run: |
