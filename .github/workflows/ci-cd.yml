@@ -24,7 +24,7 @@ jobs:
         run: npm install --force
 
       - name: Clean previous coverage folder
-        run: rm -rf src\coverage || true
+        run: rm -rf coverage || true
 
       - name: Run unit tests with coverage
         run: |
@@ -34,7 +34,7 @@ jobs:
 
       - name: Corrigir caminhos no lcov.info (substituir \ por /)
         run: |
-          LCOV_PATH="src\coverage\lcov.info"
+          LCOV_PATH="coverage/solidariza/lcov.info"
           if [ -f "$LCOV_PATH" ]; then
             sed -i 's|\|/|g' "$LCOV_PATH"
             echo "Caminhos corrigidos em $LCOV_PATH"
@@ -46,7 +46,7 @@ jobs:
       - name: Verificar cobertura gerada
         run: |
           echo "📂 Verificando arquivos de cobertura..."
-          cat src/coverage/lcov.info | head -n 30 || echo "❌ Arquivo lcov.info não encontrado!"
+          cat coverage/solidariza/lcov.info | head -n 30 || echo "❌ Arquivo lcov.info não encontrado!"
 
       - name: SonarCloud Scan
         uses: SonarSource/sonarcloud-github-action@v2.2.0
@@ -56,7 +56,7 @@ jobs:
           args: >
             -Dsonar.projectKey=SabineSantos21_solidariza
             -Dsonar.organization=sabinesantos21
-            -Dsonar.javascript.lcov.reportPaths=src/coverage/lcov.info
+            -Dsonar.javascript.lcov.reportPaths=coverage/solidariza/lcov.info
             -Dsonar.sources=src
             -Dsonar.exclusions=**/*.spec.ts,**/node_modules/**
             -Dsonar.sourceEncoding=UTF-8
