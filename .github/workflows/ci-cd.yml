@@ -32,12 +32,21 @@ jobs:
           npx ng test --code-coverage --watch=false --browsers=ChromeHeadless --no-progress
           echo "✅ Testes finalizados."
 
+      - name: Corrigir caminhos no lcov.info (substituir \ por /)
+        run: |
+          LCOV_PATH="coverage/solidariza/lcov.info"
+          if [ -f "$LCOV_PATH" ]; then
+            sed -i 's|\|/|g' "$LCOV_PATH"
+            echo "Caminhos corrigidos em $LCOV_PATH"
+          else
+            echo "Arquivo $LCOV_PATH não encontrado!"
+            exit 1
+          fi
+
       - name: Verificar cobertura gerada
         run: |
           echo "📂 Verificando arquivos de cobertura..."
-          ls -la coverage || echo "❌ Pasta coverage/ não existe"
-          ls -la coverage/solidariza || echo "❌ Pasta coverage/solidariza não existe"
-          cat coverage/solidariza/lcov.info | head -n 20 || echo "❌ Arquivo lcov.info não encontrado!"
+          cat coverage/solidariza/lcov.info | head -n 30 || echo "❌ Arquivo lcov.info não encontrado!"
 
       - name: SonarCloud Scan
         uses: SonarSource/sonarcloud-github-action@v2.2.0
