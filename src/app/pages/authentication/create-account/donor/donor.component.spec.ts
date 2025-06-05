@@ -5,7 +5,6 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { UserService } from 'src/app/shared/services/user.service';
 import { Router } from '@angular/router';
 import { of, throwError } from 'rxjs';
-import { LocalStorageService } from 'src/app/shared/services/local-storage.service';
 
 describe('DonorComponent', () => {
   let component: DonorComponent;
@@ -26,8 +25,7 @@ describe('DonorComponent', () => {
         FormBuilder,
         { provide: UserService, useValue: userServiceSpy },
         { provide: Router, useValue: routerSpy },
-        { provide: NgxSpinnerService, useValue: spinnerSpy },
-        { provide: LocalStorageService, useValue: {} }
+        { provide: NgxSpinnerService, useValue: spinnerSpy }
       ]
     }).compileComponents();
 
@@ -48,34 +46,41 @@ describe('DonorComponent', () => {
     expect(component.form.contains('confirmPassword')).toBeTrue();
   });
 
-  it('deve retornar false e mensagem se as senhas forem diferentes', () => {
+  it('deve marcar controles inválidos como tocados ao validar campos', () => {
+    spyOn(component.form.controls['name'], 'markAsTouched');
+    component.form.controls['name'].setValue('');
+    component['validateFields']();
+    expect(component.form.controls['name'].markAsTouched).toHaveBeenCalled();
+  });
+
+  it('deve retornar false e setar mensagem clara se senhas forem diferentes', () => {
     component.form.controls['password'].setValue('Senha123!');
     component.form.controls['confirmPassword'].setValue('OutraSenha!1');
-    const result = component.validatePassword();
+    const result = component['validatePassword']();
     expect(result).toBeFalse();
-    expect(component.alertError).toContain('senhas não coincidem');
+    expect(component.alertError).toBe('As senhas não coincidem.');
   });
 
-  it('deve retornar false se campos de senha estiverem vazios', () => {
+  it('deve retornar false e setar mensagem se campos de senha estiverem vazios', () => {
     component.form.controls['password'].setValue('');
     component.form.controls['confirmPassword'].setValue('');
-    const result = component.validatePassword();
+    const result = component['validatePassword']();
     expect(result).toBeFalse();
-    expect(component.alertError).toContain('campos de senha não podem estar vazios');
+    expect(component.alertError).toBe('Os campos de senha não podem estar vazios.');
   });
 
-  it('deve retornar false e mensagem se senha for fraca', () => {
+  it('deve retornar false e setar mensagem se senha for fraca', () => {
     component.form.controls['password'].setValue('senha123');
     component.form.controls['confirmPassword'].setValue('senha123');
-    const result = component.validatePassword();
+    const result = component['validatePassword']();
     expect(result).toBeFalse();
-    expect(component.alertError).toContain('deve conter pelo menos 8 caracteres');
+    expect(component.alertError).toBe('A senha deve conter pelo menos 8 caracteres, incluindo uma letra maiúscula, uma minúscula, um número e um caractere especial.');
   });
 
   it('deve retornar true para senha válida', () => {
     component.form.controls['password'].setValue('Senha123!');
     component.form.controls['confirmPassword'].setValue('Senha123!');
-    const result = component.validatePassword();
+    const result = component['validatePassword']();
     expect(result).toBeTrue();
   });
 
@@ -85,14 +90,47 @@ describe('DonorComponent', () => {
     expect(userServiceSpy.createUser).not.toHaveBeenCalled();
   });
 
-  it('deve chamar o serviço e navegar para login em caso de sucesso', fakeAsync(() => {
-    // Preenche os campos obrigatórios do formulário
+  it('não deve chamar spinner nem serviço se senha não for válida', () => {
+    component.form.controls['name'].setValue('Teste');
+    component.form.controls['email'].setValue('teste@email.com');
+    component.form.controls['password'].setValue('diferente123A!');
+    component.form.controls['confirmPassword'].setValue('outraSenha321B!');
+    component.checkPolicy = true;
+    component.checkCookie = true;
+
+    spyOn(component as any, "validatePassword").and.returnValue(false);
+    component.createUser();
+    expect(userServiceSpy.createUser).not.toHaveBeenCalled();
+    expect(spinnerSpy.show).not.toHaveBeenCalled();
+  });
+
+  it('não deve submeter se checkPolicy ou checkCookie forem false', () => {
+    // Preenche o form corretamente
+    component.form.controls['name'].setValue('Teste');
+    component.form.controls['email'].setValue('teste@email.com');
+    component.form.controls['password'].setValue('Senha123!');
+    component.form.controls['confirmPassword'].setValue('Senha123!');
+
+    // senha válida
+    spyOn(component as any, "validatePassword").and.returnValue(true);
+
+    component.checkPolicy = false;
+    component.checkCookie = true;
+    component.createUser();
+    expect(userServiceSpy.createUser).not.toHaveBeenCalled();
+
+    component.checkPolicy = true;
+    component.checkCookie = false;
+    component.createUser();
+    expect(userServiceSpy.createUser).not.toHaveBeenCalled();
+  });
+
+  it('deve chamar o serviço e navegar para login em caso de sucesso com checkboxes marcados', fakeAsync(() => {
+    // Preenche o form corretamente
     component.form.controls['name'].setValue('Doador Teste');
     component.form.controls['email'].setValue('doador@email.com');
     component.form.controls['password'].setValue('Senha123!');
     component.form.controls['confirmPassword'].setValue('Senha123!');
-
-    // Marca os checboxes
     component.checkPolicy = true;
     component.checkCookie = true;
 
@@ -106,23 +144,39 @@ describe('DonorComponent', () => {
     expect(spinnerSpy.hide).toHaveBeenCalled();
   }));
 
-  it('deve exibir mensagem de erro se o serviço falhar', fakeAsync(() => {
-    // Preenche os campos obrigatórios do formulário
+  it('deve exibir mensagem de erro se o serviço retornar 400', fakeAsync(() => {
     component.form.controls['name'].setValue('Doador Teste');
     component.form.controls['email'].setValue('doador@email.com');
     component.form.controls['password'].setValue('Senha123!');
     component.form.controls['confirmPassword'].setValue('Senha123!');
-
-    // Marca os checboxes
     component.checkPolicy = true;
     component.checkCookie = true;
 
-    userServiceSpy.createUser.and.returnValue(throwError(() => new Error('Erro API')));
+    userServiceSpy.createUser.and.returnValue(throwError(() => ({ status: 400, error: 'Email já em uso' })));
     component.createUser();
     tick();
 
-    expect(component.alertError).toContain('Erro ao criar usuário');
+    expect(component.alertError).toBe('Email já em uso');
     expect(spinnerSpy.hide).toHaveBeenCalled();
   }));
 
+  it('deve exibir mensagem genérica se o serviço retornar outro erro', fakeAsync(() => {
+    component.form.controls['name'].setValue('Doador Teste');
+    component.form.controls['email'].setValue('doador@email.com');
+    component.form.controls['password'].setValue('Senha123!');
+    component.form.controls['confirmPassword'].setValue('Senha123!');
+    component.checkPolicy = true;
+    component.checkCookie = true;
+
+    userServiceSpy.createUser.and.returnValue(throwError(() => ({ status: 500, error: 'Erro desconhecido' })));
+    component.createUser();
+    tick();
+
+    expect(component.alertError).toBe('Erro ao criar usuário');
+    expect(spinnerSpy.hide).toHaveBeenCalled();
+  }));
+
+  it('getControl deve retornar o controle correto', () => {
+    expect(component.getControl('name')).toBe(component.form.controls['name']);
+  });
 });
