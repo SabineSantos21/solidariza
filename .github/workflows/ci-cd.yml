@@ -24,7 +24,7 @@ jobs:
       - name: Run unit tests with coverage (debug mode)
         run: |
           echo "Starting tests with coverage..."
-          npm run test -- --watch=false --browsers=ChromeHeadless --code-coverage --no-progress --log-level debug
+          npx ng test --code-coverage --watch=false --browsers=ChromeHeadless --no-progress --log-level debug
           echo "Tests finished."
 
       - name: Verify lcov.info exists
