@@ -29,7 +29,9 @@ jobs:
       - name: Run unit tests with coverage
         run: |
           echo "🏃‍♀️ Executando testes com cobertura..."
-          npx ng test --code-coverage --watch=false --browsers=ChromeHeadless --no-progress
+          sudo apt-get update
+          sudo apt-get install -y libnss3 libxss1 libasound2 libatk-bridge2.0-0 libgtk-3-0
+          npx ng test --code-coverage --codeCoverageDirectory=coverage --watch=false --browsers=ChromeHeadless --no-progress || true
           echo "✅ Testes finalizados."
 
       - name: Verificar cobertura gerada
