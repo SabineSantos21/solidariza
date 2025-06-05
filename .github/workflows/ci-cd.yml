@@ -18,16 +18,20 @@ jobs:
         with:
           node-version: '16'
 
+      - name: Install dependencies
+        run: npm install --force
+
       - name: Clean previous coverage folder
         run: rm -rf coverage || true
 
-      - name: Run unit tests with coverage (via npm)
-        run: npm run test -- --watch=false --browsers=ChromeHeadless --no-progress --log-level debug
+      - name: Run unit tests with coverage (via npx)
+        run: npx ng test --code-coverage --watch=false --browsers=ChromeHeadless --no-progress --log-level debug
 
       - name: Verify lcov.info exists
         run: |
           echo "✅ Verificando cobertura..."
           ls -la coverage || echo "coverage/ não existe"
+          # Substitua 'solidariza' pelo nome do seu projeto se for diferente
           ls -la coverage/solidariza || echo "coverage/solidariza não existe"
           cat coverage/solidariza/lcov.info || echo "❌ Arquivo lcov.info não encontrado!"
 
