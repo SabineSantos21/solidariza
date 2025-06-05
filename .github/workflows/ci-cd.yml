@@ -4,7 +4,6 @@ on:
   push:
     branches:
       - main
-  pull_request:
 
 jobs:
   build:
@@ -14,24 +13,30 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
         with:
-          fetch-depth: 0  # Importante para SonarCloud funcionar bem
+          fetch-depth: 0
 
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: '16'
+          node-version: "16"
 
       - name: Install dependencies
         run: npm install --force
 
-      - name: Run unit tests and generate coverage
-        run: |
-          npx ng test --code-coverage --watch=false --browsers=ChromeHeadless --no-progress
+      - name: Clean previous coverage folder
+        run: rm -rf coverage || true
 
-      - name: Show coverage summary
+      - name: Run unit tests with coverage
         run: |
-          ls -la coverage/solidariza
-          cat coverage/solidariza/lcov.info || echo "Arquivo de cobertura não encontrado."
+          echo "Running tests with coverage..."
+          npx ng test --code-coverage --watch=false --browsers=ChromeHeadless --no-progress
+          echo "✅ Tests completed."
+
+      - name: Verify lcov.info exists
+        run: |
+          echo "📂 Verificando arquivos de cobertura..."
+          ls -la coverage/argon-dashboard-angular || echo "❌ Pasta coverage/argon-dashboard-angular não existe"
+          cat coverage/argon-dashboard-angular/lcov.info || echo "❌ Arquivo lcov.info não encontrado!"
 
       - name: SonarCloud Scan
         uses: SonarSource/sonarcloud-github-action@v2.2.0
@@ -39,3 +44,28 @@ jobs:
           projectBaseDir: .
         env:
           SONAR_TOKEN: ${{ secrets.SONARCLOUD_TOKEN }}
+
+      - name: Build Angular project
+        run: npm run build
+
+      - name: Archive production artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: dist
+          path: dist/
+
+  deploy:
+    runs-on: ubuntu-latest
+    needs: [build]
+
+    steps:
+      - name: Download artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: dist
+
+      - name: Deploy to Azure Web App
+        uses: azure/webapps-deploy@v2
+        with:
+          app-name: "Solidariza-Web"
+          publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
