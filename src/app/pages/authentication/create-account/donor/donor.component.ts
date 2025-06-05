@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { UserType } from 'src/app/shared/enums/userType';
@@ -13,11 +13,17 @@ import { UserService } from 'src/app/shared/services/user.service';
 })
 export class DonorComponent implements OnInit {
   form: FormGroup;
-  alertError: any = "";
-  alertSuccess: any = "";
+  alertError = "";
+  alertSuccess = "";
+  checkPolicy = false;
+  checkCookie = false;
 
-  checkPolicy = null;
-  checkCookie = null;
+  private readonly errorMessages = {
+    emptyPassword: 'Os campos de senha não podem estar vazios.',
+    passwordsMismatch: 'As senhas não coincidem.',
+    weakPassword: 'A senha deve conter pelo menos 8 caracteres, incluindo uma letra maiúscula, uma minúscula, um número e um caractere especial.',
+    userCreateGeneric: 'Erro ao criar usuário'
+  };
 
   constructor(
     private readonly spinner: NgxSpinnerService,
@@ -27,85 +33,68 @@ export class DonorComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.createForm(new NewUser())
+    this.createForm(new NewUser());
   }
 
-  public createForm(user: NewUser) {
+  private createForm(user: NewUser): void {
     this.form = this.formBuilder.group({
-      name: new FormControl(user.name, Validators.required),
-      type: new FormControl(UserType.Donor, Validators.required),
-      email: new FormControl(user.email, Validators.required),
-      password: new FormControl(user.password, Validators.required),
-      confirmPassword: new FormControl(null, Validators.required)
-    })
+      name: [user.name, Validators.required],
+      type: [UserType.Donor, Validators.required],
+      email: [user.email, [Validators.required, Validators.email]],
+      password: [user.password, Validators.required],
+      confirmPassword: [null, Validators.required]
+    });
   }
 
   getControl(name: string): AbstractControl {
     return this.form.get(name);
   }
 
-  private validateFields() {
-    Object.keys(this.form.controls).forEach((key) => {
-      if (
-        this.getControl(key).value == "" ||
-        this.getControl(key).value == null
-      )
-        this.getControl(key).markAsTouched();
+  private validateFields(): void {
+    Object.values(this.form.controls).forEach(control => {
+      if (control.invalid) control.markAsTouched();
     });
   }
 
-  public createUser() {
-    this.checkPolicy = this.checkPolicy ?? false;
-    this.checkCookie = this.checkCookie ?? false;
-
+  public createUser(): void {
+    this.checkPolicy = !!this.checkPolicy;
+    this.checkCookie = !!this.checkCookie;
     if (this.form.invalid) {
       this.validateFields();
+      return;
     }
-    else if (this.validatePassword() && this.checkPolicy && this.checkCookie) {
-      this.spinner.show();
 
-      let user = this.form.value;
+    if (!this.validatePassword()) return;
+    if (!this.checkPolicy || !this.checkCookie) return;
 
-      this.userService.createUser(user).subscribe(
-        (data) => {
-          this.router.navigate(["/login"]);
-        },
-        (error) => {
-          if(error.status == 400) {
-            console.log(error.error)
-            this.alertError = error.error;
-          } 
-          else {
-            this.alertError = "Erro ao criar usuário";
-          }
-        }
-      ).add(() => {
-        this.spinner.hide();
-      })
-    }
+    this.spinner.show();
+    this.userService.createUser(this.form.value).subscribe(
+      () => this.router.navigate(['/login']),
+      error => {
+        this.alertError = error.status === 400 ? error.error : this.errorMessages.userCreateGeneric;
+      }
+    ).add(() => this.spinner.hide());
   }
 
-  validatePassword() {
-    let password = this.form.value.password;
-    let confirmPassword = this.form.value.confirmPassword;
-
+  private validatePassword(): boolean {
+    const { password, confirmPassword } = this.form.value;
     if (!password || !confirmPassword) {
-      this.alertError = 'Os campos de senha não podem estar vazios.';
+      this.setError('emptyPassword');
       return false;
     }
-
     if (password !== confirmPassword) {
-      this.alertError = 'As senhas não coincidem.';
+      this.setError('passwordsMismatch');
       return false;
     }
-
-    const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
-    if (!passwordRegex.test(password)) {
-      this.alertError = 'A senha deve conter pelo menos 8 caracteres, incluindo uma letra maiúscula, uma minúscula, um número e um caractere especial.';
+    const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+    if (!regex.test(password)) {
+      this.setError('weakPassword');
       return false;
     }
-
     return true;
   }
 
+  private setError(type: keyof typeof this.errorMessages): void {
+    this.alertError = this.errorMessages[type];
+  }
 }
