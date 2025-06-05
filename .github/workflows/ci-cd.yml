@@ -26,12 +26,12 @@ jobs:
 
       - name: Verify lcov.info exists
         run: |
-          echo "Checking if coverage report exists"
+          echo "✅ Verificando cobertura..."
           ls -la coverage/
-          ls -la coverage/solidariza/  # substitua 'solidariza' pelo nome correto do seu projeto, se for diferente
-          cat coverage/solidariza/lcov.info || echo "Arquivo lcov.info não encontrado!"
+          ls -la coverage/solidariza/
+          cat coverage/solidariza/lcov.info || echo "❌ Arquivo lcov.info não encontrado!"
 
-      - name: SonarQube Scan
+      - name: SonarCloud Scan
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         run: |
