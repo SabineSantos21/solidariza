@@ -28,15 +28,15 @@ jobs:
 
       - name: Run unit tests with coverage
         run: |
-          echo "Running tests with coverage..."
+          echo "🏃‍♀️ Executando testes com cobertura..."
           npx ng test --code-coverage --watch=false --browsers=ChromeHeadless --no-progress
-          echo "✅ Tests completed."
+          echo "✅ Testes finalizados."
 
-      - name: Verify lcov.info exists
+      - name: Verificar cobertura gerada
         run: |
           echo "📂 Verificando arquivos de cobertura..."
           ls -la coverage || echo "❌ Pasta coverage/ não existe"
-          cat coverage/lcov.info || echo "❌ Arquivo lcov.info não encontrado!"
+          cat coverage/lcov.info | head -n 20 || echo "❌ Arquivo lcov.info não encontrado!"
 
       - name: SonarCloud Scan
         uses: SonarSource/sonarcloud-github-action@v2.2.0
@@ -44,9 +44,15 @@ jobs:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         with:
           args: >
-            -Dsonar.projectKey="SabineSantos21_solidariza"
-            -Dsonar.organization="sabinesantos21"
+            -Dsonar.projectKey=SabineSantos21_solidariza
+            -Dsonar.organization=sabinesantos21
             -Dsonar.javascript.lcov.reportPaths=coverage/lcov.info
+            -Dsonar.sources=src
+            -Dsonar.exclusions=**/*.spec.ts,**/node_modules/**
+            -Dsonar.tests=src
+            -Dsonar.test.inclusions=**/*.spec.ts
+            -Dsonar.typescript.tsconfigPaths=src/tsconfig.spec.json
+            -Dsonar.sourceEncoding=UTF-8
 
       - name: Build Angular project
         run: npm run build
