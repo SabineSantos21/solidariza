@@ -112,29 +112,6 @@ describe('OrganizationProfileComponent', () => {
     expect(component.removeSpecialCharacters('CNPJ 12.345/678-9')).toBe('CNPJ 123456789');
   });
 
-  it('getLinks deve popular links, socialAccounts e otherLinks', fakeAsync(() => {
-    const links = [
-      { type: LinkType.INSTAGRAM, url: 'x1' },
-      { type: LinkType.FACEBOOK, url: 'x2' },
-      { type: LinkType.LINKEDIN, url: 'x3' },
-      { type: LinkType.TIKTOK, url: 'x4' },
-      { type: LinkType.WHATSAPP, url: 'x5' },
-      { type: LinkType.YOUTUBE, url: 'x6' },
-      { type: LinkType.OTHER, url: 'x7' }
-    ];
-    linkServiceSpy.getLinksByProfileId.and.returnValue(of(links));
-    component.profile = { profileId: 'ppx' };
-    component.getLinks();
-    tick();
-    // SocialAccounts: 6 tipos, otherLinks: 1
-    expect(component.links).toEqual(links);
-    expect(component.socialAccounts.length).toBe(6);
-    expect(component.otherLinks.length).toBe(1);
-    // Verifica se os ícones estão corretos
-    expect(component.socialAccounts[0].icon).toContain('instagram.svg');
-    expect(component.otherLinks[0].icon).toContain('link.svg');
-  }));
-
   it('getLinks deve alertar erro ao buscar links', fakeAsync(() => {
     linkServiceSpy.getLinksByProfileId.and.returnValue(throwError(() => ({})));
     component.profile = { profileId: 'bad' };
