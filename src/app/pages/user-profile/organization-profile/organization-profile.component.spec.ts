@@ -22,7 +22,6 @@ describe('OrganizationProfileComponent', () => {
     organizationInfoServiceSpy = jasmine.createSpyObj('OrganizationInfoService', [
       'getOrganizationInfoByUserId', 'organizationInfoValidateByOrganizationInfoId'
     ]);
-    // Retornos padrão, assim nunca quebra o subscribe
     linkServiceSpy.getLinksByProfileId.and.returnValue(of([]));
     campaignServiceSpy.getCampaignByUserId.and.returnValue(of([]));
     organizationInfoServiceSpy.getOrganizationInfoByUserId.and.returnValue(of({}));
@@ -52,13 +51,11 @@ describe('OrganizationProfileComponent', () => {
 
   describe('ngOnInit', () => {
     it('deve chamar getOrganizationInfo e getLinks se profile estiver definido', fakeAsync(() => {
-      spyOn(component, 'getOrganizationInfo').and.callFake(() => {});
-      spyOn(component, 'getLinks').and.callFake(() => {});
-
+      spyOn(component, 'getOrganizationInfo');
+      spyOn(component, 'getLinks');
       component.profile = { profileId: 'p987' };
       component.user = { userId: 'u213' };
       component.ngOnInit();
-
       expect(component.getOrganizationInfo).toHaveBeenCalledWith('u213');
       expect(component.getLinks).toHaveBeenCalled();
     }));
@@ -73,7 +70,7 @@ describe('OrganizationProfileComponent', () => {
     });
   });
 
-  it('getOrganizationInfo deve popular organizationInfo e cuidar do spinner', fakeAsync(() => {
+  it('getOrganizationInfo deve popular organizationInfo e controlar spinner', fakeAsync(() => {
     const infoMock = { name: 'ONG', cnpj: '123' };
     organizationInfoServiceSpy.getOrganizationInfoByUserId.and.returnValue(of(infoMock));
     component.getOrganizationInfo('50');
@@ -83,9 +80,17 @@ describe('OrganizationProfileComponent', () => {
     expect(spinnerSpy.hide).toHaveBeenCalled();
   }));
 
+  it('getOrganizationInfo deve tratar fluxo de erro', fakeAsync(() => {
+    organizationInfoServiceSpy.getOrganizationInfoByUserId.and.returnValue(throwError(() => ({})));
+    component.organizationInfo = null;
+    component.getOrganizationInfo('51');
+    tick();
+    // Não tem mensagem definida, mas spinner deve ser ocultado
+    expect(spinnerSpy.hide).toHaveBeenCalled();
+  }));
+
   it('validateOrganization deve atualizar organizationInfo e tratar erro', fakeAsync(() => {
     organizationInfoServiceSpy.organizationInfoValidateByOrganizationInfoId.and.returnValue(of({valid: true}));
-    component.organizationInfo = {};
     spyOn(component, 'removeSpecialCharacters').and.returnValue('00345');
     component.validateOrganization('oid', '00.345');
     tick();
@@ -98,7 +103,7 @@ describe('OrganizationProfileComponent', () => {
     component.alertError = '';
     component.validateOrganization('oid2', '123.456');
     tick();
-    expect(component.alertError).toContain('Erro ao validar empresa');
+    expect(component.alertError).toContain('Erro ao validar empresa.');
     expect(spinnerSpy.hide).toHaveBeenCalled();
   }));
 
@@ -107,23 +112,27 @@ describe('OrganizationProfileComponent', () => {
     expect(component.removeSpecialCharacters('CNPJ 12.345/678-9')).toBe('CNPJ 123456789');
   });
 
-  it('getLinks deve popular links e chamar getSocialAccounts/otherLinks', fakeAsync(() => {
+  it('getLinks deve popular links, socialAccounts e otherLinks', fakeAsync(() => {
     const links = [
       { type: LinkType.INSTAGRAM, url: 'x1' },
-      { type: LinkType.OTHER, url: 'x2' }
+      { type: LinkType.FACEBOOK, url: 'x2' },
+      { type: LinkType.LINKEDIN, url: 'x3' },
+      { type: LinkType.TIKTOK, url: 'x4' },
+      { type: LinkType.WHATSAPP, url: 'x5' },
+      { type: LinkType.YOUTUBE, url: 'x6' },
+      { type: LinkType.OTHER, url: 'x7' }
     ];
     linkServiceSpy.getLinksByProfileId.and.returnValue(of(links));
-    spyOn(component, 'getSocialAccounts').and.callThrough();
-
     component.profile = { profileId: 'ppx' };
     component.getLinks();
     tick();
-
+    // SocialAccounts: 6 tipos, otherLinks: 1
     expect(component.links).toEqual(links);
-    expect(component.getSocialAccounts).toHaveBeenCalledWith(links[0]);
-    expect(component.getSocialAccounts).toHaveBeenCalledWith(links[1]);
-    expect(component.socialAccounts.length).toBeGreaterThan(0);
-    expect(component.otherLinks.length).toBeGreaterThan(0);
+    expect(component.socialAccounts.length).toBe(6);
+    expect(component.otherLinks.length).toBe(1);
+    // Verifica se os ícones estão corretos
+    expect(component.socialAccounts[0].icon).toContain('instagram.svg');
+    expect(component.otherLinks[0].icon).toContain('link.svg');
   }));
 
   it('getLinks deve alertar erro ao buscar links', fakeAsync(() => {
@@ -131,22 +140,8 @@ describe('OrganizationProfileComponent', () => {
     component.profile = { profileId: 'bad' };
     component.getLinks();
     tick();
-    expect(component.alertError).toContain('Erro ao buscar links');
+    expect(component.alertError).toContain('Erro ao buscar links.');
   }));
-
-  it('getSocialAccounts deve adicionar corretamente nas listas', () => {
-    const allTypes = [
-      LinkType.INSTAGRAM, LinkType.FACEBOOK, LinkType.LINKEDIN, LinkType.TIKTOK, LinkType.WHATSAPP, LinkType.YOUTUBE, LinkType.OTHER
-    ];
-    component.socialAccounts = [];
-    component.otherLinks = [];
-    allTypes.forEach((tp, idx) => {
-      component.getSocialAccounts({ type: tp, url: 'l' + idx });
-    });
-
-    expect(component.socialAccounts.length).toBe(6);
-    expect(component.otherLinks.length).toBe(1);
-  });
 
   it('toggleShowLinks alterna showLinks', () => {
     component.showLinks = false;
@@ -163,6 +158,14 @@ describe('OrganizationProfileComponent', () => {
     tick();
     expect(spinnerSpy.show).toHaveBeenCalled();
     expect(component.campaigns).toEqual(['A', 'B']);
+    expect(spinnerSpy.hide).toHaveBeenCalled();
+  }));
+
+  it('getCampaignsByUserId deve tratar erro', fakeAsync(() => {
+    campaignServiceSpy.getCampaignByUserId.and.returnValue(throwError(() => ({})));
+    component.user = { userId: '999' };
+    component.getCampaignsByUserId();
+    tick();
     expect(spinnerSpy.hide).toHaveBeenCalled();
   }));
 

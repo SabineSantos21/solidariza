@@ -1,9 +1,9 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { NgxSpinnerService } from 'ngx-spinner';
-import { LinkType } from 'src/app/shared/enums/linkType';
-import { CampaignService } from 'src/app/shared/services/campaign.service';
-import { LinkService } from 'src/app/shared/services/link.service';
-import { OrganizationInfoService } from 'src/app/shared/services/organizationInfo.service';
+import { Component, Input, OnInit } from "@angular/core";
+import { NgxSpinnerService } from "ngx-spinner";
+import { LinkType } from "src/app/shared/enums/linkType";
+import { CampaignService } from "src/app/shared/services/campaign.service";
+import { LinkService } from "src/app/shared/services/link.service";
+import { OrganizationInfoService } from "src/app/shared/services/organizationInfo.service";
 
 @Component({
   selector: 'app-organization-profile',
@@ -15,17 +15,26 @@ export class OrganizationProfileComponent implements OnInit {
   @Input() profile;
   @Input() showEditUser;
 
-  links: any = [];
-  socialAccounts: any = [];
-  campaigns: any = [];
-
+  links: any[] = [];
+  socialAccounts: any[] = [];
+  campaigns: any[] = [];
+  otherLinks: any[] = [];
   organizationInfo: any;
-  
-  otherLinks: any = [];
-  showLinks: boolean = false;
 
-  alertError: any = "";
-  alertSuccess: any = "";
+  showLinks = false;
+  alertError = '';
+  alertSuccess = '';
+
+  private readonly socialIconMap = {
+    [LinkType.INSTAGRAM]: 'instagram.svg',
+    [LinkType.FACEBOOK]: 'facebook.svg',
+    [LinkType.LINKEDIN]: 'linkedin.svg',
+    [LinkType.TIKTOK]: 'tiktok.svg',
+    [LinkType.WHATSAPP]: 'whatsapp.svg',
+    [LinkType.YOUTUBE]: 'youtube.svg'
+  };
+  private readonly linkIconPath = '../../../../assets/img/icons/social/';
+  private readonly genericError = 'Tente novamente mais tarde.';
 
   constructor(
     public spinner: NgxSpinnerService,
@@ -41,114 +50,65 @@ export class OrganizationProfileComponent implements OnInit {
     }
   }
 
-  getOrganizationInfo(userId) {
+  private handleAsync<T>(obs, onSuccess, onError?) {
     this.spinner.show();
-
-    this.organizationInfoService.getOrganizationInfoByUserId(userId).subscribe(
-      data => {
-        this.organizationInfo = data;
+    obs.subscribe(
+      onSuccess,
+      err => {
+        if (onError) { onError(err); }
       }
-    ).add(() => {
-      this.spinner.hide();
-    })
+    ).add(() => this.spinner.hide());
+  }
+
+  getOrganizationInfo(userId: string) {
+    this.handleAsync(
+      this.organizationInfoService.getOrganizationInfoByUserId(userId),
+      data => this.organizationInfo = data
+    );
   }
 
   validateOrganization(organizationInfoId, cnpj) {
-    this.spinner.show();
-
-    this.organizationInfoService.organizationInfoValidateByOrganizationInfoId(organizationInfoId, this.removeSpecialCharacters(cnpj)).subscribe(
-      data => {
-        this.organizationInfo = data;
-      },
-      error => {
-        this.alertError = "Erro ao validar empresa. Tente novamente mais tarde."
-      }
-    ).add(() => {
-      this.spinner.hide();
-    })
+    this.handleAsync(
+      this.organizationInfoService.organizationInfoValidateByOrganizationInfoId(
+        organizationInfoId, this.removeSpecialCharacters(cnpj)
+      ),
+      data => this.organizationInfo = data,
+      () => { this.alertError = 'Erro ao validar empresa. ' + this.genericError }
+    );
   }
 
   removeSpecialCharacters(str: string): string {
-    return str.replace(/[^a-zA-Z0-9 ]/g, ""); // Mantém letras, números e espaço
+    return str.replace(/[^a-zA-Z0-9 ]/g, "");
   }
 
   getLinks() {
     this.linkService.getLinksByProfileId(this.profile.profileId).subscribe(
       data => {
-        this.links = data;
-
-        this.links.forEach(el => {
-          this.getSocialAccounts(el)
-        });
-
+        this.links = data || [];
+        this.organizeLinks();
       },
-      error => {
-        this.alertError = "Erro ao buscar links. Tente novamente mais tarde."
-      }
-    )
+      () => { this.alertError = 'Erro ao buscar links. ' + this.genericError }
+    );
   }
 
-  getSocialAccounts(link) {
-    switch (link.type) {
-      case LinkType.INSTAGRAM:
+  private organizeLinks() {
+    this.socialAccounts = [];
+    this.otherLinks = [];
+    (this.links || []).forEach(link => {
+      if (this.socialIconMap[link.type]) {
         this.socialAccounts.push({
-          type: LinkType.INSTAGRAM,
-          icon: '../../../../assets/img/icons/social/instagram.svg', 
+          type: link.type,
+          icon: this.linkIconPath + this.socialIconMap[link.type],
           link: link.url
-        })
-        break;
-
-      case LinkType.FACEBOOK:
-        this.socialAccounts.push({
-          type: LinkType.FACEBOOK,
-          icon: '../../../../assets/img/icons/social/facebook.svg', 
-          link: link.url
-        })
-        break;
-
-      case LinkType.LINKEDIN:
-        this.socialAccounts.push({
-          type: LinkType.LINKEDIN,
-          icon: '../../../../assets/img/icons/social/linkedin.svg', 
-          link: link.url
-        })
-        break;
-
-      case LinkType.TIKTOK:
-        this.socialAccounts.push({
-          type: LinkType.TIKTOK,
-          icon: '../../../../assets/img/icons/social/tiktok.svg', 
-          link: link.url
-        })
-        break;
-
-      case LinkType.WHATSAPP:
-        this.socialAccounts.push({
-          type: LinkType.WHATSAPP,
-          icon: '../../../../assets/img/icons/social/whatsapp.svg', 
-          link: link.url
-        })
-        break;
-
-      case LinkType.YOUTUBE:
-        this.socialAccounts.push({
-          type: LinkType.YOUTUBE,
-          icon: '../../../../assets/img/icons/social/youtube.svg', 
-          link: link.url
-        })
-        break;
-
-      case LinkType.OTHER:
+        });
+      } else if (link.type === LinkType.OTHER) {
         this.otherLinks.push({
           type: LinkType.OTHER,
-          icon: '../../../../assets/img/icons/social/link.svg', 
+          icon: this.linkIconPath + this.socialIconMap[LinkType.OTHER] || 'link.svg',
           link: link.url
-        })
-        break;
-
-      default:
-        break
-    }
+        });
+      }
+    });
   }
 
   toggleShowLinks() {
@@ -156,15 +116,9 @@ export class OrganizationProfileComponent implements OnInit {
   }
 
   getCampaignsByUserId() {
-    this.spinner.show();
-
-    this.campaignService.getCampaignByUserId(this.user.userId).subscribe(
-      (data) => {
-        this.campaigns = data;
-      }
-    ).add(() => {
-      this.spinner.hide();
-    })
+    this.handleAsync(
+      this.campaignService.getCampaignByUserId(this.user.userId),
+      data => this.campaigns = data || []
+    );
   }
-
 }
