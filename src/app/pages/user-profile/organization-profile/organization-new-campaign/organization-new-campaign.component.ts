@@ -8,19 +8,39 @@ import { NewCampaign } from 'src/app/shared/models/campaign';
 import { CampaignService } from 'src/app/shared/services/campaign.service';
 import { LocalStorageService } from 'src/app/shared/services/local-storage.service';
 
+interface FormField {
+  label: string;
+  name: string;
+  type: string;
+  required: boolean;
+  optionsKey?: string; // Indica qual array de opções usar para selects
+  colSize: string;     // "col-lg-4" ou "col-lg-12"
+}
+
 @Component({
   selector: 'app-organization-new-campaign',
   templateUrl: './organization-new-campaign.component.html',
 })
 export class OrganizationNewCampaignComponent implements OnInit {
   form: FormGroup;
-  
   alertError: any = "";
   alertSuccess: any = "";
 
-  campaignStatus: any = [];
-  campaignType: any = [];
+  campaignStatus: any[] = [];
+  campaignType: any[] = [];
   user: any;
+
+  formFields: FormField[] = [
+    { label: 'Título',      name: 'title',       type: 'text',           required: true,  colSize: "col-lg-8" },
+    { label: 'Tipo da Campanha', name: 'type',   type: 'select',         required: true,  optionsKey: 'campaignType',   colSize: "col-lg-4" },
+    { label: 'Descrição',   name: 'description', type: 'textarea',       required: true,  colSize: "col-lg-12" },
+    { label: 'Data Início', name: 'startDate',   type: 'datetime-local', required: true,  colSize: "col-lg-4" },
+    { label: 'Data Fim',    name: 'endDate',     type: 'datetime-local', required: true,  colSize: "col-lg-4" },
+    { label: 'Status',      name: 'status',      type: 'select',         required: true,  optionsKey: 'campaignStatus', colSize: "col-lg-4" },
+    { label: 'Endereço',    name: 'address',     type: 'text',           required: false, colSize: "col-lg-4" },
+    { label: 'Cidade',      name: 'city',        type: 'text',           required: false, colSize: "col-lg-4" },
+    { label: 'Estado',      name: 'state',       type: 'text',           required: false, colSize: "col-lg-4" },
+  ];
 
   constructor(
     public spinner: NgxSpinnerService,
@@ -46,9 +66,9 @@ export class OrganizationNewCampaignComponent implements OnInit {
       endDate: new FormControl(campaign.endDate, Validators.required),
       status: new FormControl(campaign.status, Validators.required),
       type: new FormControl(campaign.type, Validators.required),
-      address: new FormControl(campaign.address,null),
-      state: new FormControl(campaign.state,null),
-      city: new FormControl(campaign.city,null)
+      address: new FormControl(campaign.address, null),
+      state: new FormControl(campaign.state, null),
+      city: new FormControl(campaign.city, null)
     })
   }
   
@@ -101,20 +121,16 @@ export class OrganizationNewCampaignComponent implements OnInit {
   }
 
   createCampaign() {
-    
     this.getControl("userId").setValue(this.user.userId);
 
-    if(this.form.invalid){
+    if (this.form.invalid) {
       this.validateFields()
-    }
-    else {
+    } else {
       this.spinner.show();
-      
       this.campaignService.createCampaign(this.form.value).subscribe(
         (data) => {
           this.alertSuccess = "Campanha criada com sucesso"
           this.router.navigate(["/user-profile"])
-          
         },
         (error) => {
           this.alertError = "Erro ao criar campanha. Tente novamente mais tarde."
