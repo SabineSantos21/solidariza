@@ -1,7 +1,7 @@
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
 
 import { AppComponent } from './app.component';
@@ -18,6 +18,7 @@ import { DonorComponent } from './pages/authentication/create-account/donor/dono
 import { VolunteerComponent } from './pages/authentication/create-account/volunteer/volunteer.component';
 import { NgxMaskModule, IConfig } from 'ngx-mask';
 import { NgxSpinnerModule } from "ngx-spinner";
+import { JwtInterceptor } from './core/helpers/jwt.interceptor';
 
 const maskConfig: Partial<IConfig> = {
   validation: false, // Define se a máscara deve validar o input
@@ -44,6 +45,9 @@ const maskConfig: Partial<IConfig> = {
     OrganizationComponent,
     DonorComponent,
     VolunteerComponent,
+  ],
+  providers: [
+     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
   ],
   bootstrap: [AppComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],

@@ -77,7 +77,7 @@ export class OrganizationComponent implements OnInit {
           this.router.navigate(["/login"]);
         },
         (error) => {
-          this.alertError = "Erro ao criar usuário";
+          this.alertError = error.error || "Erro ao criar conta. Confira se os dados estão corretos.";
         }
       ).add(() => {
         this.spinner.hide();

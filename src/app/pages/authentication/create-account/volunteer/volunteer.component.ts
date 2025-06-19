@@ -69,8 +69,8 @@ export class VolunteerComponent implements OnInit {
         () => {
           this.router.navigate(['/login']);
         },
-        () => {
-          this.alertError = 'Erro ao criar usuário';
+        (error) => {
+          this.alertError = error.error || 'Erro ao criar usuário. Verifique os dados informados.';
         }
       ).add(() => {
         this.spinner.hide();
