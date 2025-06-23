@@ -15,8 +15,8 @@ export class DonorComponent implements OnInit {
   form: FormGroup;
   alertError = "";
   alertSuccess = "";
-  checkPolicy = false;
-  checkCookie = false;
+  checkPolicy = null;
+  checkCookie = null;
 
   private readonly errorMessages = {
     emptyPassword: 'Os campos de senha não podem estar vazios.',
@@ -57,8 +57,9 @@ export class DonorComponent implements OnInit {
   }
 
   public createUser(): void {
-    this.checkPolicy = !!this.checkPolicy;
-    this.checkCookie = !!this.checkCookie;
+    this.checkPolicy = this.checkPolicy ?? false;
+    this.checkCookie = this.checkCookie ?? false;
+    
     if (this.form.invalid) {
       this.validateFields();
       return;

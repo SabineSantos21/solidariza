@@ -1,9 +1,14 @@
 <div class="card-body pt-0 pt-md-4">
   <div class="text-center">
     <h3>
-      {{ user.name }}<span class="font-weight-light"></span> <img *ngIf="organizationInfo && organizationInfo.isOrganizationApproved == true" src="../../../../assets/img/icons/verificado.svg" alt="" height="25">
+      {{ user.name }}
+      <span class="font-weight-light"></span> <img *ngIf="organizationInfo && organizationInfo.isOrganizationApproved == true" src="../../../../assets/img/icons/verificado.svg" alt="" height="25">
     </h3>
-
+    
+    <span *ngIf="organizationInfo && organizationInfo.isOrganizationApproved == false">
+      <span class="font-weight-light"></span> <img src="../../../../assets/img/icons/warning.svg" alt="" height="15">
+      {{ organizationInfo?.disapprovalReason || 'Organização não verificada' }}
+    </span>
     
     <div class="h5 font-weight-300" *ngIf="profile.city">
       <i class="ni location_pin mr-2"></i>{{ profile.city }}, {{ profile.state }}

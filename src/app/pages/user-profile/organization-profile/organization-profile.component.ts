@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from "@angular/core";
+import { ActivatedRoute } from "@angular/router";
 import { NgxSpinnerService } from "ngx-spinner";
 import { LinkType } from "src/app/shared/enums/linkType";
 import { CampaignService } from "src/app/shared/services/campaign.service";
@@ -40,11 +41,15 @@ export class OrganizationProfileComponent implements OnInit {
     public spinner: NgxSpinnerService,
     public linkService: LinkService,
     public campaignService: CampaignService,
-    public organizationInfoService: OrganizationInfoService
+    public organizationInfoService: OrganizationInfoService,
+    public route: ActivatedRoute,
   ) { }
 
   ngOnInit(): void {
     if (this.profile) {
+      var userId = this.route.snapshot.paramMap.get('id');
+      if (userId) this.user.userId = userId;
+
       this.getOrganizationInfo(this.user.userId);
       this.getLinks();
     }
@@ -61,10 +66,16 @@ export class OrganizationProfileComponent implements OnInit {
   }
 
   getOrganizationInfo(userId: string) {
-    this.handleAsync(
-      this.organizationInfoService.getOrganizationInfoByUserId(userId),
-      data => this.organizationInfo = data
-    );
+    this.organizationInfoService.getOrganizationInfoByUserId(userId).subscribe({
+      next: data => {
+      if (data && data.organizationInfoId) {
+        this.organizationInfo = data;
+      } else {
+        this.organizationInfo = null;
+      }
+      },
+      error: () => { this.alertError = 'Erro ao buscar informações da empresa. ' + this.genericError; }
+    });
   }
 
   validateOrganization(organizationInfoId, cnpj) {
