@@ -7,31 +7,36 @@ import { AdminLayoutComponent } from './layouts/admin-layout/admin-layout.compon
 import { AuthLayoutComponent } from './layouts/auth-layout/auth-layout.component';
 import { AuthGuard } from './core/guards/auth.guard';
 
-const routes: Routes =[
+const routes: Routes = [
   {
     path: '',
     redirectTo: 'login',
-    pathMatch: 'full',
-  }, {
-    path: '',
-    canActivate: [AuthGuard],
-    component: AdminLayoutComponent,
-    children: [
-      {
-        path: '',
-        loadChildren: () => import('src/app/layouts/admin-layout/admin-layout.module').then(m => m.AdminLayoutModule)
-      }
-    ]
-  }, {
+    pathMatch: 'full'
+  },
+  {
     path: '',
     component: AuthLayoutComponent,
     children: [
       {
         path: '',
-        loadChildren: () => import('src/app/layouts/auth-layout/auth-layout.module').then(m => m.AuthLayoutModule)
+        loadChildren: () =>
+          import('./layouts/auth-layout/auth-layout.module').then(m => m.AuthLayoutModule)
       }
     ]
-  }, {
+  },
+  {
+    path: '',
+    component: AdminLayoutComponent,
+    canActivate: [AuthGuard],
+    children: [
+      {
+        path: '',
+        loadChildren: () =>
+          import('./layouts/admin-layout/admin-layout.module').then(m => m.AdminLayoutModule)
+      }
+    ]
+  },
+  {
     path: '**',
     redirectTo: 'dashboard'
   }
