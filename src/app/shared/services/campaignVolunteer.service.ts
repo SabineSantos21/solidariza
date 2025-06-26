@@ -6,6 +6,7 @@ import { environment } from 'src/environments/environment';
 const httpOptions = {
   headers: new HttpHeaders({
     "Content-Type": "Application/json",
+    Authorization: `Bearer ${localStorage.getItem('token')}`
   }),
 };
 
@@ -15,7 +16,7 @@ const httpOptions = {
 export class CampaignVolunteerService {
 
   constructor(private readonly http: HttpClient) { }
-  
+
   getCampaignVolunteerById(campaignVolunteerId): Observable<any> {
     return this.http.get(
       `${environment.apiAddress}CampaignVolunteer/${campaignVolunteerId}`,

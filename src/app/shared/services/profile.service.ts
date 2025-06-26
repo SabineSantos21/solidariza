@@ -7,6 +7,7 @@ import { UpdateProfile } from '../models/profile';
 const httpOptions = {
   headers: new HttpHeaders({
     "Content-Type": "Application/json",
+    Authorization: `Bearer ${localStorage.getItem('token')}`
   }),
 };
 
