@@ -1,15 +1,21 @@
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { NgxSpinnerService } from 'ngx-spinner';
-import { PixType } from 'src/app/shared/enums/pixType';
-import { DonationService } from 'src/app/shared/services/donation.service';
+import { Component, ElementRef, OnInit, ViewChild } from "@angular/core";
+import { ActivatedRoute, Router } from "@angular/router";
+import { NgxSpinnerService } from "ngx-spinner";
+import { PixType } from "src/app/shared/enums/pixType";
+import { CampaignService } from "src/app/shared/services/campaign.service";
+import { DonationService } from "src/app/shared/services/donation.service";
+import { OrganizationInfoService } from "src/app/shared/services/organizationInfo.service";
+import { PixUtils } from "src/app/shared/services/pix-utils.service";
+import * as QRCode from "qrcode";
 
 @Component({
-  selector: 'app-campaign-donation',
-  templateUrl: './campaign-donation.component.html',
-  styleUrls: ['./campaign-donation.component.scss']
+  selector: "app-campaign-donation",
+  templateUrl: "./campaign-donation.component.html",
+  styleUrls: ["./campaign-donation.component.scss"],
 })
 export class CampaignDonationComponent implements OnInit {
+  @ViewChild("qrCanvas", { static: false }) qrCanvas!: ElementRef;
+
   organizationInfo: any;
 
   campaignId: any;
@@ -18,84 +24,131 @@ export class CampaignDonationComponent implements OnInit {
   alertError: any = "";
   alertSuccess: any = "";
 
-  textTooltip: string = "Copiar"
+  textTooltip: string = "Copiar";
+  qrCodePixPayload: string = "";
 
   constructor(
     private readonly spinner: NgxSpinnerService,
     private readonly donationService: DonationService,
+    private readonly campaignService: CampaignService,
+    private readonly organizationInfoService: OrganizationInfoService,
     private readonly route: ActivatedRoute,
-    public readonly router: Router,
-  ) { }
+    public readonly router: Router
+  ) {}
 
   ngOnInit(): void {
     this.campaignId = this.route.snapshot.paramMap.get("id");
 
     if (this.campaignId) {
-      this.getDonationQrCode(this.campaignId);
-    }
-    else {
+      this.getCampaignById();
+    } else {
       this.router.navigate(["/dashboard"]);
     }
   }
 
-  getDonationQrCode(campaignId) {
+  getCampaignById() {
     this.spinner.show();
 
-    this.donationService.getDonationQRCode(campaignId).subscribe(
-      data => {
-        this.organizationInfo = data
+    this.campaignService
+      .getCampaignById(this.campaignId)
+      .subscribe(
+        (data) => {
+          this.campaign = data;
+          this.getOrganizationInfo(this.campaign.userId);
+        },
+        (error) => {}
+      )
+      .add(() => {
+        this.spinner.hide();
+      });
+  }
+
+  getOrganizationInfo(userId: string) {
+    this.organizationInfoService.getOrganizationInfoByUserId(userId).subscribe({
+      next: (data) => {
+        if (data && data.organizationInfoId) {
+          this.organizationInfo = data;
+          this.gerarQRCode(this.organizationInfo);
+        } else {
+          this.organizationInfo = null;
+        }
       },
-      error => {
-        this.alertError = "Erro ao buscar Qr Code"
+      error: () => {
+        this.alertError = "Erro ao buscar informações da empresa. ";
+      },
+    });
+  }
+
+  gerarQRCode(organization): void {
+    const sanitizedPixKey = organization.pixKey.replace(/\D/g, "");
+
+    const payloadPix = PixUtils.gerarPayloadPix(
+      sanitizedPixKey,
+      organization.beneficiaryName,
+      organization.beneficiaryCity,
+      0
+    );
+    this.qrCodePixPayload = payloadPix;
+    console.log("Payload Pix:", payloadPix);
+
+    setTimeout(() => {
+      if (this.qrCanvas) {
+        QRCode.toCanvas(
+          this.qrCanvas.nativeElement,
+          payloadPix,
+          {
+            errorCorrectionLevel: "M",
+            width: 256,
+          },
+          (error) => {
+            if (error) console.error("Erro ao gerar QR Code:", error);
+          }
+        );
       }
-    ).add(() => {
-      this.spinner.hide();
-    })
+    }, 0);
   }
 
   getPixType(type) {
-    
-    switch(type) {
+    switch (type) {
       case PixType.PHONE:
-        return "Telefone"
+        return "Telefone";
 
       case PixType.EMAIL:
-        return "Email"
-      
+        return "Email";
+
       case PixType.CPF:
-        return "CPF"
-      
+        return "CPF";
+
       case PixType.CNPJ:
-        return "CNPJ"
-      
-      case PixType.OTHER :
-        return "Outra"
-        
+        return "CNPJ";
+
+      case PixType.OTHER:
+        return "Outra";
+
       default:
-        return "Outra"
+        return "Outra";
     }
   }
 
   getPixKeyMask(type) {
-    
-    switch(type) {
+    switch (type) {
       case PixType.PHONE:
-        return "(00) 0000-00009"
+        return "(00) 0000-00009";
 
       case PixType.EMAIL:
-        return ""
-      
+        return "";
+
       case PixType.CPF:
-        return "000.000.000-00"
-      
+        return "000.000.000-00";
+
       case PixType.CNPJ:
-        return "00.000.000/0000-00"
-      
-      case PixType.OTHER :
-        return ""
-        
+        return "00.000.000/0000-00";
+
+      case PixType.OTHER:
+        return "";
+
       default:
-        return ""
+        return "";
     }
   }
 
@@ -103,8 +156,7 @@ export class CampaignDonationComponent implements OnInit {
     if (!pixKey) return;
 
     navigator.clipboard.writeText(pixKey).then(() => {
-      this.textTooltip = "Copiado"
+      this.textTooltip = "Copiado";
     });
   }
-
 }

@@ -7,3 +7,7 @@ ul {
 .cursor-pointer {
     cursor: pointer;
 }
+
+::ng-deep .qrcode {
+  border: 2px solid red;
+}
