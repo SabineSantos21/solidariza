@@ -108,7 +108,15 @@
             "polyfills": "src/polyfills.ts",
             "tsConfig": "src/tsconfig.spec.json",
             "codeCoverage": true,
-            "codeCoverageExclude": [],
+            "codeCoverageExclude": [
+              "src/app/core/**/*",
+              "src/app/app.component.html",
+              "src/app/app.component.ts",
+              "src/app/app.component.scss",
+              "src/app/app.module.ts",
+              "src/app/app.routing.ts",
+              "src/app/shared/**/*"
+            ],
             "karmaConfig": "src/karma.conf.js",
             "styles": [
               "src/styles.scss"
