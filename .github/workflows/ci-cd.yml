@@ -81,6 +81,9 @@ jobs:
       - name: Verificar web.config no deploy
         run: cat web.config || echo "❌ web.config não encontrado no deploy"
 
+      - name: Verificar index.html
+        run: cat index.html || echo "❌ index.html não encontrado"
+
       - name: Deploy to Azure Web App
         uses: azure/webapps-deploy@v2
         with:
