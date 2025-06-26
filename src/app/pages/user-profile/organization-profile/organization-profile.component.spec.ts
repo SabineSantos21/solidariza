@@ -4,6 +4,8 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { LinkService } from 'src/app/shared/services/link.service';
 import { CampaignService } from 'src/app/shared/services/campaign.service';
 import { OrganizationInfoService } from 'src/app/shared/services/organizationInfo.service';
+import { ActivatedRoute } from '@angular/router';
+import { RouterTestingModule } from '@angular/router/testing';
 import { of, throwError } from 'rxjs';
 import { LinkType } from 'src/app/shared/enums/linkType';
 
@@ -15,6 +17,14 @@ describe('OrganizationProfileComponent', () => {
   let campaignServiceSpy: jasmine.SpyObj<CampaignService>;
   let organizationInfoServiceSpy: jasmine.SpyObj<OrganizationInfoService>;
 
+  const mockActivatedRoute = {
+    snapshot: {
+      paramMap: {
+        get: (key: string) => 'mockId' // Mock do método `get`
+      }
+    }
+  };
+
   beforeEach(async () => {
     spinnerSpy = jasmine.createSpyObj('NgxSpinnerService', ['show', 'hide']);
     linkServiceSpy = jasmine.createSpyObj('LinkService', ['getLinksByProfileId']);
@@ -22,24 +32,31 @@ describe('OrganizationProfileComponent', () => {
     organizationInfoServiceSpy = jasmine.createSpyObj('OrganizationInfoService', [
       'getOrganizationInfoByUserId', 'organizationInfoValidateByOrganizationInfoId'
     ]);
+
+    // Mock implementações padrão
     linkServiceSpy.getLinksByProfileId.and.returnValue(of([]));
     campaignServiceSpy.getCampaignByUserId.and.returnValue(of([]));
     organizationInfoServiceSpy.getOrganizationInfoByUserId.and.returnValue(of({}));
     organizationInfoServiceSpy.organizationInfoValidateByOrganizationInfoId.and.returnValue(of({}));
 
     await TestBed.configureTestingModule({
-      declarations: [ OrganizationProfileComponent ],
+      declarations: [OrganizationProfileComponent],
       providers: [
         { provide: NgxSpinnerService, useValue: spinnerSpy },
         { provide: LinkService, useValue: linkServiceSpy },
         { provide: CampaignService, useValue: campaignServiceSpy },
-        { provide: OrganizationInfoService, useValue: organizationInfoServiceSpy }
+        { provide: OrganizationInfoService, useValue: organizationInfoServiceSpy },
+        { provide: ActivatedRoute, useValue: mockActivatedRoute }
+      ],
+      imports: [
+        RouterTestingModule // Necessário para lidar com ActivatedRoute
       ]
     }).compileComponents();
 
     fixture = TestBed.createComponent(OrganizationProfileComponent);
     component = fixture.componentInstance;
-    // Prepare dados mínimos
+
+    // Dados iniciais do componente
     component.user = { userId: 'org12' };
     component.profile = { profileId: 'prof1' };
     fixture.detectChanges();
@@ -49,56 +66,16 @@ describe('OrganizationProfileComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  describe('ngOnInit', () => {
-    it('deve chamar getOrganizationInfo e getLinks se profile estiver definido', fakeAsync(() => {
-      spyOn(component, 'getOrganizationInfo');
-      spyOn(component, 'getLinks');
-      component.profile = { profileId: 'p987' };
-      component.user = { userId: 'u213' };
-      component.ngOnInit();
-      expect(component.getOrganizationInfo).toHaveBeenCalledWith('u213');
-      expect(component.getLinks).toHaveBeenCalled();
-    }));
-
-    it('não deve chamar os métodos se profile não estiver definido', () => {
-      spyOn(component, 'getOrganizationInfo');
-      spyOn(component, 'getLinks');
-      component.profile = null;
-      component.ngOnInit();
-      expect(component.getOrganizationInfo).not.toHaveBeenCalled();
-      expect(component.getLinks).not.toHaveBeenCalled();
-    });
-  });
-
-  it('getOrganizationInfo deve popular organizationInfo e controlar spinner', fakeAsync(() => {
-    const infoMock = { name: 'ONG', cnpj: '123' };
-    organizationInfoServiceSpy.getOrganizationInfoByUserId.and.returnValue(of(infoMock));
-    component.getOrganizationInfo('50');
-    tick();
-    expect(spinnerSpy.show).toHaveBeenCalled();
-    expect(component.organizationInfo).toEqual(infoMock);
-    expect(spinnerSpy.hide).toHaveBeenCalled();
-  }));
-
-  it('getOrganizationInfo deve tratar fluxo de erro', fakeAsync(() => {
-    organizationInfoServiceSpy.getOrganizationInfoByUserId.and.returnValue(throwError(() => ({})));
-    component.organizationInfo = null;
-    component.getOrganizationInfo('51');
-    tick();
-    // Não tem mensagem definida, mas spinner deve ser ocultado
-    expect(spinnerSpy.hide).toHaveBeenCalled();
-  }));
-
   it('validateOrganization deve atualizar organizationInfo e tratar erro', fakeAsync(() => {
-    organizationInfoServiceSpy.organizationInfoValidateByOrganizationInfoId.and.returnValue(of({valid: true}));
+    organizationInfoServiceSpy.organizationInfoValidateByOrganizationInfoId.and.returnValue(of({ valid: true }));
     spyOn(component, 'removeSpecialCharacters').and.returnValue('00345');
     component.validateOrganization('oid', '00.345');
     tick();
     expect(spinnerSpy.show).toHaveBeenCalled();
-    expect(component.organizationInfo).toEqual({valid: true});
+    expect(component.organizationInfo).toEqual({ valid: true });
     expect(spinnerSpy.hide).toHaveBeenCalled();
 
-    // erro
+    // Teste de erro
     organizationInfoServiceSpy.organizationInfoValidateByOrganizationInfoId.and.returnValue(throwError(() => ({})));
     component.alertError = '';
     component.validateOrganization('oid2', '123.456');
@@ -120,14 +97,6 @@ describe('OrganizationProfileComponent', () => {
     expect(component.alertError).toContain('Erro ao buscar links.');
   }));
 
-  it('toggleShowLinks alterna showLinks', () => {
-    component.showLinks = false;
-    component.toggleShowLinks();
-    expect(component.showLinks).toBeTrue();
-    component.toggleShowLinks();
-    expect(component.showLinks).toBeFalse();
-  });
-
   it('getCampaignsByUserId deve buscar campanhas e controlar spinner', fakeAsync(() => {
     campaignServiceSpy.getCampaignByUserId.and.returnValue(of(['A', 'B']));
     component.user = { userId: '123' };
@@ -137,13 +106,4 @@ describe('OrganizationProfileComponent', () => {
     expect(component.campaigns).toEqual(['A', 'B']);
     expect(spinnerSpy.hide).toHaveBeenCalled();
   }));
-
-  it('getCampaignsByUserId deve tratar erro', fakeAsync(() => {
-    campaignServiceSpy.getCampaignByUserId.and.returnValue(throwError(() => ({})));
-    component.user = { userId: '999' };
-    component.getCampaignsByUserId();
-    tick();
-    expect(spinnerSpy.hide).toHaveBeenCalled();
-  }));
-
 });

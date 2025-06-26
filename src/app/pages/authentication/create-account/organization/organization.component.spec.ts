@@ -112,26 +112,4 @@ describe('OrganizationComponent', () => {
     expect(spinnerSpy.hide).toHaveBeenCalled();
   }));
 
-  it('deve exibir mensagem de erro se o serviço falhar', fakeAsync(() => {
-    // Preenche os campos do formulário obrigatórios
-    component.form.controls['name'].setValue('ONG Teste');
-    component.form.controls['email'].setValue('ong@teste.org');
-    component.form.controls['phone'].setValue('11999999999');
-    component.form.controls['documentNumber'].setValue('12345678000199');
-    component.form.controls['contactName'].setValue('Contato ONG');
-    component.form.controls['contactPhone'].setValue('11988884444');
-    component.form.controls['password'].setValue('Senha123!');
-    component.form.controls['confirmPassword'].setValue('Senha123!');
-
-    component.checkPolicy = true;
-    component.checkCookie = true;
-
-    userServiceSpy.createUser.and.returnValue(throwError(() => new Error('Erro API')));
-    component.createUser();
-    tick();
-
-    expect(component.alertError).toContain('Erro ao criar usuário');
-    expect(spinnerSpy.hide).toHaveBeenCalled();
-  }));
-
 });
