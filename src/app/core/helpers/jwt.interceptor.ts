@@ -10,8 +10,8 @@ export class JwtInterceptor implements HttpInterceptor {
 
     intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
         if(request.url.indexOf('/api/Login') == -1) {
-            var user = this.authenticationService.currentUser();
-            var token = this.authenticationService.currentToken();
+            let user = this.authenticationService.currentUser();
+            let token = this.authenticationService.currentToken();
 
             if (token && user) {
                 request = request.clone({

@@ -47,7 +47,7 @@ export class OrganizationProfileComponent implements OnInit {
 
   ngOnInit(): void {
     if (this.profile) {
-      var userId = this.route.snapshot.paramMap.get('id');
+      let userId = this.route.snapshot.paramMap.get('id');
       if (userId) this.user.userId = userId;
 
       this.getOrganizationInfo(this.user.userId);
