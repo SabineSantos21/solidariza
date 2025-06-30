@@ -69,12 +69,12 @@ export class DonorComponent implements OnInit {
     if (!this.checkPolicy || !this.checkCookie) return;
 
     this.spinner.show();
-    this.userService.createUser(this.form.value).subscribe(
-      () => this.router.navigate(['/login']),
-      error => {
+    this.userService.createUser(this.form.value).subscribe({
+      next: () => { this.router.navigate(['/login']) },
+      error: (error) => {
         this.alertError = error.status === 400 ? error.error : this.errorMessages.userCreateGeneric;
       }
-    ).add(() => this.spinner.hide());
+    }).add(() => this.spinner.hide());
   }
 
   private validatePassword(): boolean {

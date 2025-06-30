@@ -65,14 +65,14 @@ export class VolunteerComponent implements OnInit {
     } else if (this.checkPolicy && this.checkCookie && this.validatePassword()) {
       this.spinner.show();
       const user = this.form.value;
-      this.userService.createUser(user).subscribe(
-        () => {
+      this.userService.createUser(user).subscribe({
+        next: (data) => {
           this.router.navigate(['/login']);
         },
-        (error) => {
-          this.alertError = error.error || 'Erro ao criar usuário. Verifique os dados informados.';
+        error: (error) => {
+          this.alertError = error.error ?? 'Erro ao criar usuário. Verifique os dados informados.';
         }
-      ).add(() => {
+      }).add(() => {
         this.spinner.hide();
       });
     }

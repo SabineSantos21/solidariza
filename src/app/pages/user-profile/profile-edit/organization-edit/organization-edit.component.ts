@@ -141,8 +141,8 @@ export class OrganizationEditComponent implements OnInit {
     let newProfile = new NewProfile(profile);
     newProfile.userId = this.user.userId;
 
-    this.profileService.createProfile(newProfile).subscribe(
-      data => {
+    this.profileService.createProfile(newProfile).subscribe({
+      next: (data) => {
         this.alertSuccess = "Alterações Salvas com sucesso";
 
         if(this.organizationInfo) {
@@ -153,10 +153,10 @@ export class OrganizationEditComponent implements OnInit {
         }
 
       },
-      error => {
+      error: (error) => {
         this.alertError = "Erro ao Salvar Perfil";
       }
-    ).add(() => {
+    }).add(() => {
       this.spinner.hide()
     })
   }
@@ -164,9 +164,8 @@ export class OrganizationEditComponent implements OnInit {
   updateProfile(profile) {
     this.spinner.show();
 
-    this.profileService.updateProfile(this.profile.profileId, profile).subscribe(
-      data => {       
-
+    this.profileService.updateProfile(this.profile.profileId, profile).subscribe({
+      next: () => {       
         if(this.organizationInfo) {
           this.updateOrganizationInfo();
         }
@@ -174,10 +173,10 @@ export class OrganizationEditComponent implements OnInit {
           this.createOrganizationInfo();
         }
       },
-      error => {
+      error: () => {
         this.alertError = "Erro ao Salvar Perfil"
       }
-    ).add(() => {
+    }).add(() => {
       this.spinner.hide()
     })
   }
@@ -244,14 +243,14 @@ export class OrganizationEditComponent implements OnInit {
     else {
       this.spinner.show();
       
-      this.organizationInfoService.createOrganizationInfo(this.formOrganizationInfo.value).subscribe(
-        (data) => {
+      this.organizationInfoService.createOrganizationInfo(this.formOrganizationInfo.value).subscribe({
+        next: (data) => {
           this.alertSuccess = "Alterações Salvas com sucesso"          
         },
-        (error) => {
+        error: (error) => {
           this.alertError = "Erro ao salvar informações. Tente novamente mais tarde."
         }
-      ).add(() => {
+      }).add(() => {
         this.spinner.hide();
       })
 
@@ -266,41 +265,41 @@ export class OrganizationEditComponent implements OnInit {
     })
 
     if (link.profileId && link.type && link.url) {
-      this.linkService.createLink(link).subscribe(
-        data => {
+      this.linkService.createLink(link).subscribe({
+        next: (data) => {
           this.links.push(data);
 
           this.link = null;
           this.selectedOption = null;
         },
-        error => {
+        error: (error) => {
           this.alertError = "Erro ao adicionar link. Tente novamente."
         }
-      )
+      })
 
     }
   }
 
   getLinks() {
-    this.linkService.getLinksByProfileId(this.profile.profileId).subscribe(
-      data => {
+    this.linkService.getLinksByProfileId(this.profile.profileId).subscribe({
+      next: (data) => {
         this.links = data;
       },
-      error => {
+      error: (error) => {
         this.alertError = "Erro ao buscar links. Tente novamente mais tarde."
       }
-    )
+    })
   }
 
   removeLink(link) {
-    this.linkService.deleteLink(link.linkId).subscribe(
-      data => {
+    this.linkService.deleteLink(link.linkId).subscribe({
+      next: (data) => {
         this.getLinks()
       },
-      error => {
+      error: (error) => {
         this.alertError = "Erro ao buscar Links. Tente novamente."
       }
-    )
+    })
   }
 
   getSocialIcon(linkType) {

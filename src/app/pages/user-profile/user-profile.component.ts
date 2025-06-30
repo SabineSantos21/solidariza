@@ -63,9 +63,6 @@ export class UserProfileComponent implements OnInit {
         if(this.user.type == UserType.Organization) {
           this.getCampaignByUserId(this.user.userId);
         }
-      },
-      error => {
-        
       }
     ).add(() => {
       this.spinner.hide();
@@ -82,9 +79,6 @@ export class UserProfileComponent implements OnInit {
         if(this.user.type == UserType.Organization) {
           this.getCampaignByUserId(this.user.userId);
         }
-      },
-      error => {
-        
       }
     ).add(() => {
       this.spinner.hide();
@@ -97,9 +91,6 @@ export class UserProfileComponent implements OnInit {
     this.campaignService.getCampaignByUserId(userId).subscribe(
       data => {
         this.campaigns = data;
-      },
-      error => {
-
       }
     ).add(() => {
       this.spinner.hide();

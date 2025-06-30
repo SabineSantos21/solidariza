@@ -41,14 +41,14 @@ export class CampaignViewComponent implements OnInit {
   getCampaignById(campaignId) {
     this.spinner.show();
     
-    this.campaignService.getCampaignById(campaignId).subscribe(
-      data => {
+    this.campaignService.getCampaignById(campaignId).subscribe({
+      next: (data) => {
         this.campaign = data;
       },
-      error => {
+      error: (error) => {
         this.alertError = "Erro ao buscar campanha"
       }
-    ).add(() => {
+    }).add(() => {
       this.spinner.hide();
     })
   }

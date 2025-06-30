@@ -47,14 +47,11 @@ export class CampaignVolunteerComponent implements OnInit {
   getCampaignById() {
     this.spinner.show();
 
-    this.campaignService.getCampaignById(this.campaignId).subscribe(
-      data => {
+    this.campaignService.getCampaignById(this.campaignId).subscribe({
+      next: (data) => {
         this.campaign = data;
       },
-      error => {
-
-      }
-    ).add(() => {
+    }).add(() => {
       this.spinner.hide()
     })
   }
@@ -67,15 +64,15 @@ export class CampaignVolunteerComponent implements OnInit {
       campaignId: this.campaignId
     }
 
-    this.campaignVolunteerService.createCampaignVolunteer(newCampaignVolunteer).subscribe(
-      data => {
+    this.campaignVolunteerService.createCampaignVolunteer(newCampaignVolunteer).subscribe({
+      next: (data) => {
         this.created = true;
         this.getCampaignById();
       },
-      erros => {
+      error: () => {
         this.created = false;
       }
-    ).add(() => {
+    }).add(() => {
       this.spinner.hide();
     })
   }

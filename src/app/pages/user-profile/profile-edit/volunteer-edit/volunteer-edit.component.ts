@@ -90,14 +90,14 @@ export class VolunteerEditComponent implements OnInit {
     let newProfile = new NewProfile(profile);
     newProfile.userId = this.user.userId;
 
-    this.profileService.createProfile(newProfile).subscribe(
-      data => {
+    this.profileService.createProfile(newProfile).subscribe({
+      next: (data) => {
         this.alertSuccess = "Alterações Salvas com sucesso"
       },
-      error => {
+      error: (error) => {
         this.alertError = "Erro ao Salvar Perfil"
       }
-    ).add(() => {
+    }).add(() => {
       this.spinner.hide();
     })
   }
@@ -105,14 +105,14 @@ export class VolunteerEditComponent implements OnInit {
   updateProfile(profile) {
     this.spinner.show();
 
-    this.profileService.updateProfile(this.profile.profileId, profile).subscribe(
-      data => {
+    this.profileService.updateProfile(this.profile.profileId, profile).subscribe({
+      next: (data) => {
         this.alertSuccess = "Alterações Salvas com sucesso"
       },
-      error => {
+      error: (error) => {
         this.alertError = "Erro ao Salvar Perfil"
       }
-    ).add(() => {
+    }).add(() => {
       this.spinner.hide();
     })
   }

@@ -54,16 +54,16 @@ export class LoginComponent implements OnInit {
     } else{
       this.spinner.show();
 
-      this.loginService.login(this.form.value).subscribe(
-        (data) => {    
+      this.loginService.login(this.form.value).subscribe({
+        next: (data) => {    
           this.localStorageService.set("token", data.token);
           this.localStorageService.set("user", data.user);
           this.router.navigate(["/dashboard"]);
         },
-        (error) => {
+        error: (error) => {
           this.alertError = "Erro ao realizar login. Confira se as suas credenciais estão corretas."
         }
-      ).add(() => {
+      }).add(() => {
         this.spinner.hide()
       });
     }

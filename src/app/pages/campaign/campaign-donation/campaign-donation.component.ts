@@ -49,15 +49,13 @@ export class CampaignDonationComponent implements OnInit {
   getCampaignById() {
     this.spinner.show();
 
-    this.campaignService
-      .getCampaignById(this.campaignId)
-      .subscribe(
-        (data) => {
+    this.campaignService.getCampaignById(this.campaignId).subscribe({
+        next: (data) => {
           this.campaign = data;
           this.getOrganizationInfo(this.campaign.userId);
         },
-        (error) => {}
-      )
+        error: (error) => {}
+      })
       .add(() => {
         this.spinner.hide();
       });

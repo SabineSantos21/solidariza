@@ -93,13 +93,13 @@ export class OrganizationProfileComponent implements OnInit {
   }
 
   getLinks() {
-    this.linkService.getLinksByProfileId(this.profile.profileId).subscribe(
-      data => {
+    this.linkService.getLinksByProfileId(this.profile.profileId).subscribe({
+      next: (data) => {
         this.links = data || [];
         this.organizeLinks();
       },
-      () => { this.alertError = 'Erro ao buscar links. ' + this.genericError }
-    );
+      error: () => { this.alertError = 'Erro ao buscar links. ' + this.genericError }
+    });
   }
 
   private organizeLinks() {

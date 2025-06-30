@@ -127,15 +127,15 @@ export class OrganizationNewCampaignComponent implements OnInit {
       this.validateFields()
     } else {
       this.spinner.show();
-      this.campaignService.createCampaign(this.form.value).subscribe(
-        (data) => {
+      this.campaignService.createCampaign(this.form.value).subscribe({
+        next: (data) => {
           this.alertSuccess = "Campanha criada com sucesso"
           this.router.navigate(["/user-profile"])
         },
-        (error) => {
+        error: (error) => {
           this.alertError = "Erro ao criar campanha. Tente novamente mais tarde."
         }
-      ).add(() => {
+      }).add(() => {
         this.spinner.hide();
       })
 
