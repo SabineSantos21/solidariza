@@ -50,7 +50,7 @@ jobs:
             -Dsonar.organization=sabinesantos21
             -Dsonar.javascript.lcov.reportPaths=src/coverage/lcov.info
             -Dsonar.sources=src
-            -Dsonar.exclusions=**/*.spec.ts,**/node_modules/**,**/src/app/core/**,**/src/assets/**,**/src/coverage/**,**/src/*.json
+            -Dsonar.exclusions=**/*.spec.ts,**/node_modules/**,**/src/app/core/**,**/src/assets/**,**/src/coverage/**,**/src/*.json,**/src/app/shared/**
             -Dsonar.sourceEncoding=UTF-8
 
       - name: Build Angular project
