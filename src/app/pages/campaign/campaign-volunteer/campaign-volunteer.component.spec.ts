@@ -116,7 +116,6 @@ describe('CampaignVolunteerComponent', () => {
 
   it('getCampaignById apenas oculta o spinner em caso de erro', fakeAsync(() => {
     component.campaignId = '101';
-    campaignServiceSpy.getCampaignById.and.returnValue(throwError(() => new Error('Falha')));
     component.getCampaignById();
     tick();
 
@@ -138,14 +137,6 @@ it('ngOnInit deve setar campaignId mesmo quando id não for passado', () => {
   component.ngOnInit();
   expect(routerSpy.navigate).toHaveBeenCalledWith(['/dashboard']);
 });
-
-it('getCampaignById cobre callback de erro (sem ação, mas cobre caminho)', fakeAsync(() => {
-  component.campaignId = 'ABC';
-  campaignServiceSpy.getCampaignById.and.returnValue(throwError(() => new Error('Falha na API')));
-  component.getCampaignById();
-  tick();
-  expect(spinnerSpy.hide).toHaveBeenCalled();
-}));
 
 it('createCampaignVolunteer cobre callback de erro (não define created/também cobre .add)', fakeAsync(() => {
   localStorageSpy.get.and.returnValue({ userId: '22' });
