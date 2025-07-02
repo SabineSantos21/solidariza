@@ -28,6 +28,9 @@ O Solidariza foi desenvolvido com foco em eficiência, escalabilidade e facilida
 
 - [API de Consulta de CNPJ - cnpj.ws](https://www.cnpj.ws/pt-BR)
 
+
+![Solidariza - Arquitetura](https://github.com/user-attachments/assets/fc0d228f-8e88-4733-a7bf-be3eac1ec477)
+
 ---
 
 ## ☁️ Hospedagem e Infraestrutura
