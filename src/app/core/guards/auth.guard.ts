@@ -12,7 +12,7 @@ export class AuthGuard implements CanActivate {
         private authenticationService: AuthenticationService
     ) { }
 
-    canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
+    canActivate() {
         
         this.user = this.authenticationService.currentUser();
         this.token = this.authenticationService.currentToken();

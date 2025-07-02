@@ -19,7 +19,6 @@ import { VolunteerComponent } from './pages/authentication/create-account/volunt
 import { NgxMaskModule, IConfig } from 'ngx-mask';
 import { NgxSpinnerModule } from "ngx-spinner";
 import { JwtInterceptor } from './core/helpers/jwt.interceptor';
-import { RouterTestingModule } from '@angular/router/testing';
 
 const maskConfig: Partial<IConfig> = {
   validation: false, // Define se a máscara deve validar o input
@@ -37,7 +36,6 @@ const maskConfig: Partial<IConfig> = {
     ReactiveFormsModule,
     NgxMaskModule.forRoot(maskConfig),
     NgxSpinnerModule.forRoot({ type: 'ball-8bits' }),
-    RouterTestingModule.withRoutes([])
   ],
   declarations: [
     AppComponent,

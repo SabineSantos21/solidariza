@@ -40,9 +40,9 @@
                             </div>
 
                             <div class="col-lg-6">
-                                <ng-container *ngIf="getPixKeyMask(organizationInfo.pixType) as pixMask">
+                                <ng-container>
                                     <h3>
-                                        🔑 Chave Pix: {{ organizationInfo.pixKey | mask: pixMask }} 
+                                        🔑 Chave Pix: {{ organizationInfo.pixType < 5 ? (organizationInfo.pixKey | mask: getPixKeyMask(organizationInfo.pixType)) : organizationInfo.pixKey }} 
                                         <i class="fa fa-solid fa-copy cursor-pointer" 
                                         placement="top" 
                                         ngbTooltip="{{ textTooltip }}" 
