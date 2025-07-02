@@ -87,7 +87,6 @@ export class CampaignDonationComponent implements OnInit {
       0
     );
     this.qrCodePixPayload = payloadPix;
-    console.log("Payload Pix:", payloadPix);
 
     setTimeout(() => {
       if (this.qrCanvas) {

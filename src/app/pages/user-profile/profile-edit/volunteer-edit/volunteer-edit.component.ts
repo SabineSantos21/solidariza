@@ -37,7 +37,7 @@ export class VolunteerEditComponent implements OnInit {
       name: new FormControl(profile.name, Validators.required),
       email: new FormControl(profile.email, Validators.required),
       phone: new FormControl(profile.phone, null),
-      description: new FormControl(profile.description, Validators.required),
+      description: new FormControl(profile.description, null),
       city: new FormControl(profile.city, Validators.required),
       state: new FormControl(profile.state, Validators.required),
     })
